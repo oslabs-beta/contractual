@@ -36,6 +36,7 @@ module.exports = [
   },
   {
     mode: 'development',
+    
     entry: './src/React.tsx',
     target: 'electron-renderer',
     devtool: 'source-map',
