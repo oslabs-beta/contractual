@@ -1,17 +1,69 @@
-<!DOCTYPE html>
-<html>
-  <head>
-    <meta charset="UTF-8" />
-    <!-- <meta http-equiv="Content-Security-Policy" content="script-src 'self'">
-    <meta http-equiv="X-Content-Security-Policy" content="script-src 'self'"> -->
-    <script src="../src/express/server.js"></script>
-    <title>Hello World!</title>
-  <script defer src="react.js"></script></head>
-  <body>
-    <div id="root"></div>
-    <h1>Hello World!</h1>
-    We are using Node.js <span id="node-version"></span>, Chromium
-    <span id="chrome-version"></span>, and Electron
-    <span id="electron-version"></span>.
-  </body>
-</html>
+<head><script defer src="react.js"></script></head>Html Webpack Plugin:
+<pre>
+  Error: Child compilation failed:
+  Module not found: SyntaxError: /Users/yankunsong/Desktop/contractual/package.json (directory description file): SyntaxError: /Users/yankunsong/Desktop/contractual/package.json (dir  ectory description file): SyntaxError: Unexpected token < in JSON at position 697
+  ModuleNotFoundError: Module not found: SyntaxError: /Users/yankunsong/Desktop/contractual/package.json (directory description file): SyntaxError: /Users/yankunsong/Desktop/contract  ual/package.json (directory description file): SyntaxError: Unexpected token < in JSON at position 697
+      at /Users/yankunsong/Desktop/contractual/node_modules/webpack/lib/Compilation.js:2016:28
+      at /Users/yankunsong/Desktop/contractual/node_modules/webpack/lib/NormalModuleFactory.js:798:13
+      at eval (eval at create (/Users/yankunsong/Desktop/contractual/node_modules/tapable/lib/HookCodeFactory.js:33:10), <anonymous>:10:1)
+      at /Users/yankunsong/Desktop/contractual/node_modules/webpack/lib/NormalModuleFactory.js:270:22
+      at eval (eval at create (/Users/yankunsong/Desktop/contractual/node_modules/tapable/lib/HookCodeFactory.js:33:10), <anonymous>:9:1)
+      at /Users/yankunsong/Desktop/contractual/node_modules/webpack/lib/NormalModuleFactory.js:434:22
+      at /Users/yankunsong/Desktop/contractual/node_modules/webpack/lib/NormalModuleFactory.js:120:11
+      at /Users/yankunsong/Desktop/contractual/node_modules/webpack/lib/NormalModuleFactory.js:635:23
+      at /Users/yankunsong/Desktop/contractual/node_modules/neo-async/async.js:2830:7
+      at done (/Users/yankunsong/Desktop/contractual/node_modules/neo-async/async.js:2925:13)
+  
+  - Compilation.js:2016 
+    [contractual]/[webpack]/lib/Compilation.js:2016:28
+  
+  - NormalModuleFactory.js:798 
+    [contractual]/[webpack]/lib/NormalModuleFactory.js:798:13
+  
+  
+  - NormalModuleFactory.js:270 
+    [contractual]/[webpack]/lib/NormalModuleFactory.js:270:22
+  
+  
+  - NormalModuleFactory.js:434 
+    [contractual]/[webpack]/lib/NormalModuleFactory.js:434:22
+  
+  - NormalModuleFactory.js:120 
+    [contractual]/[webpack]/lib/NormalModuleFactory.js:120:11
+  
+  - NormalModuleFactory.js:635 
+    [contractual]/[webpack]/lib/NormalModuleFactory.js:635:23
+  
+  - async.js:2830 
+    [contractual]/[neo-async]/async.js:2830:7
+  
+  - async.js:2925 done
+    [contractual]/[neo-async]/async.js:2925:13
+  
+  - child-compiler.js:169 
+    [contractual]/[html-webpack-plugin]/lib/child-compiler.js:169:18
+  
+  - Compiler.js:551 finalCallback
+    [contractual]/[webpack]/lib/Compiler.js:551:5
+  
+  - Compiler.js:577 
+    [contractual]/[webpack]/lib/Compiler.js:577:11
+  
+  - Compiler.js:1196 
+    [contractual]/[webpack]/lib/Compiler.js:1196:17
+  
+  
+  - Hook.js:18 Hook.CALL_ASYNC_DELEGATE [as _callAsync]
+    [contractual]/[tapable]/lib/Hook.js:18:14
+  
+  - Compiler.js:1192 
+    [contractual]/[webpack]/lib/Compiler.js:1192:33
+  
+  - Compilation.js:2787 finalCallback
+    [contractual]/[webpack]/lib/Compilation.js:2787:11
+  
+  - Compilation.js:3092 
+    [contractual]/[webpack]/lib/Compilation.js:3092:11
+  
+  
+</pre>
