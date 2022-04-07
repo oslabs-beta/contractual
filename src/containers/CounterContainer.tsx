@@ -14,7 +14,7 @@ export default function CounterContainer () {
   return (
     <div>
       <h1>{counter.counter}</h1>
-      <button type="button" onClick={() => {incrementCounter(counter.counter)}}>iiiiiiiiincrement</button>
+      <button type="button" onClick={() => {incrementCounter(counter.counter)}}>increment</button>
       <button type="button" onClick={() => {decrementCounter(counter.counter)}}>decrement</button>
     </div>
   );

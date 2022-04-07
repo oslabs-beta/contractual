@@ -3,15 +3,9 @@ const HtmlWebpackPlugin = require("html-webpack-plugin");
 
 module.exports = [
   {
-    mode: process.env.NODE_ENV,
+    mode: "development",
     entry: "./src/main.ts",
     target: "electron-main",
-    // devServer: {
-    //   static: {
-    //     directory: path.resolve(__dirname, "dist"),
-    //     publicPath: "/dist",
-    //   },
-    // },
     module: {
       rules: [
         {
@@ -43,16 +37,10 @@ module.exports = [
   //   }
   // },
   {
-    mode: process.env.NODE_ENV,
+    mode: "development",
     entry: "./src/React.tsx",
     target: "electron-renderer",
     devtool: "source-map",
-    // devServer: {
-    //   static: {
-    //     directory: path.resolve(__dirname, "dist"),
-    //     publicPath: "/dist",
-    //   },
-    // },
     module: {
       rules: [
         {
