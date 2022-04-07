@@ -20,11 +20,13 @@
   "license": "ISC",
   "dependencies": {
     "express": "^4.17.3",
+    "file-loader": "^6.2.0",
     "react-redux": "^7.2.8",
     "react-router-dom": "^6.3.0",
     "redux": "^4.1.2",
     "redux-devtools-extension": "^2.13.9",
-    "redux-thunk": "^2.4.1"
+    "redux-thunk": "^2.4.1",
+    "url-loader": "^4.1.1"
   },
   "devDependencies": {
     "@babel/core": "^7.17.8",

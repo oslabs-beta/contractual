@@ -5,19 +5,21 @@ import { Link } from 'react-router-dom';
 const Nav = (props) => {
   return (
     <nav>
-        <img className="logo"  alt="Contractual logo"/>
+      <div className='logo-wrapper'>
+        <img className='logo'  alt='Contractual logo' src='../assets/img/icon-white.png'/>
+      </div>
       <ul className="nav-links">
         <Link to='/contractbuilder' style={{textDecoration: 'none'}}>
-          <li>Contract Builder</li>
+          <li>Contract</li>
         </Link>
         <Link to='/fronttester' style={{textDecoration: 'none'}}>
-          <li>Front End Tests</li>
+          <li>Frontend</li>
         </Link>
         <Link to='/backtester' style={{textDecoration: 'none'}}>
-          <li>Back End Tests</li>
+          <li>Backend</li>
         </Link>
         <Link to='/documentcreator' style={{textDecoration: 'none'}}>
-          <li>Document Creator</li>
+          <li>Documentation</li>
         </Link>
       </ul>
     </nav>
