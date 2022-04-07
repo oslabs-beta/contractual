@@ -2,7 +2,7 @@
   "name": "contractual",
   "version": "1.0.0",
   "description": "",
-  "main": "./src/main.js",
+  "main": "./dist/main.js",
   "moduleFileExtensions": [
     "js",
     "jsx",
