@@ -57,28 +57,28 @@ module.exports = [
     },
     plugins: [
       new HtmlWebpackPlugin({
-        template: './index.html'
+        template: './src/index.html'
       })
     ],
     resolve: {
       extensions: ['.js', '.jsx', '.json', '.ts', '.tsx'],
     }
   },
-  // {
-  //   mode: 'development',
-  //   entry: './src/renderer.ts',
-  //   target: 'electron-renderer',
-  //   module: {
-  //     rules: [{
-  //       test: /\.ts$/,
-  //       include: /src/,
-  //       use: [{ loader: 'ts-loader' }]
-  //     }]
-  //   },
-  //   output: {
-  //     path: __dirname + '/dist',
-  //     filename: 'renderer.js'
-  //   }
-  // },
+  {
+    mode: 'development',
+    entry: './src/renderer.ts',
+    target: 'electron-renderer',
+    module: {
+      rules: [{
+        test: /\.ts$/,
+        include: /src/,
+        use: [{ loader: 'ts-loader' }]
+      }]
+    },
+    output: {
+      path: __dirname + '/dist',
+      filename: 'renderer.js'
+    }
+  },
 
 ];
