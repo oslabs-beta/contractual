@@ -41429,6 +41429,9 @@ __webpack_require__(/*! ./App.css */ "./src/App.css");
 var CounterContainer_1 = __importDefault(__webpack_require__(/*! ./containers/CounterContainer */ "./src/containers/CounterContainer.tsx"));
 var Nav_1 = __importDefault(__webpack_require__(/*! ./components/Nav */ "./src/components/Nav.tsx"));
 var ContractBuilder_1 = __importDefault(__webpack_require__(/*! ./containers/ContractBuilder */ "./src/containers/ContractBuilder.tsx"));
+var FrontTester_1 = __importDefault(__webpack_require__(/*! ./containers/FrontTester */ "./src/containers/FrontTester.tsx"));
+var DocumentCreator_1 = __importDefault(__webpack_require__(/*! ./containers/DocumentCreator */ "./src/containers/DocumentCreator.tsx"));
+var BackTester_1 = __importDefault(__webpack_require__(/*! ./containers/BackTester */ "./src/containers/BackTester.tsx"));
 // export default class App extends Component {
 //   constructor(props) {
 //     super(props);
@@ -41453,7 +41456,7 @@ var ContractBuilder_1 = __importDefault(__webpack_require__(/*! ./containers/Con
 //   }
 // };
 function App() {
-    return ((0, jsx_runtime_1.jsxs)("div", { children: [(0, jsx_runtime_1.jsx)(react_router_dom_1.MemoryRouter, { children: (0, jsx_runtime_1.jsxs)("div", __assign({ className: "App" }, { children: [(0, jsx_runtime_1.jsx)(Nav_1["default"], {}), (0, jsx_runtime_1.jsxs)(react_router_dom_1.Routes, { children: [(0, jsx_runtime_1.jsx)(react_router_dom_1.Route, { path: "/contractbuilder", element: (0, jsx_runtime_1.jsxs)(jsx_runtime_1.Fragment, { children: [" ", (0, jsx_runtime_1.jsx)(ContractBuilder_1["default"], {}), " "] }) }), (0, jsx_runtime_1.jsx)(react_router_dom_1.Route, { path: "/fronttester", element: (0, jsx_runtime_1.jsxs)(jsx_runtime_1.Fragment, { children: [" ", (0, jsx_runtime_1.jsx)(ContractBuilder_1["default"], {}), " "] }) }), (0, jsx_runtime_1.jsx)(react_router_dom_1.Route, { path: "/backtester", element: (0, jsx_runtime_1.jsxs)(jsx_runtime_1.Fragment, { children: [" ", (0, jsx_runtime_1.jsx)(ContractBuilder_1["default"], {}), " "] }) }), (0, jsx_runtime_1.jsx)(react_router_dom_1.Route, { path: "/documentcreator", element: (0, jsx_runtime_1.jsxs)(jsx_runtime_1.Fragment, { children: [" ", (0, jsx_runtime_1.jsx)(ContractBuilder_1["default"], {}), " "] }) })] })] })) }), (0, jsx_runtime_1.jsx)(CounterContainer_1["default"], {})] }));
+    return ((0, jsx_runtime_1.jsxs)("div", { children: [(0, jsx_runtime_1.jsx)(react_router_dom_1.MemoryRouter, { children: (0, jsx_runtime_1.jsxs)("div", __assign({ className: "App" }, { children: [(0, jsx_runtime_1.jsx)(Nav_1["default"], {}), (0, jsx_runtime_1.jsxs)(react_router_dom_1.Routes, { children: [(0, jsx_runtime_1.jsx)(react_router_dom_1.Route, { path: "/contractbuilder", element: (0, jsx_runtime_1.jsxs)(jsx_runtime_1.Fragment, { children: [" ", (0, jsx_runtime_1.jsx)(ContractBuilder_1["default"], {}), " "] }) }), (0, jsx_runtime_1.jsx)(react_router_dom_1.Route, { path: "/fronttester", element: (0, jsx_runtime_1.jsxs)(jsx_runtime_1.Fragment, { children: [" ", (0, jsx_runtime_1.jsx)(FrontTester_1["default"], {}), " "] }) }), (0, jsx_runtime_1.jsx)(react_router_dom_1.Route, { path: "/backtester", element: (0, jsx_runtime_1.jsxs)(jsx_runtime_1.Fragment, { children: [" ", (0, jsx_runtime_1.jsx)(BackTester_1["default"], {}), " "] }) }), (0, jsx_runtime_1.jsx)(react_router_dom_1.Route, { path: "/documentcreator", element: (0, jsx_runtime_1.jsxs)(jsx_runtime_1.Fragment, { children: [" ", (0, jsx_runtime_1.jsx)(DocumentCreator_1["default"], {}), " "] }) })] })] })) }), (0, jsx_runtime_1.jsx)(CounterContainer_1["default"], {})] }));
 }
 exports["default"] = App;
 ;
@@ -41525,29 +41528,14 @@ exports["default"] = Nav;
 
 /***/ }),
 
-/***/ "./src/containers/ContractBuilder.tsx":
-/*!********************************************!*\
-  !*** ./src/containers/ContractBuilder.tsx ***!
-  \********************************************/
+/***/ "./src/containers/BackTester.tsx":
+/*!***************************************!*\
+  !*** ./src/containers/BackTester.tsx ***!
+  \***************************************/
 /***/ (function(__unused_webpack_module, exports, __webpack_require__) {
 
 "use strict";
 
-var __extends = (this && this.__extends) || (function () {
-    var extendStatics = function (d, b) {
-        extendStatics = Object.setPrototypeOf ||
-            ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
-            function (d, b) { for (var p in b) if (Object.prototype.hasOwnProperty.call(b, p)) d[p] = b[p]; };
-        return extendStatics(d, b);
-    };
-    return function (d, b) {
-        if (typeof b !== "function" && b !== null)
-            throw new TypeError("Class extends value " + String(b) + " is not a constructor or null");
-        extendStatics(d, b);
-        function __() { this.constructor = d; }
-        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-    };
-})();
 var __assign = (this && this.__assign) || function () {
     __assign = Object.assign || function(t) {
         for (var s, i = 1, n = arguments.length; i < n; i++) {
@@ -41561,23 +41549,39 @@ var __assign = (this && this.__assign) || function () {
 };
 exports.__esModule = true;
 var jsx_runtime_1 = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/react/jsx-runtime.js");
-var react_1 = __webpack_require__(/*! react */ "./node_modules/react/index.js");
-var react_redux_1 = __webpack_require__(/*! react-redux */ "./node_modules/react-redux/es/index.js");
-// MAP WHAT STATE PROPERTIES WE WANT TO PASS DOWN PASS DOWN
-var mapStateToProps = function () { return ({}); };
-var mapDispatchToProps = function () { return ({}); };
-// WORKS AFTER SWITCHING TO CLASS COMPONENT
-var ContractBuilder = /** @class */ (function (_super) {
-    __extends(ContractBuilder, _super);
-    function ContractBuilder(props) {
-        return _super.call(this, props) || this;
-    }
-    ContractBuilder.prototype.render = function () {
-        return ((0, jsx_runtime_1.jsxs)("div", { children: [(0, jsx_runtime_1.jsxs)("div", __assign({ className: "request-specification-container" }, { children: [(0, jsx_runtime_1.jsx)("div", __assign({ className: "request-method" }, { children: "Request type" })), (0, jsx_runtime_1.jsx)("div", { children: "endpoint" }), (0, jsx_runtime_1.jsx)("div", { children: "save as" })] })), (0, jsx_runtime_1.jsxs)("div", __assign({ className: "contract-container" }, { children: [(0, jsx_runtime_1.jsx)("div", __assign({ className: "request-box" }, { children: "request box" })), (0, jsx_runtime_1.jsx)("div", __assign({ className: "response-box" }, { children: "response box" }))] }))] }));
+function BackTester() {
+    return ((0, jsx_runtime_1.jsxs)("div", __assign({ className: "back-tester-container" }, { children: [(0, jsx_runtime_1.jsxs)("div", __assign({ className: "request-container" }, { children: [(0, jsx_runtime_1.jsxs)("div", __assign({ className: "endpoint-container" }, { children: [(0, jsx_runtime_1.jsx)("input", { type: "text", className: "endpoint", placeholder: "Project name" }), (0, jsx_runtime_1.jsx)("button", __assign({ className: "send-request-button" }, { children: "Send Request" }))] })), (0, jsx_runtime_1.jsx)("div", { children: (0, jsx_runtime_1.jsx)("button", __assign({ className: "method-dropdown" }, { children: "Method-dropdown" })) })] })), (0, jsx_runtime_1.jsx)("div", { className: "api-dropdown" })] })));
+}
+exports["default"] = BackTester;
+
+
+/***/ }),
+
+/***/ "./src/containers/ContractBuilder.tsx":
+/*!********************************************!*\
+  !*** ./src/containers/ContractBuilder.tsx ***!
+  \********************************************/
+/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
+
+"use strict";
+
+var __assign = (this && this.__assign) || function () {
+    __assign = Object.assign || function(t) {
+        for (var s, i = 1, n = arguments.length; i < n; i++) {
+            s = arguments[i];
+            for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p))
+                t[p] = s[p];
+        }
+        return t;
     };
-    return ContractBuilder;
-}(react_1.Component));
-exports["default"] = (0, react_redux_1.connect)(mapStateToProps, mapDispatchToProps)(ContractBuilder);
+    return __assign.apply(this, arguments);
+};
+exports.__esModule = true;
+var jsx_runtime_1 = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/react/jsx-runtime.js");
+function ContractBuilder() {
+    return ((0, jsx_runtime_1.jsxs)("div", { children: [(0, jsx_runtime_1.jsxs)("div", __assign({ className: "request-specification-container" }, { children: [(0, jsx_runtime_1.jsx)("div", __assign({ className: "request-method" }, { children: "Request type" })), (0, jsx_runtime_1.jsx)("div", { children: "endpoint" }), (0, jsx_runtime_1.jsx)("div", { children: "save as" })] })), (0, jsx_runtime_1.jsxs)("div", __assign({ className: "contract-container" }, { children: [(0, jsx_runtime_1.jsx)("div", __assign({ className: "request-box" }, { children: "request box" })), (0, jsx_runtime_1.jsx)("div", __assign({ className: "response-box" }, { children: "response box" }))] }))] }));
+}
+exports["default"] = ContractBuilder;
 
 
 /***/ }),
@@ -41613,6 +41617,64 @@ function CounterContainer() {
     return ((0, jsx_runtime_1.jsxs)("div", { children: [(0, jsx_runtime_1.jsx)("h1", { children: counter.counter }), (0, jsx_runtime_1.jsx)("button", __assign({ type: "button", onClick: function () { incrementCounter(counter.counter); } }, { children: "increment" })), (0, jsx_runtime_1.jsx)("button", __assign({ type: "button", onClick: function () { decrementCounter(counter.counter); } }, { children: "decrement" }))] }));
 }
 exports["default"] = CounterContainer;
+
+
+/***/ }),
+
+/***/ "./src/containers/DocumentCreator.tsx":
+/*!********************************************!*\
+  !*** ./src/containers/DocumentCreator.tsx ***!
+  \********************************************/
+/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
+
+"use strict";
+
+var __assign = (this && this.__assign) || function () {
+    __assign = Object.assign || function(t) {
+        for (var s, i = 1, n = arguments.length; i < n; i++) {
+            s = arguments[i];
+            for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p))
+                t[p] = s[p];
+        }
+        return t;
+    };
+    return __assign.apply(this, arguments);
+};
+exports.__esModule = true;
+var jsx_runtime_1 = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/react/jsx-runtime.js");
+function DocumentCreator() {
+    return ((0, jsx_runtime_1.jsxs)("div", { children: [(0, jsx_runtime_1.jsx)("div", { children: (0, jsx_runtime_1.jsxs)("div", __assign({ className: "export-container" }, { children: [(0, jsx_runtime_1.jsx)("input", { type: "text", className: "project-name", placeholder: "Project name" }), (0, jsx_runtime_1.jsx)("button", __assign({ className: "export" }, { children: "Export" }))] })) }), (0, jsx_runtime_1.jsx)("div", __assign({ className: "contract-container" }, { children: (0, jsx_runtime_1.jsx)("div", { children: "spread out endpoint components" }) }))] }));
+}
+exports["default"] = DocumentCreator;
+
+
+/***/ }),
+
+/***/ "./src/containers/FrontTester.tsx":
+/*!****************************************!*\
+  !*** ./src/containers/FrontTester.tsx ***!
+  \****************************************/
+/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
+
+"use strict";
+
+var __assign = (this && this.__assign) || function () {
+    __assign = Object.assign || function(t) {
+        for (var s, i = 1, n = arguments.length; i < n; i++) {
+            s = arguments[i];
+            for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p))
+                t[p] = s[p];
+        }
+        return t;
+    };
+    return __assign.apply(this, arguments);
+};
+exports.__esModule = true;
+var jsx_runtime_1 = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/react/jsx-runtime.js");
+function FrontTester() {
+    return ((0, jsx_runtime_1.jsxs)("div", __assign({ className: "front-tester-container" }, { children: [(0, jsx_runtime_1.jsx)("div", { className: "api-dropdown" }), (0, jsx_runtime_1.jsx)("div", __assign({ className: "request-log-container" }, { children: (0, jsx_runtime_1.jsx)("h2", __assign({ className: "request-log-title" }, { children: "Request Log:" })) })), (0, jsx_runtime_1.jsxs)("div", __assign({ className: "custom-response-container" }, { children: [(0, jsx_runtime_1.jsx)("h2", __assign({ className: "custom-response-title" }, { children: "Edit Response for:" })), (0, jsx_runtime_1.jsx)("div", __assign({ className: "custom-response-method" }, { children: "POST /endpoint" })), (0, jsx_runtime_1.jsx)("div", __assign({ className: "custom-response-headers" }, { children: "Headers" })), (0, jsx_runtime_1.jsx)("div", __assign({ className: "custom-response-data-strucure" }, { children: "Data-Structure" })), (0, jsx_runtime_1.jsx)("div", __assign({ className: "custom-response-datatype-container" }, { children: (0, jsx_runtime_1.jsx)("ul", { className: "datatype-list" }) }))] }))] })));
+}
+exports["default"] = FrontTester;
 
 
 /***/ }),
