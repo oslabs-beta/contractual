@@ -1,4 +1,6 @@
-
+body {
+  margin: 0px;
+}
 button {
   background-color: white;
   padding: 10px 20px;
@@ -26,7 +28,8 @@ a {
   text-decoration: none;
   height: fit-content;
   width: fit-content;
-  margin: 10px;
+  color: white;
+  font-family:Arial, Helvetica, sans-serif;
 }
 
 a:hover {
@@ -37,19 +40,24 @@ a:hover {
 
 nav {
   display: flex;
-  justify-content: space-around;
-  align-items: center;
-  background: lightgray;
+  background: black;
   color: white;
 }
 
 .nav-links {
-  width: 25%;
   display: flex;
   justify-content: space-around;
-  align-items: center;
+  align-items: right;
   list-style: none;
-  font-weight: bold;
+  font-family:Arial, Helvetica, sans-serif;
+  font-weight: 200;
+  font-size: 0.85rem;
+  text-align: right;
+  color: white;
+  padding-top: 5px;
+}
+.nav-links a {
+  margin: 0px 10px;
 }
 
 .request-specification-container {
@@ -58,4 +66,14 @@ nav {
 
 .contract-container {
   display: flex;
+}
+.logo-wrapper {
+  display: flex;
+  flex-grow: 1;
+}
+.logo {
+  display: flex;
+  width: 30px;
+  height: 30px;
+  margin: 10px;
 }
