@@ -13,7 +13,8 @@
   "scripts": {
     "build": "webpack --config ./webpack.config.js",
     "watch": "webpack --config webpack.config.js --watch",
-    "start": "npm run build && electron ./dist/main.js"
+    "start": "npm run build && electron ./dist/main.js",
+    "dev": "electron ./dist/main.js"
   },
   "keywords": [],
   "author": "",
