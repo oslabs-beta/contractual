@@ -27,11 +27,7 @@
     "redux": "^4.1.2",
     "redux-devtools-extension": "^2.13.9",
     "redux-thunk": "^2.4.1",
-<<<<<<< HEAD
-    "webpack-dev-server": "^4.8.1"
-=======
     "url-loader": "^4.1.1"
->>>>>>> dev
   },
   "devDependencies": {
     "@babel/core": "^7.17.8",
