@@ -1,31 +1,41 @@
-import React from 'react';
-import { useFormik } from 'formik';
-import * as Yup from "yup"
+import React from "react";
+import { useFormik } from "formik";
+import * as Yup from "yup";
+import axios from "axios";
 
 type FormValues = {
-  email: string,
-  password: string
-}
+  email: string;
+  password: string;
+};
 
 const initialValues: FormValues = {
   email: "",
-  password: ""
-}
-
+  password: "",
+};
 
 // console.log(formik.values);
 
 const Login = () => {
-
   const formik = useFormik({
     initialValues,
     validationSchema: Yup.object({
       email: Yup.string().email("Invalid email format").required("Required"),
-      password: Yup.string().required("invalid password")
+      password: Yup.string().required("invalid password"),
     }),
     onSubmit: (values: FormValues): void => {
       console.log(values);
-    }
+      axios
+        .post("http://localhost:3000/login", {
+          password: values.password,
+          email: values.email,
+        })
+        .then(function (response) {
+          console.log(response);
+        })
+        .catch(function (error) {
+          console.log(error);
+        });
+    },
   });
 
   console.log("errors: ", formik.errors);
@@ -36,35 +46,41 @@ const Login = () => {
       </section>
       <section className="form-container">
         <form onSubmit={formik.handleSubmit} className="form-login">
-          <input 
+          <input
             className="form-text-field"
-            type="email" 
-            id='email' 
-            name='email' 
-            placeholder="Email" 
-            value={formik.values.email} 
+            type="email"
+            id="email"
+            name="email"
+            placeholder="Email"
+            value={formik.values.email}
             onChange={formik.handleChange}
             onBlur={formik.handleBlur}
           />
-            {formik.touched.email && formik.errors.email ? <p>{formik.errors.email}</p> : <p>&nbsp;</p> }
-          <input 
+          {formik.touched.email && formik.errors.email ? (
+            <p>{formik.errors.email}</p>
+          ) : (
+            <p>&nbsp;</p>
+          )}
+          <input
             className="form-text-field"
-            type="password" 
-            id='password' 
-            name='password' 
-            placeholder="password" 
-            value={formik.values.password} 
+            type="password"
+            id="password"
+            name="password"
+            placeholder="password"
+            value={formik.values.password}
             onChange={formik.handleChange}
             onBlur={formik.handleBlur}
           />
-          {formik.touched.password && formik.errors.password ? <p>{formik.errors.password}</p> : <p>&nbsp;</p> }
+          {formik.touched.password && formik.errors.password ? (
+            <p>{formik.errors.password}</p>
+          ) : (
+            <p>&nbsp;</p>
+          )}
           <button type="submit">Login</button>
         </form>
       </section>
     </div>
-  )
-
+  );
 };
-
 
 export default Login;
