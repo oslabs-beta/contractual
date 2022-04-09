@@ -2,23 +2,23 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 // import Logo2 from '../images/Logo2.jpg'
 
-const Nav = (props) => {
+const Nav = () => {
   return (
     <nav>
-      <div className='logo-wrapper'>
+      <div className='wrapper-logo'>
         <img className='logo'  alt='Contractual logo' src='../assets/img/icon-white.png'/>
       </div>
       <ul className="nav-links">
-        <Link to='/contractbuilder' style={{textDecoration: 'none'}}>
+        <Link to='/contract'>
           <li>Contract</li>
         </Link>
-        <Link to='/fronttester' style={{textDecoration: 'none'}}>
+        <Link to='/front'>
           <li>Frontend</li>
         </Link>
-        <Link to='/backtester' style={{textDecoration: 'none'}}>
+        <Link to='/back'>
           <li>Backend</li>
         </Link>
-        <Link to='/documentcreator' style={{textDecoration: 'none'}}>
+        <Link to='/document'>
           <li>Documentation</li>
         </Link>
       </ul>
