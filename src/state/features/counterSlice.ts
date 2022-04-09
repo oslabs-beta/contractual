@@ -2,8 +2,8 @@
 
 import { createSlice, PayloadAction } from "@reduxjs/toolkit"; 
 
-// define types of contents in your state object with interface
-interface CounterState {
+// define types of contents in your state object with interface or object type
+type CounterState = {
   counter: number;
 }
 
