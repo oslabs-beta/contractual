@@ -1,5 +1,31 @@
-const dbController = {};
 const db = require("../models/dbModel.js");
+
+const dbController = {};
+
+dbController.getContent = async (req, res, next) => {
+  const { token } = req.params;
+  const param = [token.toUpperCase()];
+  try {
+    const getContent = `
+      SELECT * FROM contracts
+      WHERE token = $1;
+    `;
+
+    const targetContent = await db.query(getContent, param);
+    res.locals.content = targetContent.rows[0].content
+    return next()
+  } catch (error) {
+    return next({
+      log: 'Express error in getContent middleware',
+      status: 400,
+      message: {
+        err: `dbController.getContent: ERROR: ${error}`,
+      },
+    });
+  }
+};
+
+
 
 dbController.addContract = async (req, res, next) => {
   // console.log("Hitttttt!!!!!");
@@ -19,7 +45,6 @@ dbController.addContract = async (req, res, next) => {
   }
 
   let token;
-
   // Check if token exists in DB
   while (true) {
     token = makeid(4);
