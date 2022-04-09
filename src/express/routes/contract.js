@@ -3,14 +3,15 @@ const dbController = require("../controllers/dbController");
 const cors = require("cors");
 
 const router = express.Router();
-// // Get one with param
+
+// // Get content with token Route
 router.get("/:token", dbController.getContent, (req, res) => {
   return res.status(200).json(res.locals.content);
 });
 
 // Create Contract Route
 router.post("/", dbController.addContract, (req, res) => {
-  return res.status(200).json("Added!");
+  return res.status(200).json(res.locals.token);
 });
 
 module.exports = router;

@@ -3,10 +3,13 @@ const app = express();
 const path = require("path");
 
 // Routes Import
-const contractRouter = require(path.resolve(
-  __dirname,
-  "../src/express/routes/contract.js"
+const contractRouter = require(path.resolve(__dirname,"../src/express/routes/contract.js"
 ));
+
+const signupRouter = require(path.resolve(__dirname,"../src/express/routes/signup.js"))
+
+const loginRouter = require(path.resolve(__dirname,"../src/express/routes/login.js"))
+
 
 const PORT = 3000;
 
@@ -20,6 +23,8 @@ app.get("/", function (req, res) {
 });
 
 app.use("/contract", contractRouter);
+app.use("/signup", signupRouter )
+app.use("/login", loginRouter);
 
 
 // Unknown route handler
