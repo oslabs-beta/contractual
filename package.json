@@ -20,6 +20,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@reduxjs/toolkit": "^1.8.1",
     "express": "^4.17.3",
     "file-loader": "^6.2.0",
     "react-redux": "^7.2.8",
