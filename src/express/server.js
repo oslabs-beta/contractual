@@ -1,26 +1,47 @@
-// (
-//   function() {
-//       "use strict";
-//       let express = require('express');
-//       let app = express();
-//       app.get('/', function(req, res) {
-//          res.send("Hello world! Contractual is here!");
-//       });
-//       let server = app.listen(3000, function () {
-//           console.log('Express server listening on port ' + server.address().port);
-//       });
-//       module.exports = app;
-//   }()
-// );
-
 const express = require("express");
-// const ffmpegPath = require("ffmpeg-static");
-// Stream = require("node-rtsp-stream");
+const app = express();
+const path = require("path");
 
-let app = express();
+// Routes Import
+const contractRouter = require(path.resolve(__dirname,"../src/express/routes/contract.js"
+));
 
-let server = app.listen(3000);
+const signupRouter = require(path.resolve(__dirname,"../src/express/routes/signup.js"))
+
+const loginRouter = require(path.resolve(__dirname,"../src/express/routes/login.js"))
+
+
+const PORT = 3000;
+
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+
+// Define Routes Handler
 
 app.get("/", function (req, res) {
   res.send("Server is ready!");
 });
+
+app.use("/contract", contractRouter);
+app.use("/signup", signupRouter )
+app.use("/login", loginRouter);
+
+
+// Unknown route handler
+app.use((req, res) => res.status(404).send("You are in the wrong place! 😡"));
+
+// Global error handler
+app.use((err, req, res, next) => {
+  const defaultErr = {
+    log: "Express error handler caught unknown middleware error",
+    status: 400,
+    message: { err: "An error occurred" },
+  };
+  const errorObj = Object.assign(defaultErr, err);
+  console.log(errorObj.log);
+  return res.status(errorObj.status).send(errorObj.message);
+});
+
+app.listen(PORT, () => console.log(`App listening on port ${PORT}`));
+
+module.exports = app;
