@@ -1,23 +1,20 @@
 body {
   margin: 0px;
+  font-family:Arial, Helvetica, sans-serif;
 }
+/* GENERAL STYLES */
 button {
-  background-color: white;
-  padding: 10px 20px;
-  border-radius: 10px;
-  border: none;
-  appearance: none;
-  font-size: 1.3rem;
-  box-shadow: 0px 8px 28px -6px rgba(24, 39, 75, 0.12),
-    0px 18px 88px -4px rgba(24, 39, 75, 0.14);
+  background-color: black;
+  color: white;
+  padding: 5px 10px;
+  border-radius: 5px;
+  border: 1px solid black;
+  font-size: 0.9rem;
   transition: all ease-in 0.1s;
-  cursor: pointer;
-  opacity: 0.9;
 }
 
 button:hover {
-  transform: scale(1.05);
-  opacity: 1;
+  cursor: pointer;
 }
 
 li {
@@ -37,10 +34,50 @@ a:hover {
   text-decoration: none;
 }
 
+.form-container {
+  padding: 2em;
+  width: 80%;
+  margin: 0 auto;
+}
 
+/* SIGN UP AND LOGIN FORM */
+
+.heading {
+  margin: 0 auto;
+}
+
+h1 {
+  text-align: center;
+}
+
+.form-login {
+  display: flex;
+  flex-direction: column;
+}
+
+.form-text-field {
+  padding: 0.5em;
+  width: 60%;
+  margin: 0.3em auto;
+  border-radius: 5px;
+}
+
+.form-login p {
+  width: 60%;
+  margin: 0 auto 0.2em;
+  color: red;
+  font-size: x-small;
+}
+
+.form-login button {
+  width: 30%;
+  margin: 0.3em auto;
+}
+
+/* NAVIGATION BAR */
 nav {
   display: flex;
-  background: black;
+  background-color: black;
   color: white;
 }
 
@@ -67,7 +104,7 @@ nav {
 .contract-container {
   display: flex;
 }
-.logo-wrapper {
+.wrapper-logo {
   display: flex;
   flex-grow: 1;
 }
@@ -76,4 +113,62 @@ nav {
   width: 30px;
   height: 30px;
   margin: 10px;
+}
+.wrapper-endpoint {
+  display: flex;
+}
+.form-endpoint {
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  height: 38px;
+}
+.request-type-selector {
+  display: block;
+  width: 100%;
+  padding-right: 10px;
+  font-size: 0.9rem;
+  text-align: center;
+  height: 38px;
+  border: none;
+  background-color:rgb(30, 30, 30);
+  color: white;
+}
+#endpoint-text {
+  display: flex;
+  flex-grow: 1;
+  height: 38px;
+  border: none;
+  padding: 0px 10px;
+  background-color:rgb(30, 30, 30);
+  color: white;
+  outline: none;
+  outline-offset: 0;
+  inset:none;
+  border-left: 1px solid gray;
+  border-right: 1px solid gray;
+}
+.btn-save {
+  display: block;
+  width: 100%;
+  border-radius: 0px;
+  border: none;
+  height: 38px;
+  background-color:rgb(30, 30, 30);
+  color: white;
+}
+.wrapper-selector {
+  display: inline-block;
+  width: 15%;
+}
+.wrapper-input {
+  display: flex;
+  width: 70%;
+}
+.wrapper-save {
+  display: inline-block;
+  width: 15%;
+}
+input:focus, select:focus {
+  outline: none;
 }

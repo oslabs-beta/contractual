@@ -24,13 +24,15 @@
     "@reduxjs/toolkit": "^1.8.1",
     "express": "^4.17.3",
     "file-loader": "^6.2.0",
+    "formik": "^2.2.9",
     "pg": "^8.7.3",
     "react-redux": "^7.2.8",
     "react-router-dom": "^6.3.0",
     "redux": "^4.1.2",
     "redux-devtools-extension": "^2.13.9",
     "redux-thunk": "^2.4.1",
-    "url-loader": "^4.1.1"
+    "url-loader": "^4.1.1",
+    "yup": "^0.32.11"
   },
   "devDependencies": {
     "@babel/core": "^7.17.8",
@@ -39,6 +41,7 @@
     "@types/react": "^17.0.43",
     "@types/react-dom": "^17.0.14",
     "@types/react-redux": "^7.1.23",
+    "@types/yup": "^0.29.13",
     "babel-loader": "^8.2.4",
     "concurrently": "^7.1.0",
     "css-loader": "^6.7.1",

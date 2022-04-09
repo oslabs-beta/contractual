@@ -7,32 +7,10 @@ import ContractBuilder from './containers/ContractBuilder';
 import FrontTester from './containers/FrontTester';
 import DocumentCreator from './containers/DocumentCreator';
 import BackTester from './containers/BackTester';
+import Login from './components/Login';
+import SignUp from './components/SignUp';
 
 
-// export default class App extends Component {
-//   constructor(props) {
-//     super(props);
-//   }
-
-//   render() {
-//     return (
-//       <div>
-//        <Router>
-//         <div className="App">
-//           <Nav/>
-//           <Routes>
-//             <Route path="/contractbuilder" element={<> <ContractBuilder/> </>}/>
-//             <Route path="/fronttester" element={<> <ContractBuilder/> </>}/>
-//             <Route path="/backtester" element={<> <ContractBuilder/> </>}/>
-//             <Route path="/documentcreator" element={<> <ContractBuilder/> </>}/>
-//           </Routes>
-//         </div>
-//       </Router>
-//        <CounterContainer />
-//       </div>
-//     )
-//   }
-// };
 
 export default function App () {
  
@@ -40,16 +18,22 @@ export default function App () {
     <div>
      <Router>
       <div className="App">
+        {/* <Routes>
+            <Route> path="/" element={<Login />} </Route>
+            <Route> path="/signup" element={<SignUp />} </Route>
+        </Routes> */}
         <Nav/>
         <Routes>
-          <Route path="/contractbuilder" element={<> <ContractBuilder/> </>}/>
-          <Route path="/fronttester" element={<> <FrontTester/> </>}/>
-          <Route path="/backtester" element={<> <BackTester/> </>}/>
-          <Route path="/documentcreator" element={<> <DocumentCreator/> </>}/>
+          <Route path="/contract" element={<ContractBuilder/>}/>
+          <Route path="/front" element={<> <FrontTester/> </>}/>
+          <Route path="/back" element={<> <BackTester/> </>}/>
+          <Route path="/document" element={<> <DocumentCreator/> </>}/>
         </Routes>
       </div>
     </Router>
-     <CounterContainer />
+    <SignUp/>
+    <Login/>
+    <CounterContainer/>
     </div>
   )
 };
