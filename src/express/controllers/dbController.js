@@ -2,11 +2,12 @@ const dbController = {};
 const db = require("../models/dbModel.js");
 
 dbController.addContract = async (req, res, next) => {
-  console.log("Hitttttt!!!!!");
+  // console.log("Hitttttt!!!!!");
   const content = req.body.content;
   const userId = req.body.userId;
-  console.log(content, userId);
-  // generate a token
+  // console.log(content, userId);
+  
+  // function to generate random token
   function makeid(length) {
     let result = "";
     const characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
@@ -19,6 +20,7 @@ dbController.addContract = async (req, res, next) => {
 
   let token;
 
+  // Check if token exists in DB
   while (true) {
     token = makeid(4);
     const checkTokenQuery = `
@@ -29,7 +31,7 @@ dbController.addContract = async (req, res, next) => {
     if (checkToken.rows.length == 0) break;
   }
 
-  // query database to get habits for target date
+  // Store content in database
   const params = [content, token, userId];
   console.log(params);
   const addContractQuery = `
