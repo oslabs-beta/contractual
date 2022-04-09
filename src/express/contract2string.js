@@ -25,8 +25,8 @@ console.log(contract2string({ name: "[]", age: "number" }));
 const res = string2constract(
   contract2string({ name: "[]", age: "number" })
 );
-for (let key in res) console.log(res[key])
 
+for (let key in res) console.log(res[key])
 
 const arraySymbol ="[] ";
 day: arraySymbol;
