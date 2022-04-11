@@ -9,9 +9,7 @@ import FrontTester from './containers/FrontTester';
 import DocumentCreator from './containers/DocumentCreator';
 import BackTester from './containers/BackTester';
 import Login from './components/Login';
-import SignUp from './components/SignUp';
-
-import LoginTW from './components/LoginTW';
+import Register from './components/Register';
 
 
 
@@ -21,13 +19,10 @@ export default function App () {
     <div>
      <Router>
       <div className="App">
-        {/* <Nav/> */}
-        {/* <Navbar/> */}
-        <LoginTW/>
         <Routes>
-          {/* <Route index element={<Login/>} /> */}
-          {/* <Route path="/" element={<Login/>} /> */}
-          <Route path="signup" element={<SignUp/>} />
+          <Route index element={<Login/>} />
+          <Route path="/" element={<Login/>} />
+          <Route path="register" element={<Register/>} />
           <Route path="nav" element={<Nav/>} >
             <Route index element={<ContractBuilder/>} />
             <Route path="contract" element={<ContractBuilder/>} />
@@ -38,9 +33,6 @@ export default function App () {
         </Routes>
       </div>
     </Router>
-    {/* <SignUp/>
-    <Login/> */}
-    {/* <CounterContainer/> */}
     </div>
   )
 };
