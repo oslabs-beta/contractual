@@ -11,6 +11,8 @@ import BackTester from './containers/BackTester';
 import Login from './components/Login';
 import SignUp from './components/SignUp';
 
+import LoginTW from './components/LoginTW';
+
 
 
 export default function App () {
@@ -20,9 +22,10 @@ export default function App () {
      <Router>
       <div className="App">
         {/* <Nav/> */}
-        <Navbar/>
+        {/* <Navbar/> */}
+        <LoginTW/>
         <Routes>
-          <Route index element={<Login/>} />
+          {/* <Route index element={<Login/>} /> */}
           {/* <Route path="/" element={<Login/>} /> */}
           <Route path="signup" element={<SignUp/>} />
           <Route path="nav" element={<Nav/>} >
