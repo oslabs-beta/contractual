@@ -1,4 +1,5 @@
-const db = require("../models/dbModel.js");
+const db = require('../models/dbModel.js');
+const bcrypt = require('bcrypt');
 
 const dbController = {};
 
@@ -17,7 +18,7 @@ dbController.getContent = async (req, res, next) => {
     return next();
   } catch (error) {
     return next({
-      log: "Express error in getContent middleware",
+      log: 'Express error in getContent middleware',
       status: 400,
       message: {
         err: `dbController.getContent: ERROR: ${error}`,
@@ -35,8 +36,8 @@ dbController.addContract = async (req, res, next) => {
 
   // function to generate random token
   function makeid(length) {
-    let result = "";
-    const characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+    let result = '';
+    const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
     const charactersLength = characters.length;
     for (let i = 0; i < length; i++) {
       result += characters.charAt(Math.floor(Math.random() * charactersLength));
@@ -82,7 +83,7 @@ dbController.checkUser = async (req, res, next) => {
     return next();
   } catch (error) {
     return next({
-      log: "Express error in checkUser middleware",
+      log: 'Express error in checkUser middleware',
       status: 400,
       message: {
         err: `dbController.checkUser: ERROR: ${error}`,
@@ -94,25 +95,53 @@ dbController.checkUser = async (req, res, next) => {
 // Sign up Route => save user info into users Table
 dbController.saveUser = async (req, res, next) => {
   const { name, email, password } = res.locals.newUser;
-  params = [name, email, password];
-  try {
-    const saveUserQuery = `
-        INSERT INTO users (name, email, password)
-        VALUES($1, $2, $3)
-        RETURNING *
-        `;
-    const newUser = await db.query(saveUserQuery, params);
-    // res.locals.userId = newUser.rows[0].id;
-    return next();
-  } catch (error) {
-    return next({
-      log: "Express error in saveUser middleware",
-      status: 400,
-      message: {
-        err: `dbController.saveUser: ERROR: ${error}`,
-      },
-    });
-  }
+  const saltRounds = 10;
+
+  bcrypt.genSalt(saltRounds, async (err, salt) => {
+    if (err) {
+      throw err;
+    } else {
+      bcrypt.hash(password, saltRounds, async (err, hash) => {
+        try {
+          params = [name, email, hash];
+          const saveUserQuery = `
+          INSERT INTO users (name, email, password)
+          VALUES($1, $2, $3)
+          RETURNING *
+          `;
+          const newUser = await db.query(saveUserQuery, params);
+          return next();
+        } catch (error) {
+          return next({
+            log: 'Express error in saveUser middleware',
+            status: 400,
+            message: {
+              err: `dbController.saveUser: ERROR: ${error}`,
+            },
+          });
+        }
+      });
+    }
+  });
+
+  // try {
+  //   const saveUserQuery = `
+  //       INSERT INTO users (name, email, password)
+  //       VALUES($1, $2, $3)
+  //       RETURNING *
+  //       `;
+  //   const newUser = await db.query(saveUserQuery, params);
+  //   // res.locals.userId = newUser.rows[0].id;
+  //   return next();
+  // } catch (error) {
+  //   return next({
+  //     log: 'Express error in saveUser middleware',
+  //     status: 400,
+  //     message: {
+  //       err: `dbController.saveUser: ERROR: ${error}`,
+  //     },
+  //   });
+  // }
 };
 
 module.exports = dbController;
