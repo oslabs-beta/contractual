@@ -86,7 +86,7 @@ dbController.checkUser = async (req, res, next) => {
     bcrypt.compare(password, userInfo.rows[0].password, (err, result) => {
       if (err) return err;
       console.log(result);
-      // Result return false if password doesn't match
+      // Result return false if plain pw doesn't match hashed pw
       if (!result) return res.status(404).json('Incorrect password');
       res.locals.name = userInfo.rows[0].name;
       return next();
