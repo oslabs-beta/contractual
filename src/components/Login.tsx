@@ -1,4 +1,5 @@
 import React from "react";
+import { Link, Navigate, useNavigate } from "react-router-dom";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import axios from "axios";
@@ -16,6 +17,8 @@ const initialValues: FormValues = {
 // console.log(formik.values);
 
 const Login = () => {
+const navigate = useNavigate();
+
   const formik = useFormik({
     initialValues,
     validationSchema: Yup.object({
@@ -29,10 +32,11 @@ const Login = () => {
           password: values.password,
           email: values.email,
         })
-        .then(function (response) {
+        .then((response) => {
           console.log(response);
+          navigate("nav");
         })
-        .catch(function (error) {
+        .catch((error) => {
           console.log(error);
         });
     },
@@ -78,6 +82,10 @@ const Login = () => {
           )}
           <button type="submit">Login</button>
         </form>
+      </section>
+      <section className="routes">
+        <p className="current-page">login</p>
+        <Link to="signup"><p className="route-link">sign up</p></Link>
       </section>
     </div>
   );
