@@ -11,10 +11,7 @@ import BackTester from './containers/BackTester';
 import Login from './components/Login';
 import Register from './components/Register';
 
-
-
-export default function App () {
- 
+export default function App() {
   return (
     <div>
      <Router>
@@ -34,5 +31,5 @@ export default function App () {
       </div>
     </Router>
     </div>
-  )
-};
+  );
+}
