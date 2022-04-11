@@ -1,27 +1,22 @@
 // ======== Contract to String ==========
 /*
-Input from frontend should be an object. It contains the following properties:
-1. request: boolean   if true, then this is a request; otherwise, this is a response
-2. type: string "POST"|"GET"  clarifying the type of the request
-3. endpoint: string  clarifying the endpoint of the request
-4. data: object  the data object stores all the name-type pairs
+Frontend saves all the contracts for a given application in an object. 
 
-An example of a request:
+In this object, each key-value pair is a contract. 
+
+1. The key is a string, containing the essential info about where this constract should be applied to.
+The key is in the format of "<Req|Res>@<POST|GET>@<endpoint>", e.g. "Req@POST@/login"
+
+2. The value is about the content of this contract, which is an object stores all the name-type pairs.
+e.g. {username: "string", age: "number"}
+
+The final contracts saved in the state looks like :
 {
-  request:true,
-  type: "POST",
-  endpoint: "/login",
-  data: {username: "string", age: "number"}
+  "Req@POST@/login": {username: "string", age: "number"},
+  "Res@POST@/login": {success: "boolean"}
+  "Req@POST@/habits": {habitname: "string", target: "number"},
+  "Res@POST@/habits": {currentHabits: "array"}
 }
-
-An example of a response:
-{
-  request:false,
-  type: "POST",
-  endpoint: "/login",
-  data: {success: "boolean"}
-}
-
 */
 
 function contract2string(contract) {
@@ -32,3 +27,4 @@ function string2constract(str) {
   return JSON.parse(str);
 }
 
+function checkInput(input, contracts, condition) {}
