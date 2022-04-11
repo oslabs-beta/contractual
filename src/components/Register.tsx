@@ -38,8 +38,9 @@ const Register = () => {
       console.log(values);
       axios
         .post("http://localhost:3000/register", {
-          password: values.password,
+          name: values.name,
           email: values.email,
+          password: values.password,
         })
         .then((response) => {
           console.log(response);

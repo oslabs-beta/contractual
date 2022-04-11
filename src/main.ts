@@ -20,14 +20,15 @@ function createWindow() {
   // Open the DevTools.
   win.webContents.openDevTools();
 
-  setTimeout(() => {
-    const win2 = new BrowserWindow({
-      width: 600,
-      height: 400,
-    });
-    win2.loadURL("http://localhost:3000/");
-    //win2.loadURL("https://google.com/");
-  }, 8000);
+//   setTimeout(() => {
+//     const win2 = new BrowserWindow({
+//       width: 600,
+//       height: 400,
+//     });
+//     win2.loadURL("http://localhost:3000/");
+//     //win2.loadURL("https://google.com/");
+//   }, 8000);
+
 }
 
 app.whenReady().then(() => {
