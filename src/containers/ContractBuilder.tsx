@@ -1,11 +1,13 @@
 
 import ContractEndpoint from '../components/ContractEndpoint';
+import ContractEditor from '../components/ContractEditor';
 
 export default function ContractBuilder() {
 
   return (
     <div>
       <ContractEndpoint/>
+      <ContractEditor/>
      {/* <div className="request-specification-container">
        <div className="request-method">Request type</div>
        <div>endpoint</div>

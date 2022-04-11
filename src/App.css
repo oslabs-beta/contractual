@@ -95,6 +95,10 @@ nav {
 }
 .nav-links a {
   margin: 0px 10px;
+  transition: all ease-in 0.1s;
+}
+.nav-links a:hover {
+  border-bottom: 1px solid white;
 }
 
 .request-specification-container {
@@ -131,22 +135,23 @@ nav {
   text-align: center;
   height: 38px;
   border: none;
-  background-color:rgb(30, 30, 30);
+  background-color:rgb(40, 40, 40);
   color: white;
 }
+
 #endpoint-text {
   display: flex;
   flex-grow: 1;
   height: 38px;
   border: none;
   padding: 0px 10px;
-  background-color:rgb(30, 30, 30);
+  background-color:rgb(40, 40, 40);
   color: white;
   outline: none;
   outline-offset: 0;
   inset:none;
-  border-left: 1px solid gray;
-  border-right: 1px solid gray;
+  border-left: 1px solid black;
+  border-right: 1px solid black;
 }
 .btn-save {
   display: block;
@@ -154,8 +159,11 @@ nav {
   border-radius: 0px;
   border: none;
   height: 38px;
-  background-color:rgb(30, 30, 30);
+  background-color:rgb(40, 40, 40);
   color: white;
+}
+.btn-save:hover {
+  background-color: #00CC96;
 }
 .wrapper-selector {
   display: inline-block;
@@ -171,4 +179,26 @@ nav {
 }
 input:focus, select:focus {
   outline: none;
+}
+select:hover {
+  cursor: pointer;
+}
+.wrapper-editor {
+  display: flex;
+}
+.wrapper-reqres {
+  width: 50%;
+  height: 100%;
+  background-color: black;
+  color: white;
+  padding: 10px;
+}
+.title-editor {
+  text-align: center;
+  margin: auto;
+  font-size: 0.8rem;
+  font-weight: 200;
+}
+#req-editor {
+  border-right: 1px solid rgb(40, 40, 40);
 }
