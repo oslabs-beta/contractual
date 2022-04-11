@@ -79,13 +79,15 @@ dbController.checkUser = async (req, res, next) => {
       WHERE email = $1;
     `;
     const userInfo = await db.query(verifyQuery, param);
+    // Verify if email already exists
     if (userInfo.rows[0] === undefined) {
-      return res.status(404).json('Incorrect username');
+      return res.status(404).json('Incorrect email');
     }
     bcrypt.compare(password, userInfo.rows[0].password, (err, result) => {
       if (err) return err;
-      if (!result) return res.status(404).json('Incorrect password');
       console.log(result);
+      // Result return false if password doesn't match
+      if (!result) return res.status(404).json('Incorrect password');
       res.locals.name = userInfo.rows[0].name;
       return next();
     });
@@ -98,7 +100,7 @@ dbController.checkUser = async (req, res, next) => {
       },
     });
   }
-
+  // Without b-crypt
   // const { email, password } = res.locals.loginUser;
   // const param = [email, password];
   // try {
@@ -125,11 +127,13 @@ dbController.saveUser = async (req, res, next) => {
   const { name, email, password } = res.locals.newUser;
   const saltRounds = 10;
 
+  // bcrypt magic, generates hashed password
   bcrypt.genSalt(saltRounds, async (err, salt) => {
     if (err) {
       throw err;
     } else {
       bcrypt.hash(password, saltRounds, async (err, hash) => {
+        if (err) return err;
         try {
           params = [name, email, hash];
           const saveUserQuery = `
@@ -151,7 +155,7 @@ dbController.saveUser = async (req, res, next) => {
       });
     }
   });
-
+  // Without b-crypt
   // try {
   //   const saveUserQuery = `
   //       INSERT INTO users (name, email, password)
