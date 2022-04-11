@@ -44,10 +44,11 @@ const Register = () => {
         })
         .then((response) => {
           console.log(response);
-          navigate("nav");
+          navigate("../nav");
         })
         .catch((error) => {
           console.log(error);
+          navigate("../")
         });
     },
   });
