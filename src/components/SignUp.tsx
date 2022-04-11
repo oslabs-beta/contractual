@@ -1,4 +1,5 @@
 import {useState, useEffect} from 'react';
+import { Link, Navigate, useNavigate } from 'react-router-dom';
 import { useFormik } from 'formik';
 import * as Yup from "yup"
 
@@ -77,6 +78,10 @@ const SignUp = () => {
           {formik.touched.password && formik.errors.password ? <p>{formik.errors.password}</p> : <p>&nbsp;</p> }
           <button type="submit">sign up</button>
         </form>
+      </section>
+      <section className="routes">
+        <Link to="/"><p className="route-link">login</p></Link>
+        <p className="current-page">sign up</p>
       </section>
     </div>
   )
