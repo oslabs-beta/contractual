@@ -1,32 +1,34 @@
+// ======== Contract to String ==========
 /*
-key_name    key_type
-________   number/string/boolean/array/obejct
+Input from frontend should be an object. It contains the following properties:
+1. request: boolean   if true, then this is a request; otherwise, this is a response
+2. type: string "POST"|"GET"  clarifying the type of the request
+3. endpoint: string  clarifying the endpoint of the request
+4. data: object  the data object stores all the name-type pairs
 
-days: []
+An example of a request:
+{
+  request:true,
+  type: "POST",
+  endpoint: "/login",
+  data: {username: "string", age: "number"}
+}
 
-days: array
+An example of a response:
+{
+  request:false,
+  type: "POST",
+  endpoint: "/login",
+  data: {success: "boolean"}
+}
 
-
-key_name:key_type
 */
 
-// {"name":"string", "age":"number"}
-// "{name:string,age:number}"
-
-function contract2string(contents) {
-  return JSON.stringify(contents);
+function contract2string(contract) {
+  return JSON.stringify(contract);
 }
 
 function string2constract(str) {
   return JSON.parse(str);
 }
 
-console.log(contract2string({ name: "[]", age: "number" }));
-const res = string2constract(
-  contract2string({ name: "[]", age: "number" })
-);
-
-for (let key in res) console.log(res[key])
-
-const arraySymbol ="[] ";
-day: arraySymbol;
