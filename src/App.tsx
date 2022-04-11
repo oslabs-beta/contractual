@@ -18,22 +18,24 @@ export default function App () {
     <div>
      <Router>
       <div className="App">
-        {/* <Routes>
-            <Route> path="/" element={<Login />} </Route>
-            <Route> path="/signup" element={<SignUp />} </Route>
-        </Routes> */}
-        <Nav/>
+        {/* <Nav/> */}
         <Routes>
-          <Route path="/contract" element={<ContractBuilder/>}/>
-          <Route path="/front" element={<> <FrontTester/> </>}/>
-          <Route path="/back" element={<> <BackTester/> </>}/>
-          <Route path="/document" element={<> <DocumentCreator/> </>}/>
+          <Route index element={<Login/>} />
+          {/* <Route path="/" element={<Login/>} /> */}
+          <Route path="signup" element={<SignUp/>} />
+          <Route path="nav" element={<Nav/>} >
+            <Route index element={<ContractBuilder/>} />
+            <Route path="contract" element={<ContractBuilder/>} />
+            <Route path="front" element={<> <FrontTester/> </>} />
+            <Route path="back" element={<> <BackTester/> </>} />
+            <Route path="document" element={<> <DocumentCreator/> </>} />
+          </Route>
         </Routes>
       </div>
     </Router>
-    <SignUp/>
-    <Login/>
-    <CounterContainer/>
+    {/* <SignUp/>
+    <Login/> */}
+    {/* <CounterContainer/> */}
     </div>
   )
 };

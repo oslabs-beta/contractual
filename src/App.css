@@ -74,6 +74,26 @@ h1 {
   margin: 0.3em auto;
 }
 
+.routes {
+  display: flex;
+  width: 30%;
+  margin: 0 auto;
+  justify-content: space-around;
+}
+
+.routes p {
+  color: black;
+}
+
+.route-link:hover {
+  color: blue;
+  transition: 200ms;
+}
+
+.current-page {
+  text-decoration: underline;
+}
+
 /* NAVIGATION BAR */
 nav {
   display: flex;
