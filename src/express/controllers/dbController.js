@@ -72,15 +72,23 @@ dbController.addContract = async (req, res, next) => {
 // Login Route => verify user info with users Table
 dbController.checkUser = async (req, res, next) => {
   const { email, password } = res.locals.loginUser;
-  const param = [email, password];
+  const param = [email];
   try {
-    const getUser = `
+    const verifyQuery = `
       SELECT * FROM users
-      WHERE email=$1 AND password=$2;
+      WHERE email = $1;
     `;
-    const user = await db.query(getUser, param);
-    res.locals.name = user.rows[0].name;
-    return next();
+    const userInfo = await db.query(verifyQuery, param);
+    if (userInfo.rows[0] === undefined) {
+      return res.status(404).json('Incorrect username');
+    }
+    bcrypt.compare(password, userInfo.rows[0].password, (err, result) => {
+      if (err) return err;
+      if (!result) return res.status(404).json('Incorrect password');
+      console.log(result);
+      res.locals.name = userInfo.rows[0].name;
+      return next();
+    });
   } catch (error) {
     return next({
       log: 'Express error in checkUser middleware',
@@ -90,6 +98,26 @@ dbController.checkUser = async (req, res, next) => {
       },
     });
   }
+
+  // const { email, password } = res.locals.loginUser;
+  // const param = [email, password];
+  // try {
+  //   const getUser = `
+  //     SELECT * FROM users
+  //     WHERE email=$1 AND password=$2;
+  //   `;
+  //   const user = await db.query(getUser, param);
+  //   res.locals.name = user.rows[0].name;
+  //   return next();
+  // } catch (error) {
+  //   return next({
+  //     log: 'Express error in checkUser middleware',
+  //     status: 400,
+  //     message: {
+  //       err: `dbController.checkUser: ERROR: ${error}`,
+  //     },
+  //   });
+  // }
 };
 
 // Sign up Route => save user info into users Table
