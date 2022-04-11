@@ -30,7 +30,7 @@ app.get('/', function (req, res) {
 });
 
 app.use('/contract', contractRouter);
-app.use('/signup', signupRouter);
+app.use('/register', signupRouter);
 app.use('/login', loginRouter);
 
 // Unknown route handler
