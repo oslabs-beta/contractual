@@ -3,6 +3,7 @@ import { MemoryRouter as Router, Routes, Route } from 'react-router-dom';
 import './App.css';
 import CounterContainer from './containers/CounterContainer';
 import Nav from './components/Nav';
+import Navbar from './components/Navbar';
 import ContractBuilder from './containers/ContractBuilder';
 import FrontTester from './containers/FrontTester';
 import DocumentCreator from './containers/DocumentCreator';
@@ -19,6 +20,7 @@ export default function App () {
      <Router>
       <div className="App">
         {/* <Nav/> */}
+        <Navbar/>
         <Routes>
           <Route index element={<Login/>} />
           {/* <Route path="/" element={<Login/>} /> */}
