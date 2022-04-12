@@ -33,7 +33,7 @@ const ContractEndpoint: React.FC<ContractEndpointProps> = ({ reqMethod, setReqMe
   return (
     <div>
       <div className='grid grid-cols-12 gap-1 px-3 py-3 grid-flow-col'>
-        <div className="col-span-2 sm:col-span-22 lg:col-span-1">
+        <div className="col-span-3 sm:col-span-2 md:col-span-2 lg:col-span-1">
           <select
             id="reqMethod"
             name="reqMethod"
@@ -47,18 +47,18 @@ const ContractEndpoint: React.FC<ContractEndpointProps> = ({ reqMethod, setReqMe
             <option value="DELETE" >DELETE</option>
           </select>
         </div>
-        {/* <button onClick={() => {saveContract(reqMethod, endpoint)}}>check state of request type</button> */}
-        <div className="col-span-9 sm:col-span-9 lg:col-span-10">
+        {/* <button onClick={() => {console.log(reqMethod)}}>check state of request type</button> */}
+        <div className="col-span-7 sm:col-span-8 md:col-span-8 lg:col-span-9">
           <input
             type="endpoint"
             name="endpoint"
             id="endpoint"
             value={endpoint}
             onChange={(e) => {setEndpoint(e)}}
-            className="focus:ring-indigo-500 mt-1 focus:border-indigo-500 block w-full shadow-sm sm:text-md border-gray-300 rounded-md px-3 py-2"
+            className="h-[2.4rem] mt-1 block w-full shadow-sm sm:text-md border-gray-300 rounded-md px-3 py-2"
           />
         </div>
-        <div className="col-span-1 sm:col-span-1 text-right">
+        <div className="col-span-2 sm:col-span-2 md:col-span-2 lg:col-span-3 text-right">
           <button
             className="inline-flex w-full justify-center mt-1 py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
             onClick={() => {saveContract(reqMethod, endpoint)}}

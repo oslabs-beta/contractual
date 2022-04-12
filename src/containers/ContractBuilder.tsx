@@ -24,7 +24,7 @@ export default function ContractBuilder() {
 
   
   return (
-    <div className='bg-gray-900'>
+    <div className='bg-gray-900 h-screen'>
       <ContractEndpoint reqMethod={reqMethod} setReqMethod={handleSetReqMethod} endpoint={endpoint} setEndpoint={handleSetEndpoint}/>
       <ContractEditor reqMethod={reqMethod}/>
      {/* <div className="request-specification-container">
