@@ -1,6 +1,9 @@
 import {useState, useEffect} from 'react';
+import { Link, Navigate, useNavigate } from 'react-router-dom';
 import { useFormik } from 'formik';
 import * as Yup from "yup"
+import axios from "axios";
+
 
 type FormValues = {
   name: string,
@@ -78,10 +81,12 @@ const SignUp = () => {
           <button type="submit">sign up</button>
         </form>
       </section>
+      <section className="routes">
+        <Link to="/"><p className="route-link">login</p></Link>
+        <p className="current-page">sign up</p>
+      </section>
     </div>
   )
-
 };
 
-
-export default SignUp;
+// export default SignUp;

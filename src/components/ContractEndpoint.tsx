@@ -14,7 +14,7 @@ export default function ContractEndpoint() {
                 </select>
             </div>
             <div className='wrapper-input'>
-                <input type='text' id='endpoint-text' name='endpoint'></input>
+                <input type='text' id='endpoint-text' name='endpoint' placeholder='Enter request URL'></input>
             </div>
             <div className='wrapper-save'>
                 <button className='btn-save'>Save</button>
