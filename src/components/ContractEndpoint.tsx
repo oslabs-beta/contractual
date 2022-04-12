@@ -2,27 +2,31 @@ import React, { useState } from 'react';
 import { Fragment } from 'react'
 import { Menu, Transition } from '@headlessui/react'
 import { ChevronDownIcon } from '@heroicons/react/solid'
+import { string } from 'yup';
 function classNames(...classes) {
   return classes.filter(Boolean).join(' ')
 }
 
 interface ContractEndpointProps{
   reqMethod: string,
-  setReqMethod: (text: string) => void
+  setReqMethod: (e: any) => void,
+  endpoint: string,
+  setEndpoint: (e: any) => void
 }
 
-const ContractEndpoint: React.FC<ContractEndpointProps> = (props): JSX.Element => {
 
-// export default function ContractEndpoint(props) {
 
-  // const [reqMethod, setReqMethod] = useState('GET')
-  // const [endpoint, setEndpoint] = useState('')
+const ContractEndpoint: React.FC<ContractEndpointProps> = ({ reqMethod, setReqMethod, endpoint, setEndpoint }): JSX.Element => {
 
-  // const dropDownChange = (e: any): void => {
-  //   const method:string = e.target.value
-  //   console.log("method changed: ", method)
-  //   setReqMethod(method);
-  // }
+  // save contract needs to be a reducer function adding to our store object
+  // would also pass in req body and res body
+  // concat our 'newContract' object to the store state?
+  const saveContract = (reqMethod: string, endpoint: string): void => {
+    const newContract = {}
+    newContract[`Req@${reqMethod}@${endpoint}`] = {email: 'email@gmail.com', password: 'password'}
+    newContract[`Res@${reqMethod}@${endpoint}`] = { username: 'MyUsername'}
+    console.log(newContract);
+  }
 
   return (
     <div>
@@ -31,8 +35,8 @@ const ContractEndpoint: React.FC<ContractEndpointProps> = (props): JSX.Element =
           <select
             id="reqMethod"
             name="reqMethod"
-            onChange={(e) => {console.log(e)}}
-            className="mt-1 block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none sm:text-sm text-sm"
+            onChange={(e) => {setReqMethod(e)}}
+            className="mt-1 block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
           >
             <option value="GET" >GET</option>
             <option value="POST" >POST</option>
@@ -47,12 +51,15 @@ const ContractEndpoint: React.FC<ContractEndpointProps> = (props): JSX.Element =
             type="endpoint"
             name="endpoint"
             id="endpoint"
+            value={endpoint}
+            onChange={(e) => {setEndpoint(e)}}
             className="h-[2.4rem] mt-1 block w-full shadow-sm sm:text-md border-gray-300 rounded-md px-3 py-2"
           />
         </div>
         <div className="col-span-2 sm:col-span-2 md:col-span-2 lg:col-span-3 text-right">
           <button
-            className="inline-flex w-full justify-center mt-1 py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 "
+            className="inline-flex w-full justify-center mt-1 py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+            onClick={() => {saveContract(reqMethod, endpoint)}}
           >
             Save
           </button>
