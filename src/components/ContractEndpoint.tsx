@@ -27,12 +27,12 @@ const ContractEndpoint: React.FC<ContractEndpointProps> = (props): JSX.Element =
   return (
     <div>
       <div className='grid grid-cols-12 gap-1 px-3 py-3 grid-flow-col'>
-        <div className="col-span-2 sm:col-span-22 lg:col-span-1">
+        <div className="col-span-3 sm:col-span-2 md:col-span-2 lg:col-span-1">
           <select
             id="reqMethod"
             name="reqMethod"
             onChange={(e) => {console.log(e)}}
-            className="mt-1 block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+            className="mt-1 block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none sm:text-sm text-sm"
           >
             <option value="GET" >GET</option>
             <option value="POST" >POST</option>
@@ -42,17 +42,17 @@ const ContractEndpoint: React.FC<ContractEndpointProps> = (props): JSX.Element =
           </select>
         </div>
         {/* <button onClick={() => {console.log(reqMethod)}}>check state of request type</button> */}
-        <div className="col-span-9 sm:col-span-9 lg:col-span-10">
+        <div className="col-span-7 sm:col-span-8 md:col-span-8 lg:col-span-9">
           <input
             type="endpoint"
             name="endpoint"
             id="endpoint"
-            className="focus:ring-indigo-500 mt-1 focus:border-indigo-500 block w-full shadow-sm sm:text-md border-gray-300 rounded-md px-3 py-2"
+            className="h-[2.4rem] mt-1 block w-full shadow-sm sm:text-md border-gray-300 rounded-md px-3 py-2"
           />
         </div>
-        <div className="col-span-1 sm:col-span-1 text-right">
+        <div className="col-span-2 sm:col-span-2 md:col-span-2 lg:col-span-3 text-right">
           <button
-            className="inline-flex w-full justify-center mt-1 py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+            className="inline-flex w-full justify-center mt-1 py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 "
           >
             Save
           </button>

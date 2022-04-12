@@ -11,7 +11,7 @@ export default function ContractBuilder() {
 
   // const [reqBody, setReqBody] = useState({})
   return (
-    <div className='bg-gray-900'>
+    <div className='bg-gray-900 h-screen'>
       <ContractEndpoint reqMethod={reqMethod} setReqMethod={setReqMethod}/>
       <ContractEditor reqMethod={reqMethod}/>
      {/* <div className="request-specification-container">
