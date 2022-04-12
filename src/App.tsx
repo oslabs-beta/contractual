@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import { MemoryRouter as Router, Routes, Route } from 'react-router-dom';
 import './App.css';
 import CounterContainer from './containers/CounterContainer';
-import Nav from './components/Nav';
 import Navbar from './components/Navbar';
 import ContractBuilder from './containers/ContractBuilder';
 import FrontTester from './containers/FrontTester';
@@ -20,7 +19,7 @@ export default function App() {
           <Route index element={<Login/>} />
           <Route path="/" element={<Login/>} />
           <Route path="register" element={<Register/>} />
-          <Route path="nav" element={<Nav/>} >
+          <Route path="navbar" element={<Navbar/>} >
             <Route index element={<ContractBuilder/>} />
             <Route path="contract" element={<ContractBuilder/>} />
             <Route path="front" element={<> <FrontTester/> </>} />
