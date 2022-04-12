@@ -22,13 +22,13 @@ export default function App () {
      <Router>
       <div className="App">
         {/* <Nav/> */}
-        <Navbar/>
+        {/* <Navbar/> */}
         <LoginTW/>
         <Routes>
           {/* <Route index element={<Login/>} /> */}
           {/* <Route path="/" element={<Login/>} /> */}
           <Route path="signup" element={<SignUp/>} />
-          <Route path="nav" element={<Nav/>} >
+          <Route path="navbar" element={<Navbar/>} >
             <Route index element={<ContractBuilder/>} />
             <Route path="contract" element={<ContractBuilder/>} />
             <Route path="front" element={<> <FrontTester/> </>} />

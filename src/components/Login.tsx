@@ -34,7 +34,7 @@ const navigate = useNavigate();
         })
         .then((response) => {
           console.log(response);
-          navigate("nav");
+          navigate("navbar");
         })
         .catch((error) => {
           console.log(error);

@@ -44,6 +44,7 @@ export default function Navbar() {
                         Documentation
                     </Link>
                   </div>
+                  <Outlet/>
                 </div>
               </div>
               <div className="hidden sm:ml-6 sm:block">
@@ -214,7 +215,6 @@ export default function Navbar() {
               </div>
             </div>
           </Disclosure.Panel>
-          <Outlet />
         </>
       )}
     </Disclosure>
