@@ -23,8 +23,8 @@ const ContractEndpoint: React.FC<ContractEndpointProps> = ({ reqMethod, setReqMe
   // concat our 'newContract' object to the store state?
   const saveContract = (reqMethod: string, endpoint: string): void => {
     const newContract = {}
-    newContract[`Req@${reqMethod}@${endpoint}`] = JSON.stringify({email: 'email@gmail.com', password: 'password'}) // should pass in request object here
-    newContract[`Res@${reqMethod}@${endpoint}`] = JSON.stringify({ username: 'MyUsername'}) // should pass in response object here
+    newContract[`Req@${reqMethod}@${endpoint}`] = {email: 'email@gmail.com', password: 'password'} // should pass in request object here
+    newContract[`Res@${reqMethod}@${endpoint}`] = {username: 'MyUsername'} // should pass in response object here
     console.log(newContract);
     // newContract can be the payload of an action
     // contract.concat(newContract) can be the reducer function
