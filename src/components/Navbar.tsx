@@ -1,15 +1,24 @@
 /* This example requires Tailwind CSS v2.0+ */
-import { Fragment } from 'react'
+import React, { Fragment } from 'react'
 import { Disclosure, Menu, Transition } from '@headlessui/react'
-import { BellIcon, MenuIcon, XIcon } from '@heroicons/react/outline'
+import { UserIcon, BellIcon, MenuIcon, XIcon } from '@heroicons/react/outline'
+import { Link, Outlet, useLocation } from 'react-router-dom';
 
 function classNames(...classes) {
   return classes.filter(Boolean).join(' ')
 }
 
 export default function Navbar() {
+
+  const location = useLocation();
+  let currentStyle = "bg-gray-900 text-white px-3 py-2 rounded-md text-sm font-medium";
+  let defaultStyle = "text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium";
+
+  console.log('location: ' + location.pathname);
+
   return (
-    <Disclosure as="nav" className="bg-gray-800">
+    <>
+    <Disclosure as="nav" className="bg-gray-800 sticky top-0 z-50">
       {({ open }) => (
         <>
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -18,60 +27,51 @@ export default function Navbar() {
                 <div className="flex-shrink-0">
                   <img
                     className="block lg:hidden h-8 w-auto"
-                    src="https://tailwindui.com/img/logos/workflow-mark-indigo-500.svg"
-                    alt="Workflow"
+                    src="../assets/img/icon-white.png"
+                    alt="Contractual"
                   />
                   <img
                     className="hidden lg:block h-8 w-auto"
-                    src="https://tailwindui.com/img/logos/workflow-logo-indigo-500-mark-white-text.svg"
-                    alt="Workflow"
+                    src="../assets/img/icon-white.png"
+                    alt="Contractual"
                   />
                 </div>
                 <div className="hidden sm:block sm:ml-6">
                   <div className="flex space-x-4">
                     {/* Current: "bg-gray-900 text-white", Default: "text-gray-300 hover:bg-gray-700 hover:text-white" */}
-                    <a href="#" className="bg-gray-900 text-white px-3 py-2 rounded-md text-sm font-medium">
-                      Dashboard
-                    </a>
-                    <a
-                      href="#"
-                      className="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium"
-                    >
-                      Team
-                    </a>
-                    <a
-                      href="#"
-                      className="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium"
-                    >
-                      Projects
-                    </a>
-                    <a
-                      href="#"
-                      className="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium"
-                    >
-                      Calendar
-                    </a>
+                    <Link to='contract' className={location.pathname === '/navbar' || location.pathname === '/navbar/contract' ? currentStyle : defaultStyle}>
+                      Contract
+                    </Link>
+                    <Link to='front' className={location.pathname === '/navbar/front' ? currentStyle : defaultStyle}>
+                        Frontend
+                    </Link>
+                    <Link to='back' className={location.pathname === '/navbar/back' ? currentStyle : defaultStyle}>
+                        Backend
+                    </Link>
+                    <Link to='document' className={location.pathname === '/navbar/document' ? currentStyle : defaultStyle}>
+                        Documentation
+                    </Link>
                   </div>
                 </div>
               </div>
               <div className="hidden sm:ml-6 sm:block">
                 <div className="flex items-center">
-                  <button
+                  {/* <button
                     type="button"
                     className="bg-gray-800 p-1 rounded-full text-gray-400 hover:text-white focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-800 focus:ring-white"
                   >
                     <span className="sr-only">View notifications</span>
                     <BellIcon className="h-6 w-6" aria-hidden="true" />
-                  </button>
+                  </button> */}
 
                   {/* Profile dropdown */}
                   <Menu as="div" className="ml-3 relative">
                     <div>
-                      <Menu.Button className="bg-gray-800 flex text-sm rounded-full focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-800 focus:ring-white">
+                      <Menu.Button className="bg-gray-800 flex text-sm rounded-full focus:outline-none">
                         <span className="sr-only">Open user menu</span>
                         <img
                           className="h-8 w-8 rounded-full"
-                          src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
+                          src="../assets/img/icon-user.png"
                           alt=""
                         />
                       </Menu.Button>
@@ -86,7 +86,7 @@ export default function Navbar() {
                       leaveTo="transform opacity-0 scale-95"
                     >
                       <Menu.Items className="origin-top-right absolute right-0 mt-2 w-48 rounded-md shadow-lg py-1 bg-white ring-1 ring-black ring-opacity-5 focus:outline-none">
-                        <Menu.Item>
+                        {/* <Menu.Item>
                           {({ active }) => (
                             <a
                               href="#"
@@ -98,7 +98,7 @@ export default function Navbar() {
                               Your Profile
                             </a>
                           )}
-                        </Menu.Item>
+                        </Menu.Item> */}
                         <Menu.Item>
                           {({ active }) => (
                             <a
@@ -152,28 +152,28 @@ export default function Navbar() {
                 href="#"
                 className="bg-gray-900 text-white block px-3 py-2 rounded-md text-base font-medium"
               >
-                Dashboard
+                Contract
               </Disclosure.Button>
               <Disclosure.Button
                 as="a"
                 href="#"
                 className="text-gray-300 hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium"
               >
-                Team
+                Frontend
               </Disclosure.Button>
               <Disclosure.Button
                 as="a"
                 href="#"
                 className="text-gray-300 hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium"
               >
-                Projects
+                Backend
               </Disclosure.Button>
               <Disclosure.Button
                 as="a"
                 href="#"
                 className="text-gray-300 hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium"
               >
-                Calendar
+                Documentation
               </Disclosure.Button>
             </div>
             <div className="pt-4 pb-3 border-t border-gray-700">
@@ -181,30 +181,30 @@ export default function Navbar() {
                 <div className="flex-shrink-0">
                   <img
                     className="h-10 w-10 rounded-full"
-                    src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
+                    src="../assets/img/icon-user.png"
                     alt=""
                   />
                 </div>
                 <div className="ml-3">
-                  <div className="text-base font-medium text-white">Tom Cook</div>
-                  <div className="text-sm font-medium text-gray-400">tom@example.com</div>
+                  <div className="text-base font-medium text-white">Yankun Song</div>
+                  <div className="text-sm font-medium text-gray-400">yankun@gmail.com</div>
                 </div>
-                <button
+                {/* <button
                   type="button"
                   className="ml-auto flex-shrink-0 bg-gray-800 p-1 rounded-full text-gray-400 hover:text-white focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-800 focus:ring-white"
                 >
                   <span className="sr-only">View notifications</span>
                   <BellIcon className="h-6 w-6" aria-hidden="true" />
-                </button>
+                </button> */}
               </div>
               <div className="mt-3 px-2 space-y-1">
-                <Disclosure.Button
+                {/* <Disclosure.Button
                   as="a"
                   href="#"
                   className="block px-3 py-2 rounded-md text-base font-medium text-gray-400 hover:text-white hover:bg-gray-700"
                 >
                   Your Profile
-                </Disclosure.Button>
+                </Disclosure.Button> */}
                 <Disclosure.Button
                   as="a"
                   href="#"
@@ -225,5 +225,7 @@ export default function Navbar() {
         </>
       )}
     </Disclosure>
+    <Outlet/>
+    </>
   )
 }
