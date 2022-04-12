@@ -2,15 +2,23 @@
 import React, { Fragment } from 'react'
 import { Disclosure, Menu, Transition } from '@headlessui/react'
 import { UserIcon, BellIcon, MenuIcon, XIcon } from '@heroicons/react/outline'
-import { Link, Outlet } from 'react-router-dom';
+import { Link, Outlet, useLocation } from 'react-router-dom';
 
 function classNames(...classes) {
   return classes.filter(Boolean).join(' ')
 }
 
 export default function Navbar() {
+
+  const location = useLocation();
+  let currentStyle = "bg-gray-900 text-white px-3 py-2 rounded-md text-sm font-medium";
+  let defaultStyle = "text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium";
+
+  console.log('location: ' + location.pathname);
+
   return (
-    <Disclosure as="nav" className="bg-gray-800">
+    <>
+    <Disclosure as="nav" className="bg-gray-800 sticky top-0 z-50">
       {({ open }) => (
         <>
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -31,20 +39,19 @@ export default function Navbar() {
                 <div className="hidden sm:block sm:ml-6">
                   <div className="flex space-x-4">
                     {/* Current: "bg-gray-900 text-white", Default: "text-gray-300 hover:bg-gray-700 hover:text-white" */}
-                    <Link to='contract' className="bg-gray-900 text-white px-3 py-2 rounded-md text-sm font-medium">
+                    <Link to='contract' className={location.pathname === '/navbar' || location.pathname === '/navbar/contract' ? currentStyle : defaultStyle}>
                       Contract
                     </Link>
-                    <Link to='front' className="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium">
+                    <Link to='front' className={location.pathname === '/navbar/front' ? currentStyle : defaultStyle}>
                         Frontend
                     </Link>
-                    <Link to='back' className="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium">
+                    <Link to='back' className={location.pathname === '/navbar/back' ? currentStyle : defaultStyle}>
                         Backend
                     </Link>
-                    <Link to='document' className="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium">
+                    <Link to='document' className={location.pathname === '/navbar/document' ? currentStyle : defaultStyle}>
                         Documentation
                     </Link>
                   </div>
-                  <Outlet/>
                 </div>
               </div>
               <div className="hidden sm:ml-6 sm:block">
@@ -218,5 +225,7 @@ export default function Navbar() {
         </>
       )}
     </Disclosure>
+    <Outlet/>
+    </>
   )
 }
