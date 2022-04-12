@@ -60,9 +60,9 @@ const mockResponse = {
   name: randomize.fullName(),
   isHuman: randomize.boolean(),
   email: randomize.email(),
-  age: randomize.integer(),
+  age: randomize.number(),
   country: randomize.country(),
-  favoriteAnimal: randomize.arrGen(randomize.animal),
+  favoriteAnimal: randomize.array(randomize.animal),
   quote: randomize.sentence(),
 };
 

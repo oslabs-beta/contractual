@@ -3,7 +3,7 @@ const chance = require('chance').Chance();
 // Basic Usage
 const string = () => chance.string(); // length, pool, alpha, casing, symbols
 const letter = () => chance.letter(); // casing: lower
-const integer = () => chance.integer({ min: 0, max: 100 });
+const number = () => chance.integer({ min: 0, max: 100 });
 const floating = () => chance.floating({ min: 0, max: 100 }); // min, max, fixed
 const boolean = () => chance.bool();
 const falsy = () => chance.falsy();
@@ -31,15 +31,15 @@ const weekday = () => chance.weekday();
 const timestamp = () => chance.timestamp();
 
 // Array Generator
-const arrGen = (content) => Array.from({ length: 3 }, content);
+const array = (content) => Array.from({ length: 3 }, content);
 
 const mockResponse = {
   name: fullName(),
   isHuman: boolean(),
   email: email(),
-  age: integer(),
+  age: number(),
   country: country(),
-  favoriteAnimal: arrGen(animal),
+  favoriteAnimal: array(animal),
   quote: sentence(),
 };
 
