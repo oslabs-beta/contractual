@@ -15,7 +15,7 @@ The final contracts saved in the state looks like :
   "Req@POST@/login": {username: "string", age: "number"},
   "Res@POST@/login": {success: "boolean"},
   "Req@POST@/habits": {habitname: "string", target: "number"},
-  "Res@POST@/habits": {currentHabits: "array"}
+  "Res@POST@/habits": {currentHabits: "array-any-any"}
 }
 To extract a specific contract from the whole contracts, just do `contracts["Res@POST@/habits"] `
 */
@@ -52,8 +52,9 @@ function checkInput(input, contracts, condition) {
     error: [],
   };
 
-  // check each field
   const contract = contracts[condition];
+
+  // check each field
   for (let key in contract) {
     // key name doesn't match, record this error and continue
     if (input[key] === undefined) {
@@ -64,12 +65,50 @@ function checkInput(input, contracts, condition) {
     // key name matches, then check the value type
     const targetType = contract[key];
     const value = input[key];
-    const match = typeCheck[targetType](value);
-    if (!match) {
-      res.pass = false;
-      res.error.push(`type of "${key}" do not match! It should be ${targetType}!`);
+    // if is an array
+    if (targetType.slice(0, 3) == "arr") {
+      // make sure it is an array
+      if (!Array.isArray(value)) {
+        res.pass = false;
+        res.error.push(`type of "${key}" do not match! It should be an array!`);
+        continue;
+      }
+      [elementType, targetLength] = targetType.split("-").slice(1);
+      // test element type
+      if (elementType !== "any") {
+        for (let el of value) {
+          const match = typeCheck[elementType](el);
+          if (!match) {
+            res.pass = false;
+            res.error.push(
+              `type of array elements for "${key}" do not match! It should only contain "${elementType}"!`
+            );
+          }
+          break;
+        }
+      }
+      // test length
+      if (targetLength !== "any") {
+        if (value.length != targetLength) {
+          res.pass = false;
+          res.error.push(
+            `array length for "${key}" do not match! It should be ${targetLength}!`
+          );
+        }
+      }
+    }
+    // not an array
+    else {
+      const match = typeCheck[targetType](value);
+      if (!match) {
+        res.pass = false;
+        res.error.push(
+          `type of "${key}" do not match! It should be ${targetType}!`
+        );
+      }
     }
   }
+
   return res;
 }
 
