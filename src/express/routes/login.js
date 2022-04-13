@@ -11,7 +11,7 @@ router.post(
   dbController.checkUser,
   (req, res) => {
     // frontend receives and store userId in redux
-    return res.status(200).json(`Hello, ${res.locals.name}!`);
+    return res.status(200).json(res.locals.loginData);
   }
 );
 module.exports = router;

@@ -28,18 +28,10 @@ INSERT INTO users ( email, name, password)
 VALUES('yankun@gmail.com', 'Yankun', '1234')
 
 INSERT INTO contracts ( title, content, token, user_id)
-VALUES('Contractual', '{
-  "Req@POST@/login": {
-    "username": "string",
-    "age": "number"
-  },
-  "Res@POST@/login": {
-    "success": "boolean"
-  }
-}' , 'A1B2', 1)
+VALUES('Contractual', '{"Req@POST@/login": {"username": "string","age": "number"},"Res@POST@/login": {"success": "boolean"}}' , 'A1B2', 1)
 
 INSERT INTO contracts ( title, content, token, user_id)
-VALUES('Habitual', '{Req@POST@/:id: {userid: number},Res@POST@/calendar: {calendar: array}}' , 'XY69', 1)
+VALUES('Habitual', '{"Req@POST@/habits": {"habitname": "string","target": "number"},"Res@POST@/habits": {"currentHabits": "array"}}' , 'XY69', 1)
 
 INSERT INTO users_contracts (user_id, contract_id, premission)
 VALUES(1,1, true)
