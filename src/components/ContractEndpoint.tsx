@@ -3,6 +3,10 @@ import { Fragment } from 'react'
 import { Menu, Transition } from '@headlessui/react'
 import { ChevronDownIcon } from '@heroicons/react/solid'
 import { string } from 'yup';
+import { useDispatch, useSelector } from 'react-redux';
+import { RootState } from '../state/store';
+import { addToContract } from '../state/features/contractSlice';
+
 function classNames(...classes) {
   return classes.filter(Boolean).join(' ')
 }
@@ -18,6 +22,8 @@ interface ContractEndpointProps{
 
 const ContractEndpoint: React.FC<ContractEndpointProps> = ({ reqMethod, setReqMethod, endpoint, setEndpoint }): JSX.Element => {
 
+  const { currentContract } = useSelector((state: RootState)=> state.contract);
+  const dispatch = useDispatch()
   // save contract needs to be a reducer function adding to our store object
   // would also pass in req body and res body
   // concat our 'newContract' object to the store state?
@@ -26,6 +32,7 @@ const ContractEndpoint: React.FC<ContractEndpointProps> = ({ reqMethod, setReqMe
     newContract[`Req@${reqMethod}@${endpoint}`] = {email: 'email@gmail.com', password: 'password'} // should pass in request object here
     newContract[`Res@${reqMethod}@${endpoint}`] = {username: 'MyUsername'} // should pass in response object here
     console.log(newContract);
+    dispatch(addToContract(newContract))
     // newContract can be the payload of an action
     // contract.concat(newContract) can be the reducer function
   }
@@ -47,7 +54,7 @@ const ContractEndpoint: React.FC<ContractEndpointProps> = ({ reqMethod, setReqMe
             <option value="DELETE" >DELETE</option>
           </select>
         </div>
-        {/* <button onClick={() => {console.log(reqMethod)}}>check state of request type</button> */}
+        <button onClick={() => {console.log(currentContract)}}>check state of currentContract</button>
         <div className="col-span-7 sm:col-span-8 md:col-span-8 lg:col-span-9">
           <input
             type="endpoint"

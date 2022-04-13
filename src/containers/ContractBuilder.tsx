@@ -1,5 +1,4 @@
 import { useState } from 'react'
-import Navbar from '../components/Navbar';
 import ContractEndpoint from '../components/ContractEndpoint';
 import ContractEditor from '../components/ContractEditor';
 

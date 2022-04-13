@@ -1,16 +1,30 @@
 import { createSlice, createAsyncThunk, PayloadAction } from "@reduxjs/toolkit";
-import counterSlice from "./counterSlice";
 
-type Contract = {};
+
+type Contracts = {
+  [key: string]: string
+}
+
+type CurrentContract = {
+  [key: string]: {}
+};
 
 type ContractState = {
-  contractToken: string;
-  contract: Contract
+  userName: string,
+  userID: number,
+  contracts: Contracts,
+  owner: string[],
+  currentContractToken: string;
+  currentContract: CurrentContract
 };
 
 const initialState: ContractState = {
-  contractToken: '',
-  contract: {}
+  userName: '',
+  userID: 0,
+  contracts: {},
+  owner: [],
+  currentContractToken: '',
+  currentContract: {}
 };
 
 export const contractSlice = createSlice({
@@ -18,18 +32,20 @@ export const contractSlice = createSlice({
   initialState,
   reducers: {
     getContract: (state, action: PayloadAction<string>) => {
-      state.contractToken = action.payload;
-      // axios request here? grab contract based on passed in token
+      state.currentContractToken = action.payload;
       // state.contract = response data?
+      // this may need to be in extra reducers after building asyncThunk function
     },
-  //   addToContract: (state, action), 
+    addToContract: (state, action: PayloadAction<CurrentContract>) => {
+      state.currentContract = {...state.currentContract, ...action.payload}
+    }, 
   //   deleteFromContract:,
   },
-  // async reducers go in extra reducers
-  // axios request here?
-  // extraReducers: 
+  // extraReducers:
+  // this is where you can respond to actions from other slices or asyncThunk functions
+  // use builder syntax
 });
 
-export const { getContract } = contractSlice.actions;
+export const { getContract, addToContract } = contractSlice.actions;
 
 export default contractSlice.reducer;
