@@ -58,6 +58,8 @@ const ContractEndpoint: React.FC<ContractEndpointProps> = ({ reqMethod, setReqMe
   // concat our 'newContract' object to the store state?
   const saveContract = (reqMethod: string, endpoint: string, reqKey: string, resKey: string, reqValueType: string, resValueType: string): void => {
     // name of contract could be argument
+    // build reqBody
+    // build resbody
     const newContract = {}
     newContract[`Req@${reqMethod}@${endpoint}`] = {[reqKey]: reqValueType} // should pass in request object here
     newContract[`Res@${reqMethod}@${endpoint}`] = {[resKey]: resValueType} // should pass in response object here
