@@ -1,14 +1,42 @@
 /* This example requires Tailwind CSS v2.0+ */
-import React, { Fragment } from 'react'
-import { Disclosure, Menu, Transition } from '@headlessui/react'
-import { UserIcon, BellIcon, MenuIcon, XIcon } from '@heroicons/react/outline'
+import React, { Fragment, useState } from 'react'
+import { Disclosure, Menu, Transition, Combobox } from '@headlessui/react'
+import { UserIcon, BellIcon, MenuIcon, XIcon, CheckIcon, SelectorIcon } from '@heroicons/react/outline'
 import { Link, Outlet, useLocation } from 'react-router-dom';
+
+interface EnumContractItem {
+  id: number,
+  name: string
+};
+
+const contracts: EnumContractItem[] = [
+  { id: 1, name: 'Habitual' },
+  { id: 2, name: 'Escape Date' },
+  { id: 3, name: 'Svelcro' },
+  { id: 4, name: 'Spearmint' },
+  { id: 5, name: 'ReSvelte' },
+  { id: 6, name: 'Recoilize' },
+  { id: 7, name: 'SeeQR' },
+  { id: 8, name: 'LitForms' },
+  { id: 9, name: 'Chromogen' },
+  // More contracts...
+]
 
 function classNames(...classes) {
   return classes.filter(Boolean).join(' ')
 }
 
 export default function Navbar() {
+
+  const [query, setQuery] = useState('')
+  const [selectedContract, setSelectedContract] = useState()
+
+  const filteredContracts =
+    query === ''
+      ? contracts
+      : contracts.filter((contract: EnumContractItem) => {
+          return contract.name.toLowerCase().includes(query.toLowerCase())
+        })
 
   const location = useLocation();
   let currentStyle = "bg-gray-900 text-white px-3 py-2 rounded-md text-sm font-medium";
@@ -38,6 +66,54 @@ export default function Navbar() {
                 </div>
                 <div className="hidden sm:block sm:ml-6">
                   <div className="flex space-x-4">
+                  <Combobox as="div" value={selectedContract} onChange={setSelectedContract}>
+                      <div className="relative mt-1">
+                        <Combobox.Input
+                          className="w-full rounded-md border border-gray-300 bg-white py-1 pl-3 pr-10 shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-1 focus:ring-indigo-500 sm:text-sm"
+                          onChange={(event) => setQuery(event.target.value)}
+                          displayValue={(contract: EnumContractItem) => contract.name}
+                        />
+                        <Combobox.Button className="absolute inset-y-0 right-0 flex items-center rounded-r-md px-2 focus:outline-none">
+                          <SelectorIcon className="h-5 w-5 text-gray-400" aria-hidden="true" />
+                        </Combobox.Button>
+
+                        {filteredContracts.length > 0 && (
+                          <Combobox.Options className="absolute z-10 mt-1 max-h-60 w-full overflow-auto rounded-md bg-white py-1 text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm">
+                            {filteredContracts.map((contract) => (
+                              <Combobox.Option
+                                key={contract.id}
+                                value={contract}
+                                className={({ active }) =>
+                                  classNames(
+                                    'relative cursor-default select-none py-2 pl-3 pr-9',
+                                    active ? 'bg-indigo-600 text-white' : 'text-gray-900'
+                                  )
+                                }
+                              >
+                                {({ active, selected }) => (
+                                  <>
+                                    <span className={classNames('block truncate', selected && 'font-semibold')}>{contract.name}</span>
+
+                                    {selected && (
+                                      <span
+                                        className={classNames(
+                                          'absolute inset-y-0 right-0 flex items-center pr-4',
+                                          active ? 'text-white' : 'text-indigo-600'
+                                        )}
+                                      >
+                                        <CheckIcon className="h-5 w-5" aria-hidden="true" />
+                                      </span>
+                                    )}
+                                  </>
+                                )}
+                              </Combobox.Option>
+                            ))}
+                          </Combobox.Options>
+                        )}
+                      </div>
+                    </Combobox>
+
+                    
                     {/* Current: "bg-gray-900 text-white", Default: "text-gray-300 hover:bg-gray-700 hover:text-white" */}
                     <Link to='contract' className={location.pathname === '/navbar' || location.pathname === '/navbar/contract' ? currentStyle : defaultStyle}>
                       Contract
