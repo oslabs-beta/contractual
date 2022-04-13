@@ -14,7 +14,9 @@ dbController.getContent = async (req, res, next) => {
     `;
 
     const targetContent = await db.query(getContent, param);
-    res.locals.content = targetContent.rows[0].content;
+    // targetContent returns a JSON object
+    const parsedContent = JSON.parse(targetContent.rows[0].content);
+    res.locals.content = { content: parsedContent };
     return next();
   } catch (error) {
     return next({
@@ -30,8 +32,7 @@ dbController.getContent = async (req, res, next) => {
 // Contract Route => Create token and contract and store in contracts Table
 dbController.addContract = async (req, res, next) => {
   // console.log("Hitttttt!!!!!");
-  const content = req.body.content;
-  const userId = req.body.userId;
+  const { title, content, userId } = req.body;
   // console.log(content, userId);
 
   // function to generate random token
@@ -58,16 +59,22 @@ dbController.addContract = async (req, res, next) => {
   }
 
   // Store content in database
-  const params = [content, token, userId];
+  const params = [title, content, token, userId];
   const addContractQuery = `
-    INSERT INTO contracts(content, token, user_id)
-    VALUES($1, $2, $3)
+    INSERT INTO contracts(title, content, token, user_id)
+    VALUES($1, $2, $3, $4)
     RETURNING *
     ;`;
   const addContract = await db.query(addContractQuery, params);
+  // res.locals.contractid = addContract.rows[0].contract_id;
   res.locals.token = token;
+  // console.log('test', res.locals.contractid, res.locals.token);
   return next();
 };
+
+// dbController.linkUserContract = async (req, res, next) => {
+
+// }
 
 // Login Route => verify user info with users Table
 dbController.checkUser = async (req, res, next) => {
@@ -81,14 +88,25 @@ dbController.checkUser = async (req, res, next) => {
     const userInfo = await db.query(verifyQuery, param);
     // Verify if email already exists
     if (userInfo.rows[0] === undefined) {
-      return res.status(404).json('Incorrect email');
+      return res
+        .status(404)
+        .json({ success: false, message: 'Incorrect Email!' });
     }
     bcrypt.compare(password, userInfo.rows[0].password, (err, result) => {
       if (err) return err;
-      console.log(result);
       // Result return false if plain pw doesn't match hashed pw
-      if (!result) return res.status(404).json('Incorrect password');
-      res.locals.name = userInfo.rows[0].name;
+      if (!result)
+        return res
+          .status(404)
+          .json({ success: false, message: 'Incorrect Password!' });
+      const loginRes = {
+        success: true,
+        userId: userInfo.rows[0].user_id,
+        userName: userInfo.rows[0].name,
+        // tokens:
+        // owns:
+      };
+      res.locals.loginData = loginRes;
       return next();
     });
   } catch (error) {
