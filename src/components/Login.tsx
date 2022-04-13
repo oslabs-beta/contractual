@@ -33,13 +33,17 @@ const Login = () => {
     onSubmit: (values: FormValues): void => {
       console.log(values);
       axios
-        .post("http://localhost:3000/login", {
+        .post("http://localhost:4321/login", {
           password: values.password,
           email: values.email,
         })
         .then((response) => {
           console.log(response);
-          navigate("navbar");
+          if (response.status === 200) {
+            navigate("navbar");
+
+          }
+
         })
         .catch((error) => {
           console.log(error);
