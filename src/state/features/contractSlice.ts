@@ -28,6 +28,8 @@ type ContractState = {
   owner: string[],
   currentContractToken: string,
   currentContract: CurrentContract,
+  frontEndPort: string
+  backendPort: string
   // status: string
 };
 
@@ -40,6 +42,8 @@ const initialState: ContractState = {
   owner: [],
   currentContractToken: '',
   currentContract: {},
+  frontEndPort: '8080',
+  backendPort: '3000'
   // status: '',
 };
 
@@ -60,7 +64,13 @@ export const contractSlice = createSlice({
       state.userId = action.payload.userId,
       state.contracts = action.payload.contracts,
       state.owner = action.payload.owner
-    }
+    },
+    changeFrontEndPort: (state, action: PayloadAction<string>) => {
+      state.frontEndPort = action.payload
+    },
+    changeBackEndPort: (state, action: PayloadAction<string>) => {
+      state.backendPort = action.payload
+    },
   //   deleteFromContract:,
   },
   // extraReducers(builder) {
@@ -81,6 +91,6 @@ export const contractSlice = createSlice({
   // use builder syntax
 });
 
-export const { getContract, addToContract, getUserData } = contractSlice.actions;
+export const { getContract, addToContract, getUserData, changeFrontEndPort, changeBackEndPort } = contractSlice.actions;
 
 export default contractSlice.reducer;

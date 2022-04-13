@@ -33,7 +33,7 @@ const Login = () => {
     onSubmit: (values: FormValues): void => {
       console.log(values);
       axios
-        .post("http://localhost:3000/login", {
+        .post("http://localhost:4321/login", {
           password: values.password,
           email: values.email,
         })
