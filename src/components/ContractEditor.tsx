@@ -1,4 +1,13 @@
 import React from 'react';
+
+const addReqField = (e: any): void => {
+
+}
+
+const addResField = (e: any): void => {
+
+}
+
 export default function ContractEditor({ reqMethod }) {
   return (
     <form className="divide-gray-200 px-3 grid grid-cols-12 gap-3">
@@ -13,7 +22,7 @@ export default function ContractEditor({ reqMethod }) {
         </div>
 
         <div>
-          <div className="mt-6 grid grid-cols-1 gap-y-6 gap-x-2 sm:grid-cols-6">
+          <div id="req-form" className="mt-6 grid grid-cols-1 gap-y-6 gap-x-2 sm:grid-cols-6">
 
           <div className="sm:col-span-6">
               <div className="mt-1">
