@@ -39,7 +39,11 @@ const Login = () => {
         })
         .then((response) => {
           console.log(response);
-          navigate("navbar");
+          if (response.status === 200) {
+            navigate("navbar");
+
+          }
+
         })
         .catch((error) => {
           console.log(error);
