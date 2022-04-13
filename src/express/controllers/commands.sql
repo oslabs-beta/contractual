@@ -31,12 +31,17 @@ INSERT INTO contracts ( title, content, token, user_id)
 VALUES('Contractual', '{"Req@POST@/login": {"username": "string","age": "number"},"Res@POST@/login": {"success": "boolean"}}' , 'A1B2', 1)
 
 INSERT INTO contracts ( title, content, token, user_id)
-VALUES('Habitual', '{"Req@POST@/habits": {"habitname": "string","target": "number"},"Res@POST@/habits": {"currentHabits": "array"}}' , 'XY69', 1)
+VALUES('Habitual', '{"Req@POST@/habits": {"habitname": "string","target": "number"},"Res@POST@/habits": {"currentHabits": "array-string-any"}}' , 'XY69', 1)
 
 INSERT INTO users_contracts (user_id, contract_id, premission)
 VALUES(1,1, true)
 INSERT INTO users_contracts (user_id, contract_id, premission)
 VALUES(1,2, true)
+
+
+-- Delete row from table
+DELETE FROM contracts
+where contract_id = 2
 
 
 -- Re-serialize primary key

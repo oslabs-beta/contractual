@@ -57,7 +57,7 @@ dbController.addContract = async (req, res, next) => {
     const checkToken = await db.query(checkTokenQuery, [token]);
     if (checkToken.rows.length == 0) break;
   }
-
+  Í;
   // Store content in database
   const params = [title, content, token, userId];
   const addContractQuery = `
@@ -66,9 +66,7 @@ dbController.addContract = async (req, res, next) => {
     RETURNING *
     ;`;
   const addContract = await db.query(addContractQuery, params);
-  // res.locals.contractid = addContract.rows[0].contract_id;
   res.locals.token = token;
-  // console.log('test', res.locals.contractid, res.locals.token);
   return next();
 };
 
@@ -118,26 +116,25 @@ dbController.checkUser = async (req, res, next) => {
       },
     });
   }
-  // Without b-crypt
-  // const { email, password } = res.locals.loginUser;
-  // const param = [email, password];
-  // try {
-  //   const getUser = `
-  //     SELECT * FROM users
-  //     WHERE email=$1 AND password=$2;
-  //   `;
-  //   const user = await db.query(getUser, param);
-  //   res.locals.name = user.rows[0].name;
-  //   return next();
-  // } catch (error) {
-  //   return next({
-  //     log: 'Express error in checkUser middleware',
-  //     status: 400,
-  //     message: {
-  //       err: `dbController.checkUser: ERROR: ${error}`,
-  //     },
-  //   });
-  // }
+};
+
+dbController.getAccessList = async (req, res, next) => {
+  // tokens: {"postman": '1234', 'Habitual':'SHAV'}
+  // owns: ['1234]
+  const { userId } = res.locals.loginData;
+  // console.log('ACCESS MIDDLEWARE-------', userId);
+  const param = [userId];
+  try {
+    const tokenListQuery = ``;
+  } catch (error) {
+    return next({
+      log: 'Express error in getAccessList middleware',
+      status: 400,
+      message: {
+        err: `dbController.getAccessList: ERROR: ${error}`,
+      },
+    });
+  }
 };
 
 // Sign up Route => save user info into users Table
@@ -173,25 +170,6 @@ dbController.saveUser = async (req, res, next) => {
       });
     }
   });
-  // Without b-crypt
-  // try {
-  //   const saveUserQuery = `
-  //       INSERT INTO users (name, email, password)
-  //       VALUES($1, $2, $3)
-  //       RETURNING *
-  //       `;
-  //   const newUser = await db.query(saveUserQuery, params);
-  //   // res.locals.userId = newUser.rows[0].id;
-  //   return next();
-  // } catch (error) {
-  //   return next({
-  //     log: 'Express error in saveUser middleware',
-  //     status: 400,
-  //     message: {
-  //       err: `dbController.saveUser: ERROR: ${error}`,
-  //     },
-  //   });
-  // }
 };
 
 module.exports = dbController;
