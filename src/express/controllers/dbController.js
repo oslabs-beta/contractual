@@ -14,7 +14,9 @@ dbController.getContent = async (req, res, next) => {
     `;
 
     const targetContent = await db.query(getContent, param);
-    res.locals.content = targetContent.rows[0].content;
+    // targetContent returns a JSON object
+    const parsedContent = await JSON.parse(targetContent.rows[0].content);
+    res.locals.content = { content: parsedContent };
     return next();
   } catch (error) {
     return next({

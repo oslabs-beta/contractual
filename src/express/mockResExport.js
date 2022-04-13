@@ -72,6 +72,6 @@ const dataCon = {
   'Res@POST@/habits': { currentHabits: 'array' },
 };
 
-console.log(mockResponse(dataCon, 'Res@POST@/login'));
+console.log(mockResponse(dataCon, 'Res@POST@/habits'));
 
 module.exports = randomize;

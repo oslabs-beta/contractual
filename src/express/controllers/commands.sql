@@ -28,13 +28,23 @@ INSERT INTO users ( email, name, password)
 VALUES('yankun@gmail.com', 'Yankun', '1234')
 
 INSERT INTO contracts ( title, content, token, user_id)
-VALUES('Contractual', '{username: "string", age: "number"}' , 'A1B2', 1)
+VALUES('Contractual', '{
+  "Req@POST@/login": {
+    "username": "string",
+    "age": "number"
+  },
+  "Res@POST@/login": {
+    "success": "boolean"
+  }
+}' , 'A1B2', 1)
 
 INSERT INTO contracts ( title, content, token, user_id)
-VALUES('Habitual', '{calendar: "array"}' , 'XY69', 1)
+VALUES('Habitual', '{Req@POST@/:id: {userid: number},Res@POST@/calendar: {calendar: array}}' , 'XY69', 1)
 
 INSERT INTO users_contracts (user_id, contract_id, premission)
 VALUES(1,1, true)
+INSERT INTO users_contracts (user_id, contract_id, premission)
+VALUES(1,2, true)
 
 
 -- Re-serialize primary key
