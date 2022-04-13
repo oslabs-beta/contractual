@@ -24,6 +24,7 @@ const endpoints: EnumEndpointItem[] = [
   // More endpoints...
 ]
 
+
 function classNames(...classes) {
   return classes.filter(Boolean).join(' ')
 }
@@ -41,6 +42,7 @@ const ContractEndpoint: React.FC<ContractEndpointProps> = ({ reqMethod, setReqMe
 
   const { currentContract } = useSelector((state: RootState)=> state.contract);
   const dispatch = useDispatch()
+
   // save contract needs to be a reducer function adding to our store object
   // would also pass in req body and res body
   // concat our 'newContract' object to the store state?
@@ -62,6 +64,8 @@ const ContractEndpoint: React.FC<ContractEndpointProps> = ({ reqMethod, setReqMe
     setEndpoint(event);
   }
 
+
+ 
   const filteredEndpoints =
     query === ''
       ? endpoints
