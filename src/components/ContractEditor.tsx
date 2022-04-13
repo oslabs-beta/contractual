@@ -1,13 +1,3 @@
-import React from 'react';
-
-const addReqField = (e: any): void => {
-
-}
-
-const addResField = (e: any): void => {
-
-}
-
 export default function ContractEditor({ reqMethod }) {
   return (
     <form className="divide-gray-200 px-3 grid grid-cols-12 gap-3">

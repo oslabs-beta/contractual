@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import { Fragment } from 'react'
 import { Menu, Transition, Combobox } from '@headlessui/react'
 import { ChevronDownIcon, CheckIcon, SelectorIcon } from '@heroicons/react/solid'
 import { string } from 'yup';
