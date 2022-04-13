@@ -29,16 +29,26 @@ function classNames(...classes) {
   return classes.filter(Boolean).join(' ')
 }
 
+interface Body {
+  [key: string]: string
+}
+
 interface ContractEndpointProps{
   reqMethod: string,
   setReqMethod: (e: any) => void,
   endpoint: string,
   setEndpoint: (e: any) => void
+  reqKey: string
+  resKey: string
+  reqValueType: string
+  resValueType: string
+  setReqBody: (obj: Body) => void
+  setResBody: (obj: Body) => void
 }
 
 
 
-const ContractEndpoint: React.FC<ContractEndpointProps> = ({ reqMethod, setReqMethod, endpoint, setEndpoint }): JSX.Element => {
+const ContractEndpoint: React.FC<ContractEndpointProps> = ({ reqMethod, setReqMethod, endpoint, setEndpoint, reqKey, resKey, reqValueType, resValueType, setReqBody, setResBody }): JSX.Element => {
 
   const { currentContract } = useSelector((state: RootState)=> state.contract);
   const dispatch = useDispatch()
@@ -46,10 +56,11 @@ const ContractEndpoint: React.FC<ContractEndpointProps> = ({ reqMethod, setReqMe
   // save contract needs to be a reducer function adding to our store object
   // would also pass in req body and res body
   // concat our 'newContract' object to the store state?
-  const saveContract = (reqMethod: string, endpoint: string): void => {
+  const saveContract = (reqMethod: string, endpoint: string, reqKey: string, resKey: string, reqValueType: string, resValueType: string): void => {
+    // name of contract could be argument
     const newContract = {}
-    newContract[`Req@${reqMethod}@${endpoint}`] = {email: 'email@gmail.com', password: 'password'} // should pass in request object here
-    newContract[`Res@${reqMethod}@${endpoint}`] = {username: 'MyUsername'} // should pass in response object here
+    newContract[`Req@${reqMethod}@${endpoint}`] = {[reqKey]: reqValueType} // should pass in request object here
+    newContract[`Res@${reqMethod}@${endpoint}`] = {[resKey]: resValueType} // should pass in response object here
     console.log(newContract);
     dispatch(addToContract(newContract))
     // newContract can be the payload of an action
@@ -90,7 +101,7 @@ const ContractEndpoint: React.FC<ContractEndpointProps> = ({ reqMethod, setReqMe
             <option value="DELETE" >DELETE</option>
           </select>
         </div>
-        <button onClick={() => {console.log(currentContract)}}>check current state of contract</button>
+        {/* <button onClick={() => {console.log(currentContract)}}>check current state of contract</button> */}
         {/* <div className="col-span-7 sm:col-span-8 md:col-span-8 lg:col-span-9">
           <input
             type="endpoint"
@@ -158,7 +169,7 @@ const ContractEndpoint: React.FC<ContractEndpointProps> = ({ reqMethod, setReqMe
         <div className="col-span-2 sm:col-span-2 md:col-span-2 lg:col-span-3 text-right">
           <button
             className="inline-flex w-full justify-center mt-1 py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
-            onClick={() => {saveContract(reqMethod, endpoint)}}
+            onClick={() => {saveContract(reqMethod, endpoint, reqKey, resKey, reqValueType, resValueType)}}
           >
             Save
           </button>

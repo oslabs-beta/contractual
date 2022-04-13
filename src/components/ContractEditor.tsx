@@ -1,47 +1,41 @@
 import React, { useState } from 'react';
 
 
-interface Body {
-  [key: string]: string
-}
 
 interface ContractEndpointProps{
-  reqBody: Body
-  setReqBody: (obj: Body) => void
-  resBody: Body
-  setResBody: (obj: Body) => void
+  handleBodyInput: (e: any) => void
 }
 
-export default function ContractEditor({ reqBody, setReqBody, resBody, setResBody }) {
+export default function ContractEditor({ handleBodyInput }) {
 
-  const [reqKey, setReqKey] = useState('')
-  const [resKey, setResKey] = useState('')
-  const [reqValueType, setReqValueType] = useState('Boolean')
-  const [resValueType, setResValueType] = useState('Boolean')
+  // const [reqKey, setReqKey] = useState('')
+  // const [resKey, setResKey] = useState('')
+  // const [reqValueType, setReqValueType] = useState('Boolean')
+  // const [resValueType, setResValueType] = useState('Boolean')
 
   //
-  const handleBodyInput = (e: any): void => {
-    if (e.target.id === 'reqKey') {
-      const requestKey: string = e.target.value;
-      console.log("requestKey changed: ", requestKey);
-      setReqKey(requestKey);
-    }
-    if (e.target.id === 'reqValType') {
-      const requestValueType: string = e.target.value;
-      console.log("requestValueType changed: ", requestValueType);
-      setReqValueType(requestValueType);
-    }
-    if (e.target.id === 'resKey') {
-      const responseKey: string = e.target.value;
-      console.log("responseKey changed: ", responseKey);
-      setResKey(resKey);
-    }
-    if (e.target.id === 'resValType') {
-      const responseValueType: string = e.target.value;
-      console.log("responseValueType changed: ", responseValueType);
-      setResValueType(responseValueType);
-    }
-  };
+  // const handleBodyInput = (e: any): void => {
+  //   if (e.target.id === 'reqKey') {
+  //     const requestKey: string = e.target.value;
+  //     console.log("requestKey changed: ", requestKey);
+  //     setReqKey(requestKey);
+  //   }
+  //   if (e.target.id === 'reqValType') {
+  //     const requestValueType: string = e.target.value;
+  //     console.log("requestValueType changed: ", requestValueType);
+  //     setReqValueType(requestValueType);
+  //   }
+  //   if (e.target.id === 'resKey') {
+  //     const responseKey: string = e.target.value;
+  //     console.log("responseKey changed: ", responseKey);
+  //     setResKey(resKey);
+  //   }
+  //   if (e.target.id === 'resValType') {
+  //     const responseValueType: string = e.target.value;
+  //     console.log("responseValueType changed: ", responseValueType);
+  //     setResValueType(responseValueType);
+  //   }
+  // };
 
 
   return (
@@ -175,8 +169,8 @@ export default function ContractEditor({ reqBody, setReqBody, resBody, setResBod
               </label>
               <div className="mt-1">
               <select
-                  id="reqValType"
-                  name="reqValType"
+                  id="resValType"
+                  name="resValType"
                   onChange={(e) => {handleBodyInput(e)}}
                   className="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md"
                 >
@@ -193,7 +187,6 @@ export default function ContractEditor({ reqBody, setReqBody, resBody, setResBod
 
         <button
           type="button"
-          onClick={() => {console.log(reqValueType, resValueType)}}
           className="inline-flex w-full items-center px-2.5 py-1.5 border border-transparent text-xs font-medium rounded text-indigo-700 bg-indigo-100 hover:bg-indigo-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
         >
           <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 mx-auto" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
