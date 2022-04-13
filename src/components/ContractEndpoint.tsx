@@ -57,6 +57,11 @@ const ContractEndpoint: React.FC<ContractEndpointProps> = ({ reqMethod, setReqMe
   const [query, setQuery] = useState('')
   const [selectedEndpoint, setSelectedEndpoint] = useState()
 
+  const endpointChange = (event) => {
+    setQuery(event.target.value);
+    setEndpoint(event);
+  }
+
   const filteredEndpoints =
     query === ''
       ? endpoints
@@ -81,7 +86,7 @@ const ContractEndpoint: React.FC<ContractEndpointProps> = ({ reqMethod, setReqMe
             <option value="DELETE" >DELETE</option>
           </select>
         </div>
-        {/* <button onClick={() => {console.log(reqMethod)}}>check state of request type</button> */}
+        <button onClick={() => {console.log(currentContract)}}>check current state of contract</button>
         {/* <div className="col-span-7 sm:col-span-8 md:col-span-8 lg:col-span-9">
           <input
             type="endpoint"
@@ -96,8 +101,12 @@ const ContractEndpoint: React.FC<ContractEndpointProps> = ({ reqMethod, setReqMe
           <Combobox as="div" value={selectedEndpoint} onChange={setSelectedEndpoint}>
             <div className="relative mt-1">
               <Combobox.Input
+                type="endpoint"
+                name="endpoint"
+                id="endpoint"
+                value={endpoint}
                 className="w-full rounded-md border border-gray-300 bg-white py-2 pl-3 pr-10 shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-1 focus:ring-indigo-500 sm:text-sm"
-                onChange={(event) => setQuery(event.target.value)}
+                onChange={(event) => endpointChange(event)}
                 displayValue={(endpoint: EnumEndpointItem) => endpoint.name}
               />
               <Combobox.Button className="absolute inset-y-0 right-0 flex items-center rounded-r-md px-2 focus:outline-none">
