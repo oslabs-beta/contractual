@@ -49,7 +49,7 @@ interface ContractEndpointProps{
 
 const ContractEndpoint: React.FC<ContractEndpointProps> = ({ reqMethod, setReqMethod, endpoint, setEndpoint, reqInputs, resInputs }): JSX.Element => {
 
-  const { currentContract } = useSelector((state: RootState)=> state.contract);
+  const { currentContract } = useSelector((store: RootState)=> store.contract);
   const dispatch = useDispatch()
 
   // save contract needs to be a reducer function adding to our store object
