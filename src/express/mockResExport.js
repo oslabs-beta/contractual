@@ -33,7 +33,8 @@ const randomize = {
   timestamp: () => chance.timestamp(),
 
   // Array Generator
-  array: (content) => Array.from({ length: 3 }, content),
+  array: (content, length) =>
+    Array.from({ length: length }, randomize[content]),
 };
 
 /**
@@ -56,8 +57,9 @@ function mockResponse(contracts, condition) {
   // Generate mock with homemade randomize obj method
   for (let key in mockResponse) {
     const dataType = mockResponse[key];
-    if (dataType === 'array') {
-      mockResponse[key] = randomize[dataType](randomize.string);
+    if (dataType.includes('array')) {
+      const parsedArrType = extractArrType(dataType);
+      mockResponse[key] = randomize.array(parsedArrType[0], parsedArrType[1]);
     } else {
       mockResponse[key] = randomize[dataType]();
     }
@@ -65,13 +67,23 @@ function mockResponse(contracts, condition) {
   return mockResponse;
 }
 
-const dataCon = {
+// Extract array-type-length format
+function extractArrType(dataTypeStr) {
+  const mockArrContent = dataTypeStr.split('-')[1];
+  const mockArrLength = dataTypeStr.split('-')[2];
+  if (mockArrLength === 'any') {
+    return [mockArrContent, randomize.number()];
+  }
+  return [mockArrContent, Number(mockArrLength)];
+}
+
+const dataContract = {
   'Req@POST@/login': { username: 'string', age: 'number' },
   'Res@POST@/login': { success: 'boolean' },
   'Req@POST@/habits': { habitname: 'string', target: 'number' },
-  'Res@POST@/habits': { currentHabits: 'array' },
+  'Res@POST@/habits': { currentHabits: 'array-number-3' },
 };
 
-console.log(mockResponse(dataCon, 'Res@POST@/habits'));
+console.log(mockResponse(dataContract, 'Req@POST@/habits'));
 
 module.exports = randomize;
