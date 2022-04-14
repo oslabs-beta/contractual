@@ -19,7 +19,7 @@ CREATE TABLE users_contracts(
     FOREIGN KEY (user_id) REFERENCES users(user_id),
     contract_id INTEGER,
     FOREIGN KEY (contract_id) REFERENCES contracts(contract_id),
-    premission BOOLEAN
+    permission BOOLEAN
 )
 
 
@@ -33,11 +33,16 @@ VALUES('Contractual', '{"Req@POST@/login": {"username": "string","age": "number"
 INSERT INTO contracts ( title, content, token, user_id)
 VALUES('Habitual', '{"Req@POST@/habits": {"habitname": "string","target": "number"},"Res@POST@/habits": {"currentHabits": "array-string-any"}}' , 'XY69', 1)
 
-INSERT INTO users_contracts (user_id, contract_id, premission)
+INSERT INTO users_contracts (user_id, contract_id, permission)
 VALUES(1,1, true)
-INSERT INTO users_contracts (user_id, contract_id, premission)
+INSERT INTO users_contracts (user_id, contract_id, permission)
 VALUES(1,2, true)
 
+
+SELECT c.*
+    FROM users_contracts uc LEFT OUTER JOIN contracts c
+    ON uc.user_id = c.user_id
+    WHERE c.user_id = 1
 
 -- Delete row from table
 DELETE FROM contracts

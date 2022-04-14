@@ -57,7 +57,7 @@ dbController.addContract = async (req, res, next) => {
     const checkToken = await db.query(checkTokenQuery, [token]);
     if (checkToken.rows.length == 0) break;
   }
-  Í;
+
   // Store content in database
   const params = [title, content, token, userId];
   const addContractQuery = `
@@ -119,13 +119,28 @@ dbController.checkUser = async (req, res, next) => {
 };
 
 dbController.getAccessList = async (req, res, next) => {
-  // tokens: {"postman": '1234', 'Habitual':'SHAV'}
-  // owns: ['1234]
   const { userId } = res.locals.loginData;
-  // console.log('ACCESS MIDDLEWARE-------', userId);
   const param = [userId];
   try {
-    const tokenListQuery = ``;
+    const tokenListQuery = `
+    SELECT c.title, c.token, uc.permission
+    FROM users_contracts uc INNER JOIN contracts c
+    ON uc.contract_id = c.contract_id
+    WHERE uc.user_id = $1
+    `;
+
+    const accessList = await db.query(tokenListQuery, param);
+    // Save accessible tokens and permission into res.locals.loginData
+    res.locals.loginData.tokens = {};
+    res.locals.loginData.owns = [];
+    accessList.rows.forEach((userAccess) => {
+      const { title, token, permission } = userAccess;
+      res.locals.loginData.tokens[title] = token;
+      if (permission) res.locals.loginData.owns.push(token);
+    });
+    // console.log(accessList.rows);
+    // console.log(res.locals.loginData);
+    return next();
   } catch (error) {
     return next({
       log: 'Express error in getAccessList middleware',
