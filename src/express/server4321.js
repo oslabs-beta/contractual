@@ -18,7 +18,7 @@ const loginRouter = require(path.resolve(
   '../src/express/routes/login.js'
 ));
 
-const PORT = 3000;
+const PORT = 4321;
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));

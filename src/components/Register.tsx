@@ -37,7 +37,7 @@ const Register = () => {
     onSubmit: (values: FormValues): void => {
       console.log(values);
       axios
-        .post("http://localhost:3000/register", {
+        .post("http://localhost:4321/register", {
           name: values.name,
           email: values.email,
           password: values.password,
