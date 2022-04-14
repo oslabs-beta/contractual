@@ -51,7 +51,7 @@ export default function ContractEditor({ handleBodyInput }) {
         </div>
 
         <div>
-          <div className="mt-6 grid grid-cols-1 gap-y-6 gap-x-2 sm:grid-cols-6">
+          <div id="req-form" className="mt-6 grid grid-cols-1 gap-y-6 gap-x-2 sm:grid-cols-6">
 
           <div className="sm:col-span-6">
               <div className="mt-1">
@@ -69,9 +69,6 @@ export default function ContractEditor({ handleBodyInput }) {
 
             
             <div className="sm:col-span-3">
-              <label htmlFor="reqKey" className="block text-sm font-medium text-gray-300">
-                Key
-              </label>
               <div className="mt-1">
                 <input
                   type="text"
@@ -85,9 +82,6 @@ export default function ContractEditor({ handleBodyInput }) {
             </div>
 
             <div className="sm:col-span-3">
-              <label htmlFor="reqValType" className="block text-sm font-medium text-gray-300">
-                Value Type
-              </label>
               <div className="mt-1">
               <select
                   id="reqValType"
@@ -149,9 +143,6 @@ export default function ContractEditor({ handleBodyInput }) {
 
             
             <div className="sm:col-span-3">
-              <label htmlFor="resKey" className="block text-sm font-medium text-gray-300">
-                Key
-              </label>
               <div className="mt-1">
                 <input
                   type="text"
@@ -164,9 +155,6 @@ export default function ContractEditor({ handleBodyInput }) {
             </div>
 
             <div className="sm:col-span-3">
-              <label htmlFor="reqValType" className="block text-sm font-medium text-gray-300">
-                Value Type
-              </label>
               <div className="mt-1">
               <select
                   id="resValType"

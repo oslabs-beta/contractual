@@ -1,18 +1,12 @@
-
+import DocumentExport from '../components/DocumentExport';
+import DocumentPreview from '../components/DocumentPreview';
 
 export default function DocumentCreator() {
 
   return (
-    <div>
-      <div>
-        <div className="export-container">
-          <input type="text" className="project-name" placeholder="Project name"/>
-          <button className="export">Export</button>
-        </div>
-      </div>
-      <div className="contract-container">
-        <div>spread out endpoint components</div>
-      </div>
+    <div className='bg-gray-900 h-screen'>
+      <DocumentExport/>
+      <DocumentPreview/>
     </div>
   );
 }
