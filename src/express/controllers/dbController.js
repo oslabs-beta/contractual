@@ -81,7 +81,6 @@ dbController.addContract = async (req, res, next) => {
   }
 
   // Store contract in user-contract table
-  console.log(contractId);
   try {
     const param2 = [userId, contractId, true];
     const addHistoryQuery = `
@@ -102,9 +101,6 @@ dbController.addContract = async (req, res, next) => {
   return next();
 };
 
-// dbController.linkUserContract = async (req, res, next) => {
-
-// }
 
 // Login Route => verify user info with users Table
 dbController.checkUser = async (req, res, next) => {
