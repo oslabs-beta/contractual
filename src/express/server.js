@@ -50,22 +50,5 @@ app.use((err, req, res, next) => {
 
 app.listen(PORT, () => console.log(`App listening on port ${PORT}`));
 
-// TESTING
-const randomize = require(path.resolve(
-  __dirname,
-  '../src/express/mockResExport.js'
-));
-
-const mockResponse = {
-  name: randomize.fullName(),
-  isHuman: randomize.boolean(),
-  email: randomize.email(),
-  age: randomize.number(),
-  country: randomize.country(),
-  favoriteAnimal: randomize.array(randomize.animal),
-  quote: randomize.sentence(),
-};
-
-console.log(mockResponse);
 
 module.exports = app;
