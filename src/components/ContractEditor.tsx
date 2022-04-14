@@ -134,9 +134,6 @@ export default function ContractEditor({ reqInputs, resInputs, setReqInputs, set
 
             
             <div className="sm:col-span-3">
-              <label htmlFor="reqKey" className="block text-sm font-medium text-gray-300">
-                Key
-              </label>
               <div className="mt-1">
                 <input
                   type="text"
@@ -150,9 +147,6 @@ export default function ContractEditor({ reqInputs, resInputs, setReqInputs, set
             </div>
 
             <div className="sm:col-span-3">
-              <label htmlFor="reqValType" className="block text-sm font-medium text-gray-300">
-                Value Type
-              </label>
               <div className="mt-1">
               <select
                   id="reqValType"
@@ -295,9 +289,6 @@ export default function ContractEditor({ reqInputs, resInputs, setReqInputs, set
 
             
             <div className="sm:col-span-3">
-              <label htmlFor="resKey" className="block text-sm font-medium text-gray-300">
-                Key
-              </label>
               <div className="mt-1">
                 <input
                   type="text"
@@ -310,9 +301,6 @@ export default function ContractEditor({ reqInputs, resInputs, setReqInputs, set
             </div>
 
             <div className="sm:col-span-3">
-              <label htmlFor="reqValType" className="block text-sm font-medium text-gray-300">
-                Value Type
-              </label>
               <div className="mt-1">
               <select
                   id="resValType"
