@@ -36,8 +36,8 @@ type ContractState = {
   owner: string[],
   currentContractToken: string,
   currentContract: CurrentContract,
-  frontEndPort: string
-  backEndPort: string
+  // frontEndPort: string
+  // backEndPort: string
   // status: string
 };
 
@@ -103,6 +103,6 @@ export const contractSlice = createSlice({
   // use builder syntax
 });
 
-export const { getContract, addToContract, getUserData, changeFrontEndPort, changeBackEndPort } = contractSlice.actions;
+export const { getContract, addToContract, getUserData } = contractSlice.actions;
 
 export default contractSlice.reducer;
