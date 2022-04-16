@@ -6,7 +6,7 @@ function classNames(...classes) {
 export default function DocumentExport() {
 
   return (
-    <div className=' sticky top-16 z-50 bg-gray-900 shadow-lg'>
+    <div className='sticky top-16 z-50 bg-gray-900 shadow-lg'>
       <div className='grid grid-cols-12 gap-1 px-3 py-3 grid-flow-col'>
         <div className='col-span-8'>
           <div>
