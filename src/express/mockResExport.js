@@ -4,7 +4,7 @@ const randomize = {
   // Primitive
   string: () => chance.string({ alpha: true }), // length, pool, alpha, casing, symbols
   letter: () => chance.letter(), // casing: lower
-  number: () => chance.integer({ min: 0, max: 100 }),
+  number: () => chance.integer({ min: 0, max: 30 }),
   floating: () => chance.floating({ min: 0, max: 100 }), // min, max, fixed
   boolean: () => chance.bool(),
   falsy: () => chance.falsy(),
@@ -81,9 +81,11 @@ const dataContract = {
   'Req@POST@/login': { username: 'string', age: 'number' },
   'Res@POST@/login': { success: 'boolean' },
   'Req@POST@/habits': { habitname: 'string', target: 'number' },
-  'Res@POST@/habits': { currentHabits: 'array-number-3' },
+  'Res@POST@/habits': { currentHabits: 'array-boolean-7' },
 };
 
 console.log(mockResponse(dataContract, 'Req@POST@/habits'));
 
 module.exports = randomize;
+
+// string 5
