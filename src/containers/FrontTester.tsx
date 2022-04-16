@@ -1,10 +1,21 @@
-import FrontLog from '../components/FrontLog';
+import FrontLog from "../components/FrontLog";
+import { useEffect } from "react";
+import { w3cwebsocket as W3CWebSocket } from "websocket";
+
+const client = new W3CWebSocket("ws://127.0.0.1:1234");
 
 export default function FrontTester() {
-
+  useEffect(() => {
+    client.onopen = () => {
+      console.log("WebSocket Client Connected");
+    };
+    client.onmessage = (message) => {
+      console.log(message);
+    };
+  }, []);
   return (
-    <div className='bg-gray-900 h-screen'>
-      <FrontLog/>
+    <div className="bg-gray-900 h-screen">
+      <FrontLog />
     </div>
     // <div className="front-tester-container">
     //   <div className="api-dropdown"></div>
