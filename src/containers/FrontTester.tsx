@@ -1,7 +1,15 @@
-import FrontLog from "../components/FrontLog";
-import { useEffect } from "react";
+import FrontLog from '../components/FrontLog';
+import { useEffect } from 'react';
 
-// console.log(client)
+// const socket = new WebSocket('ws://localhost:6969');
+
+// socket.addEventListener('open', (event) => {
+//   console.log('Client 2: CONNECTED TO WEB SOCKET FROM CLIENT Side');
+// });
+
+// socket.addEventListener('message', (event) => {
+//   console.log('Client 2: MESSAGE RECEIVED FROM 6969: ', event.data);
+// });
 
 export default function FrontTester() {
   // const client = new WebSocket('ws://localhost:1234');
@@ -15,18 +23,18 @@ export default function FrontTester() {
   // });
 
   useEffect(() => {
-    const client = new WebSocket('ws://localhost1234')
-    client.onopen = () => {
-      console.log('Connected to socket');
-    }
-
-    client.onmessage = (event) => {
-      const message = event.data;
-      console.log(message);
-    }
+    // const client = new WebSocket('ws://localhost1234')
+    // client.onopen = () => {
+    //   console.log('Connected to socket');
+    // }
+    // client.onmessage = (event) => {
+    //   const message = event.data;
+    //   console.log(message);
+    // }
   }, []);
+
   return (
-    <div className="bg-gray-900 h-screen">
+    <div className='bg-gray-900 h-screen'>
       <FrontLog />
     </div>
     // <div className="front-tester-container">
