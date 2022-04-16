@@ -26,7 +26,7 @@ app.use(express.urlencoded({ extended: true }));
 // Define Routes Handler
 
 app.get('/', function (req, res) {
-  res.send('Server is ready!');
+  res.send('User Server is ready!');
 });
 
 app.use('/contract', contractRouter);
@@ -48,24 +48,6 @@ app.use((err, req, res, next) => {
   return res.status(errorObj.status).send(errorObj.message);
 });
 
-app.listen(PORT, () => console.log(`App listening on port ${PORT}`));
-
-// TESTING
-const randomize = require(path.resolve(
-  __dirname,
-  '../src/express/mockResExport.js'
-));
-
-const mockResponse = {
-  name: randomize.fullName(),
-  isHuman: randomize.boolean(),
-  email: randomize.email(),
-  age: randomize.number(),
-  country: randomize.country(),
-  favoriteAnimal: randomize.array(randomize.animal),
-  quote: randomize.sentence(),
-};
-
-console.log(mockResponse);
+app.listen(PORT, () => console.log(`User server listening on port ${PORT}`));
 
 module.exports = app;

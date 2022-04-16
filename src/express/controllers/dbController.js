@@ -31,10 +31,9 @@ dbController.getContent = async (req, res, next) => {
 
 // Contract Route => Create token and contract and store in contracts Table
 dbController.addContract = async (req, res, next) => {
-  // console.log("Hitttttt!!!!!");
   const { title, content, userId } = req.body;
-  // console.log(content, userId);
-
+  console.log('HIT');
+  console.log(title);
   // function to generate random token
   function makeid(length) {
     let result = '';
@@ -57,22 +56,50 @@ dbController.addContract = async (req, res, next) => {
     const checkToken = await db.query(checkTokenQuery, [token]);
     if (checkToken.rows.length == 0) break;
   }
-
-  // Store content in database
-  const params = [title, content, token, userId];
-  const addContractQuery = `
+  let contractId;
+  // Store contract in contract table
+  try {
+    const param1 = [title, content, token, userId];
+    const addContractQuery = `
     INSERT INTO contracts(title, content, token, user_id)
     VALUES($1, $2, $3, $4)
     RETURNING *
     ;`;
-  const addContract = await db.query(addContractQuery, params);
-  res.locals.token = token;
+    const addContract = await db.query(addContractQuery, param1);
+    console.log(addContract);
+    contractId = addContract['rows'][0]['contract_id'];
+
+    res.locals.token = token;
+  } catch (error) {
+    return next({
+      log: 'Express error in addContract middleware',
+      status: 400,
+      message: {
+        err: `dbController.addContract: ERROR: ${error}`,
+      },
+    });
+  }
+
+  // Store contract in user-contract table
+  try {
+    const param2 = [userId, contractId, true];
+    const addHistoryQuery = `
+    INSERT INTO users_contracts(user_id, contract_id, permission)
+    VALUES($1, $2, $3)
+    RETURNING *
+    ;`;
+    await db.query(addHistoryQuery, param2);
+  } catch (error) {
+    return next({
+      log: 'Express error in addContract middleware',
+      status: 400,
+      message: {
+        err: `dbController.addContract: ERROR: ${error}`,
+      },
+    });
+  }
   return next();
 };
-
-// dbController.linkUserContract = async (req, res, next) => {
-
-// }
 
 // Login Route => verify user info with users Table
 dbController.checkUser = async (req, res, next) => {

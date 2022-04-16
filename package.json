@@ -31,13 +31,17 @@
     "express": "^4.17.3",
     "file-loader": "^6.2.0",
     "formik": "^2.2.9",
+    "http": "^0.0.1-security",
     "pg": "^8.7.3",
     "react-redux": "^7.2.8",
     "react-router-dom": "^6.3.0",
     "redux": "^4.1.2",
     "redux-devtools-extension": "^2.13.9",
     "redux-thunk": "^2.4.1",
+    "socket.io": "^4.4.1",
     "url-loader": "^4.1.1",
+    "websocket": "^1.0.34",
+    "ws": "^8.5.0",
     "yup": "^0.32.11"
   },
   "devDependencies": {

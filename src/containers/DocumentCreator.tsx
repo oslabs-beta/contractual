@@ -1,18 +1,14 @@
-
+import DocumentExport from '../components/DocumentExport';
+import DocumentPreview from '../components/DocumentPreview';
+import { useSelector } from 'react-redux';
+import { RootState } from '../state/store';
 
 export default function DocumentCreator() {
-
+  const { currentContract } = useSelector((state: RootState) => state.contract);
   return (
-    <div>
-      <div>
-        <div className="export-container">
-          <input type="text" className="project-name" placeholder="Project name"/>
-          <button className="export">Export</button>
-        </div>
-      </div>
-      <div className="contract-container">
-        <div>spread out endpoint components</div>
-      </div>
+    <div className='bg-gray-900 h-screen'>
+      <DocumentExport />
+      <DocumentPreview />
     </div>
   );
 }
