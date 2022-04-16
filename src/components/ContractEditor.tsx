@@ -1,42 +1,32 @@
 import React, { useState } from 'react';
 
+/////TESTING DYNAMIC INPUTS
+type KeyAndType = {
+  [key: string]: string;
+};
+type BodyInputs = KeyAndType[];
+/// TEST END///////
+
 interface ContractEndpointProps {
-  handleBodyInput: (e: any) => void;
+  reqInputs: BodyInputs;
+  resInputs: BodyInputs;
+  setReqInputs: (index: string, e: Event) => void;
+  setResInputs: (index: string, e: Event) => void;
+  addReqField: () => void;
+  addResField: () => void;
 }
 
-export default function ContractEditor({ handleBodyInput }) {
-  // const [reqKey, setReqKey] = useState('')
-  // const [resKey, setResKey] = useState('')
-  // const [reqValueType, setReqValueType] = useState('Boolean')
-  // const [resValueType, setResValueType] = useState('Boolean')
-
-  //
-  // const handleBodyInput = (e: any): void => {
-  //   if (e.target.id === 'reqKey') {
-  //     const requestKey: string = e.target.value;
-  //     console.log("requestKey changed: ", requestKey);
-  //     setReqKey(requestKey);
-  //   }
-  //   if (e.target.id === 'reqValType') {
-  //     const requestValueType: string = e.target.value;
-  //     console.log("requestValueType changed: ", requestValueType);
-  //     setReqValueType(requestValueType);
-  //   }
-  //   if (e.target.id === 'resKey') {
-  //     const responseKey: string = e.target.value;
-  //     console.log("responseKey changed: ", responseKey);
-  //     setResKey(resKey);
-  //   }
-  //   if (e.target.id === 'resValType') {
-  //     const responseValueType: string = e.target.value;
-  //     console.log("responseValueType changed: ", responseValueType);
-  //     setResValueType(responseValueType);
-  //   }
-  // };
-
+export default function ContractEditor({
+  reqInputs,
+  resInputs,
+  setReqInputs,
+  setResInputs,
+  addReqField,
+  addResField,
+}) {
   return (
     <form className='divide-gray-200 px-3 grid grid-cols-12 gap-3'>
-      <div className='space-y-2 divide-y divide-gray-200 col-span-6'>
+      <div className='space-y-2 col-span-6'>
         <div className='mt-1'>
           <div>
             <h3 className='text-lg leading-6 font-medium text-gray-300'>
@@ -45,14 +35,93 @@ export default function ContractEditor({ handleBodyInput }) {
             <p className='mt-1 text-md text-gray-500'>from frontend</p>
           </div>
         </div>
+        <hr></hr>
+        <div className='sm:col-span-6'>
+          <div className='mt-1'>
+            <select
+              id='reqLocation'
+              name='reqLocation'
+              className='shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md'
+            >
+              <option value='body'>Body</option>
+              <option value='query'>Query</option>
+              <option value='params'>Params</option>
+            </select>
+          </div>
+        </div>
 
-        <div>
-          <div
-            id='req-form'
-            className='mt-6 grid grid-cols-1 gap-y-6 gap-x-2 sm:grid-cols-6'
-          >
-            <div className='sm:col-span-6'>
-              <div className='mt-1'>
+        {/* ////////// Render this portion dynamically */}
+        {reqInputs.map((input, index) => {
+          return (
+            <div key={index}>
+              <div className='mt-6 grid grid-cols-1 gap-y-6 gap-x-2 sm:grid-cols-6'>
+                {/* <div className="sm:col-span-6">
+                  <div className="mt-1">
+                    <select
+                      id="reqLocation"
+                      name="reqLocation"
+                      className="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md"
+                    >
+                      <option value="body">Body</option>
+                      <option value="query">Query</option>
+                      <option value="params">Params</option>
+                    </select>
+                  </div>
+                </div> */}
+
+                <div className='sm:col-span-3'>
+                  <label
+                    htmlFor='reqKey'
+                    className='block text-sm font-medium text-gray-300'
+                  >
+                    Key
+                  </label>
+                  <div className='mt-1'>
+                    <input
+                      type='text'
+                      name='reqKey'
+                      id='reqKey'
+                      value={input.reqKey}
+                      // test
+                      onChange={(e) => setReqInputs(index, e)}
+                      className='shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md'
+                    />
+                  </div>
+                </div>
+
+                <div className='sm:col-span-3'>
+                  <label
+                    htmlFor='reqValType'
+                    className='block text-sm font-medium text-gray-300'
+                  >
+                    Value Type
+                  </label>
+                  <div className='mt-1'>
+                    <select
+                      id='reqValType'
+                      name='reqValType'
+                      value={input.reqValType}
+                      onChange={(e) => setReqInputs(index, e)}
+                      className='shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md'
+                    >
+                      <option value='boolean'>Boolean</option>
+                      <option value='number'>Number</option>
+                      <option value='string'>String</option>
+                      <option value='object'>Object</option>
+                      <option value='array'>Array</option>
+                    </select>
+                  </div>
+                </div>
+              </div>
+            </div>
+          );
+        })}
+
+        {/* <div>
+          <div className="mt-6 grid grid-cols-1 gap-y-6 gap-x-2 sm:grid-cols-6">
+
+          <div className="sm:col-span-6">
+              <div className="mt-1">
                 <select
                   id='reqLocation'
                   name='reqLocation'
@@ -99,10 +168,11 @@ export default function ContractEditor({ handleBodyInput }) {
               </div>
             </div>
           </div>
-        </div>
-
+        </div> */}
+        {/* ////////// */}
         <button
           type='button'
+          onClick={addReqField}
           className='inline-flex w-full items-center px-2.5 py-1.5 border border-transparent text-xs font-medium rounded text-indigo-700 bg-indigo-100 hover:bg-indigo-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500'
         >
           <svg
@@ -122,7 +192,7 @@ export default function ContractEditor({ handleBodyInput }) {
         </button>
       </div>
 
-      <div className='space-y-2 divide-y divide-gray-200 col-span-6'>
+      <div className='space-y-2 col-span-6'>
         <div className='mt-1'>
           <div>
             <h3 className='text-lg leading-6 font-medium text-gray-300'>
@@ -131,11 +201,96 @@ export default function ContractEditor({ handleBodyInput }) {
             <p className='mt-1 text-md text-gray-500'>from backend</p>
           </div>
         </div>
+        <hr></hr>
+        <div className='sm:col-span-6'>
+          <div className='mt-1'>
+            <select
+              id='resType'
+              name='resType'
+              className='shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md'
+            >
+              <option value='object'>Object</option>
+              <option value='array'>Array</option>
+              <option value='boolean'>Boolean</option>
+              <option value='number'>Number</option>
+              <option value='string'>String</option>
+            </select>
+          </div>
+        </div>
 
-        <div>
-          <div className='mt-6 grid grid-cols-1 gap-y-6 gap-x-2 sm:grid-cols-6'>
-            <div className='sm:col-span-6'>
-              <div className='mt-1'>
+        {/* dynamic portion test */}
+        {resInputs.map((input, index) => {
+          return (
+            <div key={index}>
+              <div className='mt-6 grid grid-cols-1 gap-y-6 gap-x-2 sm:grid-cols-6'>
+                {/* <div className="sm:col-span-6">
+                <div className="mt-1">
+                  <select
+                    id="resType"
+                    name="resType"
+                    className="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md"
+                  >
+                    <option value="object">Object</option>
+                    <option value="array">Array</option>
+                    <option value="boolean">Boolean</option>
+                    <option value="number">Number</option>
+                    <option value="string">String</option>
+                  </select>
+                </div>
+              </div> */}
+
+                <div className='sm:col-span-3'>
+                  <label
+                    htmlFor='resKey'
+                    className='block text-sm font-medium text-gray-300'
+                  >
+                    Key
+                  </label>
+                  <div className='mt-1'>
+                    <input
+                      type='text'
+                      name='resKey'
+                      id='resKey'
+                      value={input.resKey}
+                      onChange={(e) => setResInputs(index, e)}
+                      className='shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md'
+                    />
+                  </div>
+                </div>
+
+                <div className='sm:col-span-3'>
+                  <label
+                    htmlFor='reqValType'
+                    className='block text-sm font-medium text-gray-300'
+                  >
+                    Value Type
+                  </label>
+                  <div className='mt-1'>
+                    <select
+                      id='resValType'
+                      name='resValType'
+                      value={input.resValType}
+                      onChange={(e) => setResInputs(index, e)}
+                      className='shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md'
+                    >
+                      <option value='boolean'>Boolean</option>
+                      <option value='number'>Number</option>
+                      <option value='string'>String</option>
+                      <option value='array'>Array</option>
+                      <option value='object'>Object</option>
+                    </select>
+                  </div>
+                </div>
+              </div>
+            </div>
+          );
+        })}
+
+        {/* <div>
+          <div className="mt-6 grid grid-cols-1 gap-y-6 gap-x-2 sm:grid-cols-6">
+
+          <div className="sm:col-span-6">
+              <div className="mt-1">
                 <select
                   id='resType'
                   name='resType'
@@ -183,10 +338,11 @@ export default function ContractEditor({ handleBodyInput }) {
               </div>
             </div>
           </div>
-        </div>
-
+        </div> */}
+        {/* ///dynamic */}
         <button
           type='button'
+          onClick={addResField}
           className='inline-flex w-full items-center px-2.5 py-1.5 border border-transparent text-xs font-medium rounded text-indigo-700 bg-indigo-100 hover:bg-indigo-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500'
         >
           <svg

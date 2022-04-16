@@ -48,7 +48,7 @@ const requests = [
   // More requests...
 ];
 
-const socket = new WebSocket('ws://localhost:6969');
+const socket = new WebSocket('ws://localhost:1234');
 
 socket.addEventListener('open', (event) => {
   console.log('CONNECTED TO WEB SOCKET FROM CLIENT Side');
@@ -56,8 +56,8 @@ socket.addEventListener('open', (event) => {
 
 socket.addEventListener('message', (event) => {
   // logic to display received data here
-
-  console.log('MESSAGE RECEIVED FROM 6969: ', event.data);
+  // likely use state components
+  console.log('MESSAGE RECEIVED FROM 1234: ', event.data);
 });
 
 const sendMessage = () => {

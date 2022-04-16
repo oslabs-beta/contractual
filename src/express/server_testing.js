@@ -37,7 +37,7 @@ wss.on('connection', (ws) => {
   // Trigger when server receives anything from a client
   ws.on('message', (message) => {
     console.log(`received: %s`, message);
-    ws.send(`2. SERVER 6969 GOT YOUR MESSAGE: ${message}`);
+    ws.send(`2. SERVER 1234 GOT YOUR MESSAGE: ${message}`);
   });
   app2.use('/', (req, res) => {
     //send a websocket message here
@@ -54,7 +54,7 @@ wss.on('connection', (ws) => {
 //   res.status(200).send('AYOOOOOOOOOOOO!!!!!');
 //   // throw new Error();
 // });
-server.listen(6969, () => console.log(`LISTENING ON PORT 6969`));
+server.listen(1234, () => console.log(`LISTENING ON PORT 1234`));
 
 // // Unknown route handler
 // app2.use((req, res) => res.status(404).send('You are in the wrong place! 😡'));
