@@ -40,14 +40,15 @@ interface ContractEndpointProps{
   reqMethod: string,
   setReqMethod: (e: any) => void,
   endpoint: string,
-  setEndpoint: (e: any) => void
-  reqInputs: BodyInputs
-  resInputs: BodyInputs
+  setEndpoint: (e: any) => void,
+  reqInputs: BodyInputs,
+  resInputs: BodyInputs,
+  resetFields: () => void,
 }
 
 
 
-const ContractEndpoint: React.FC<ContractEndpointProps> = ({ reqMethod, setReqMethod, endpoint, setEndpoint, reqInputs, resInputs }): JSX.Element => {
+const ContractEndpoint: React.FC<ContractEndpointProps> = ({ reqMethod, setReqMethod, endpoint, setEndpoint, reqInputs, resInputs, resetFields }): JSX.Element => {
 
   const { currentContract } = useSelector((store: RootState)=> store.contract);
   const dispatch = useDispatch()
@@ -76,8 +77,10 @@ const ContractEndpoint: React.FC<ContractEndpointProps> = ({ reqMethod, setReqMe
     console.log(newContract);
     
     dispatch(addToContract(newContract))
-    // newContract can be the payload of an action
-    // contract.concat(newContract) can be the reducer function
+    
+
+    //Reset form fields
+    resetFields()
   }
 
   const [query, setQuery] = useState('')

@@ -2,7 +2,7 @@
 import React, { Fragment, useState } from 'react'
 import { Disclosure, Menu, Transition, Combobox } from '@headlessui/react'
 import { UserIcon, BellIcon, MenuIcon, XIcon, CheckIcon, SelectorIcon } from '@heroicons/react/outline'
-import { Link, Outlet, useLocation } from 'react-router-dom';
+import { Link, Outlet, useLocation, useNavigate } from 'react-router-dom';
 
 interface EnumContractItem {
   id: number,
@@ -27,7 +27,7 @@ function classNames(...classes) {
 }
 
 export default function Navbar() {
-
+  const navigate = useNavigate()
   const [query, setQuery] = useState('')
   const [selectedContract, setSelectedContract] = useState()
 
@@ -190,15 +190,17 @@ export default function Navbar() {
                         </Menu.Item>
                         <Menu.Item>
                           {({ active }) => (
-                            <a
-                              href="#"
+                            <p
+                              // changed from a tag to p tag in order to add onClick function
+                              // href="#"
                               className={classNames(
                                 active ? 'bg-gray-100' : '',
                                 'block px-4 py-2 text-sm text-gray-700'
                               )}
+                              onClick={() => navigate('../')}
                             >
                               Sign out
-                            </a>
+                            </p>
                           )}
                         </Menu.Item>
                       </Menu.Items>

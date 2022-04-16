@@ -14,6 +14,8 @@ export default function ContractBuilder() {
 
   const [reqMethod, setReqMethod] = useState('GET');
   const [endpoint, setEndpoint] = useState('');
+  const [reqInputs, setReqInputs] = useState<BodyInputs>([{reqKey:'', reqValType: 'Boolean'}])
+  const [resInputs, setResInputs] = useState<BodyInputs>([{resKey:'', resValType: 'Boolean'}])
 
   ///// RECORD CHANGES TO REQ TYPE DROPDOWN IN CONTRACTENDPOINT COMPONENT
   const handleSetReqMethod = (e: any): void => {
@@ -29,11 +31,6 @@ export default function ContractBuilder() {
     console.log("current endpoint string: ", e.target.value);
     setEndpoint(endpoint)
   };
-
-
-  const [reqInputs, setReqInputs] = useState<BodyInputs>([{reqKey:'', reqValType: 'Boolean'}])
-  const [resInputs, setResInputs] = useState<BodyInputs>([{resKey:'', resValType: 'Boolean'}])
-  
 
 
   const handleSetReqInputs = (index, e) => {
@@ -60,7 +57,11 @@ export default function ContractBuilder() {
     setResInputs([...resInputs, additional])
   }
 
-  
+  const resetFields = () => {
+    setReqInputs([{reqKey:'', reqValType: 'Boolean'}])
+    setResInputs([{resKey:'', resValType: 'Boolean'}])
+  }
+
   return (
     <div className='bg-gray-900 h-screen'>
       <ContractEndpoint 
@@ -70,6 +71,7 @@ export default function ContractBuilder() {
         setEndpoint={handleSetEndpoint}
         reqInputs={reqInputs}
         resInputs={resInputs}
+        resetFields={resetFields}
       />
       <ContractEditor  
         reqInputs={reqInputs}
