@@ -1,17 +1,29 @@
 import FrontLog from "../components/FrontLog";
 import { useEffect } from "react";
-import { w3cwebsocket as W3CWebSocket } from "websocket";
 
-const client = new W3CWebSocket("ws://127.0.0.1:1234");
+// console.log(client)
 
 export default function FrontTester() {
+  // const client = new WebSocket('ws://localhost:1234');
+
+  // client.addEventListener('open', function (event) {
+  //   client.send('Hello Backend!');
+  // });
+
+  // client.addEventListener('message', function (event) {
+  //   console.log('Message from ze back', event.data);
+  // });
+
   useEffect(() => {
+    const client = new WebSocket('ws://localhost1234')
     client.onopen = () => {
-      console.log("WebSocket Client Connected");
-    };
-    client.onmessage = (message) => {
+      console.log('Connected to socket');
+    }
+
+    client.onmessage = (event) => {
+      const message = event.data;
       console.log(message);
-    };
+    }
   }, []);
   return (
     <div className="bg-gray-900 h-screen">

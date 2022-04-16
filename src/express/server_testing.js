@@ -1,53 +1,29 @@
 const express2 = require("express");
-const req = require("express/lib/request");
+const ws = require("ws");
+
 const app2 = express2();
-// const path2 = require("path");
 
-// const PORT2 = process.env.PORT || 1234; // setting the port
-
-const webSocketsServerPort = process.env.PORT || 1234;
-const webSocketServer = require("websocket").server;
-// const http = require("http");
-// // Spinning the http server and the websocket server.
-// const server = http.createServer();
-const server = app2.listen(webSocketsServerPort);
-const wsServer = new webSocketServer({
-  httpServer: server,
+// Set up a headless websocket server that prints any
+// events that come in.
+const wsServer = new ws.Server({ noServer: true });
+wsServer.on("connection", (socket) => {
+  socket.on("message", (message) => console.log(message));
 });
 
-app2.get("/", function (req, res) {
-  wsServer.send("connected!!!");
-  res.send("Server testing is ready!");
+// `server` is a vanilla Node.js HTTP server, so use
+// the same ws upgrade process described here:
+// https://www.npmjs.com/package/ws#multiple-servers-sharing-a-single-https-server
+const server = app2.listen(1234);
+server.on("upgrade", (request, socket, head) => {
+  wsServer.handleUpgrade(request, socket, head, (socket) => {
+    wsServer.emit("connection", socket, request);
+  });
 });
 
-// I'm maintaining all active connections in this object
-const clients = {};
 
-// This code generates unique userid for everyuser.
-const getUniqueID = () => {
-  const s4 = () =>
-    Math.floor((1 + Math.random()) * 0x10000)
-      .toString(16)
-      .substring(1);
-  return s4() + s4() + "-" + s4();
-};
 
-wsServer.on("request", function (request) {
-  var userID = getUniqueID();
-  console.log(request);
-  console.log(
-    new Date() +
-      " Recieved a new connection from origin " +
-      request.origin +
-      "."
-  );
-  // You can rewrite this part of the code to accept only the requests from allowed origin
-  const connection = request.accept(null, request.origin);
-  clients[userID] = connection;
-  console.log(
-    "connected: " + userID + " in " + Object.getOwnPropertyNames(clients)
-  );
-});
+
+
 
 // // Unknown route handler
 // app2.use((req, res) => res.status(404).send('You are in the wrong place! 😡'));
