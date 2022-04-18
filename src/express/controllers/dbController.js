@@ -1,5 +1,5 @@
-const db = require("../models/dbModel.js");
-const bcrypt = require("bcrypt");
+const db = require('../models/dbModel.js');
+const bcrypt = require('bcrypt');
 
 const dbController = {};
 
@@ -20,7 +20,7 @@ dbController.getContent = async (req, res, next) => {
     return next();
   } catch (error) {
     return next({
-      log: "Express error in getContent middleware",
+      log: 'Express error in getContent middleware',
       status: 400,
       message: {
         err: `dbController.getContent: ERROR: ${error}`,
@@ -32,12 +32,12 @@ dbController.getContent = async (req, res, next) => {
 // Contract Route => Create token and contract and store in contracts Table
 dbController.addContract = async (req, res, next) => {
   const { title, content, userId } = req.body;
-  console.log("HIT");
+  console.log('HIT');
   console.log(title);
   // function to generate random token
   function makeid(length) {
-    let result = "";
-    const characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+    let result = '';
+    const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
     const charactersLength = characters.length;
     for (let i = 0; i < length; i++) {
       result += characters.charAt(Math.floor(Math.random() * charactersLength));
@@ -67,12 +67,12 @@ dbController.addContract = async (req, res, next) => {
     ;`;
     const addContract = await db.query(addContractQuery, param1);
     console.log(addContract);
-    contractId = addContract["rows"][0]["contract_id"];
+    contractId = addContract['rows'][0]['contract_id'];
 
     res.locals.token = token;
   } catch (error) {
     return next({
-      log: "Express error in addContract middleware",
+      log: 'Express error in addContract middleware',
       status: 400,
       message: {
         err: `dbController.addContract: ERROR: ${error}`,
@@ -91,7 +91,7 @@ dbController.addContract = async (req, res, next) => {
     await db.query(addHistoryQuery, param2);
   } catch (error) {
     return next({
-      log: "Express error in addContract middleware",
+      log: 'Express error in addContract middleware',
       status: 400,
       message: {
         err: `dbController.addContract: ERROR: ${error}`,
@@ -100,7 +100,6 @@ dbController.addContract = async (req, res, next) => {
   }
   return next();
 };
-
 
 // Login Route => verify user info with users Table
 dbController.checkUser = async (req, res, next) => {
@@ -116,7 +115,7 @@ dbController.checkUser = async (req, res, next) => {
     if (userInfo.rows[0] === undefined) {
       return res
         .status(404)
-        .json({ success: false, message: "Incorrect Email!" });
+        .json({ success: false, message: 'Incorrect Email!' });
     }
     bcrypt.compare(password, userInfo.rows[0].password, (err, result) => {
       if (err) return err;
@@ -124,7 +123,7 @@ dbController.checkUser = async (req, res, next) => {
       if (!result)
         return res
           .status(404)
-          .json({ success: false, message: "Incorrect Password!" });
+          .json({ success: false, message: 'Incorrect Password!' });
       const loginRes = {
         success: true,
         userId: userInfo.rows[0].user_id,
@@ -137,33 +136,47 @@ dbController.checkUser = async (req, res, next) => {
     });
   } catch (error) {
     return next({
-      log: "Express error in checkUser middleware",
+      log: 'Express error in checkUser middleware',
       status: 400,
       message: {
         err: `dbController.checkUser: ERROR: ${error}`,
       },
     });
   }
-  // Without b-crypt
-  // const { email, password } = res.locals.loginUser;
-  // const param = [email, password];
-  // try {
-  //   const getUser = `
-  //     SELECT * FROM users
-  //     WHERE email=$1 AND password=$2;
-  //   `;
-  //   const user = await db.query(getUser, param);
-  //   res.locals.name = user.rows[0].name;
-  //   return next();
-  // } catch (error) {
-  //   return next({
-  //     log: 'Express error in checkUser middleware',
-  //     status: 400,
-  //     message: {
-  //       err: `dbController.checkUser: ERROR: ${error}`,
-  //     },
-  //   });
-  // }
+};
+
+dbController.getAccessList = async (req, res, next) => {
+  const { userId } = res.locals.loginData;
+  const param = [userId];
+  try {
+    const tokenListQuery = `
+    SELECT c.title, c.token, uc.permission
+    FROM users_contracts uc INNER JOIN contracts c
+    ON uc.contract_id = c.contract_id
+    WHERE uc.user_id = $1
+    `;
+
+    const accessList = await db.query(tokenListQuery, param);
+    // Save accessible tokens and permission into res.locals.loginData
+    res.locals.loginData.tokens = {};
+    res.locals.loginData.owns = [];
+    accessList.rows.forEach((userAccess) => {
+      const { title, token, permission } = userAccess;
+      res.locals.loginData.tokens[title] = token;
+      if (permission) res.locals.loginData.owns.push(token);
+    });
+    // console.log(accessList.rows);
+    // console.log(res.locals.loginData);
+    return next();
+  } catch (error) {
+    return next({
+      log: 'Express error in getAccessList middleware',
+      status: 400,
+      message: {
+        err: `dbController.getAccessList: ERROR: ${error}`,
+      },
+    });
+  }
 };
 
 // Sign up Route => save user info into users Table
@@ -189,7 +202,7 @@ dbController.saveUser = async (req, res, next) => {
           return next();
         } catch (error) {
           return next({
-            log: "Express error in saveUser middleware",
+            log: 'Express error in saveUser middleware',
             status: 400,
             message: {
               err: `dbController.saveUser: ERROR: ${error}`,
@@ -199,25 +212,6 @@ dbController.saveUser = async (req, res, next) => {
       });
     }
   });
-  // Without b-crypt
-  // try {
-  //   const saveUserQuery = `
-  //       INSERT INTO users (name, email, password)
-  //       VALUES($1, $2, $3)
-  //       RETURNING *
-  //       `;
-  //   const newUser = await db.query(saveUserQuery, params);
-  //   // res.locals.userId = newUser.rows[0].id;
-  //   return next();
-  // } catch (error) {
-  //   return next({
-  //     log: 'Express error in saveUser middleware',
-  //     status: 400,
-  //     message: {
-  //       err: `dbController.saveUser: ERROR: ${error}`,
-  //     },
-  //   });
-  // }
 };
 
 module.exports = dbController;
