@@ -1,3 +1,12 @@
+import { useState, useEffect } from 'react';
+
+const socket = new WebSocket('ws://localhost:1234');
+
+
+
+
+
+
 const success = (
   <span className='inline-flex rounded-full bg-green-100 px-2 text-xs font-semibold leading-5 text-green-800'>
     Success
@@ -9,7 +18,7 @@ const error = (
   </span>
 );
 
-const requests = [
+const requestsOld = [
   {
     endpoint: '/login',
     method: 'POST',
@@ -48,23 +57,27 @@ const requests = [
   // More requests...
 ];
 
-// const socket = new WebSocket('ws://localhost:1234');
-
-// socket.addEventListener('open', (event) => {
-//   console.log('CONNECTED TO WEB SOCKET FROM CLIENT Side');
-// });
-
-// socket.addEventListener('message', (event) => {
-//   // logic to display received data here
-//   // likely use state components
-//   console.log('MESSAGE RECEIVED FROM 1234: ', event.data);
-// });
-
-// const sendMessage = () => {
-//   socket.send('1. CLIENT 1 JUST SEND THIS MESSAGE TO SERVER!!!!!!');
-// };
 
 export default function FrontLog() {
+  const [requests, updateRequests] = useState([]);
+
+
+  socket.addEventListener('open', (event) => {
+    console.log('CONNECTED TO WEB SOCKET FROM CLIENT Side');
+  });
+  
+  socket.addEventListener('message', (event) => {
+    // logic to display received data here
+    // likely use state components
+    console.log('MESSAGE RECEIVED FROM 1234: ', event.data);
+    updateRequests([...requests, JSON.parse(event.data)]);
+  });
+  
+  const sendMessage = () => {
+    socket.send('1. CLIENT 1 JUST SEND THIS MESSAGE TO SERVER!!!!');
+  };
+
+  useEffect(() => {}, []);
   return (
     <div className='col-span-6 px-3'>
       <div className='sm:flex sm:items-center'>
@@ -124,8 +137,8 @@ export default function FrontLog() {
                   </tr>
                 </thead>
                 <tbody className='divide-y divide-gray-200 bg-white'>
-                  {requests.map((request) => (
-                    <tr key={request.method}>
+                  {requests.map((request, i) => (
+                    <tr key={i}>
                       <td className='whitespace-nowrap py-4 pl-4 pr-3 text-sm sm:pl-6'>
                         <div className='flex items-center'>
                           {/* <div className="h-10 w-10 flex-shrink-0">

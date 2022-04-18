@@ -41,7 +41,16 @@ wss.on('connection', (ws) => {
   });
   app2.use('/', (req, res) => {
     //send a websocket message here
-    ws.send('sent from middleware!!!!!!!!!!!!!!!!!!!!!!');
+    // ws.send('sent from middleware!!!!!!!!!!!!!!!!!!!!!!');
+    ws.send(JSON.stringify(
+      {
+        endpoint: '/login',
+        method: 'POST',
+        status: 'success',
+        time: '11:18:21 Feb 05',
+        error: '',
+      }
+    ));
     res.status(200).send('AYOOOOOOOOOOOO!!!!!');
     // throw new Error();
   });
