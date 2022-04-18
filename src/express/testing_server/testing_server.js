@@ -1,57 +1,51 @@
-// const express2 = require("express");
-// const ws = require("ws");
-
-// const app2 = express2();
-
-// // Set up a headless websocket server that prints any
-// // events that come in.
-// const wsServer = new ws.Server({ noServer: true });
-// wsServer.on("connection", (socket) => {
-//   socket.on("message", (message) => console.log(message));
-// });
-
-// // `server` is a vanilla Node.js HTTP server, so use
-// // the same ws upgrade process described here:
-// // https://www.npmjs.com/package/ws#multiple-servers-sharing-a-single-https-server
-// const server = app2.listen(1234);
-// server.on("upgrade", (request, socket, head) => {
-//   wsServer.handleUpgrade(request, socket, head, (socket) => {
-//     wsServer.emit("connection", socket, request);
-//   });
-// });
-
-const express2 = require('express');
+const express2 = require("express");
 const app2 = express2();
-const server = require('http').createServer(app2);
-const WebSocket = require('ws');
+const server = require("http").createServer(app2);
+const WebSocket = require("ws");
+// console.log(process.cwd());
+const dbController = require(path.resolve(
+  __dirname,
+  "../src/express/testing_server/controllers/dbController.js"
+));
 
 app2.use(express.json());
 app2.use(express.urlencoded({ extended: true }));
 
 const wss = new WebSocket.Server({ server: server });
 
-wss.on('connection', (ws) => {
+let currentContract = {};
+
+// receive current contract from contractual frontend
+app2.get("/contract/:token", dbController.getContent, (req, res) => {
+  console.log("updated contract:", currentContract);
+  return res.status(200).json({ success: true });
+});
+
+wss.on("connection", (ws) => {
   // Log when new client connect to this server
-  console.log('********* New Client Connected');
-  ws.send('Welcome New Client');
+  console.log("********* New Client Connected");
+  ws.send("Welcome New Client");
   // Trigger when server receives anything from a client
-  ws.on('message', (message) => {
+  ws.on("message", (message) => {
     console.log(`received: %s`, message);
     ws.send(`2. SERVER 1234 GOT YOUR MESSAGE: ${message}`);
   });
-  app2.use('/', (req, res) => {
+  app2.use("/", (req, res) => {
+    console.log(req.path);
+    console.log(req.method);
+    currentContract = { haha: "haha" };
+    console.log(currentContract);
     //send a websocket message here
-    // ws.send('sent from middleware!!!!!!!!!!!!!!!!!!!!!!');
-    ws.send(JSON.stringify(
-      {
-        endpoint: '/login',
-        method: 'POST',
-        status: 'success',
-        time: '11:18:21 Feb 05',
-        error: '',
-      }
-    ));
-    res.status(200).send('AYOOOOOOOOOOOO!!!!!');
+    ws.send(
+      JSON.stringify({
+        endpoint: "/login",
+        method: "POST",
+        status: "success",
+        time: "11:18:21 Feb 05",
+        error: "",
+      })
+    );
+    res.status(200).send("AYOOOOOOOOOOOO!!!!!");
     // throw new Error();
   });
 });
