@@ -2,10 +2,16 @@ const express2 = require("express");
 const app2 = express2();
 const server = require("http").createServer(app2);
 const WebSocket = require("ws");
+
 // console.log(process.cwd());
 const dbController = require(path.resolve(
   __dirname,
   "../src/express/testing_server/controllers/dbController.js"
+));
+
+const checkController = require(path.resolve(
+  __dirname,
+  "../src/express/testing_server/controllers/checkController.js"
 ));
 
 app2.use(express.json());
@@ -27,20 +33,16 @@ wss.on("connection", (ws) => {
   ws.send("Welcome New Client");
   // Trigger when server receives anything from a client
   ws.on("message", (message) => {
-    console.log(`received: %s`, message);
+    //console.log(`received: %s`, message);
     ws.send(`2. SERVER 1234 GOT YOUR MESSAGE: ${message}`);
   });
-  app2.use("/", middleware1(check type),MW2(generate response),(req, res) => {
-    console.log(req.path);
-    console.log(req.method);
-    currentContract = { haha: "haha" };
-    console.log(currentContract);
+  app2.use("/", checkController.checkReq,(req, res) => {
     //send a websocket message here
     ws.send(
       JSON.stringify({
         endpoint: "/login",
         method: "POST",
-        status: "success",
+        pass: true,
         time: "11:18:21 Feb 05",
         error: "",
       })
