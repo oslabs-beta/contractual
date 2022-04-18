@@ -1,41 +1,21 @@
 import FrontLog from '../components/FrontLog';
-import { useEffect } from 'react';
+import { useState, useEffect } from 'react';
 
-// const socket = new WebSocket('ws://localhost:6969');
 
-// socket.addEventListener('open', (event) => {
-//   console.log('Client 2: CONNECTED TO WEB SOCKET FROM CLIENT Side');
-// });
 
-// socket.addEventListener('message', (event) => {
-//   console.log('Client 2: MESSAGE RECEIVED FROM 6969: ', event.data);
-// });
 
 export default function FrontTester() {
-  // const client = new WebSocket('ws://localhost:1234');
-
-  // client.addEventListener('open', function (event) {
-  //   client.send('Hello Backend!');
-  // });
-
-  // client.addEventListener('message', function (event) {
-  //   console.log('Message from ze back', event.data);
-  // });
-
-  useEffect(() => {
-    // const client = new WebSocket('ws://localhost1234')
-    // client.onopen = () => {
-    //   console.log('Connected to socket');
-    // }
-    // client.onmessage = (event) => {
-    //   const message = event.data;
-    //   console.log(message);
-    // }
-  }, []);
-
+  
   return (
     <div className='bg-gray-900 h-screen'>
       <FrontLog />
+      {/* <button onClick={sendMessage} style={{ color: 'white' }}>
+                SEND MESSAGE
+      </button>
+      {message.map((element, index) => {
+        return (
+        <div style={{color: 'white'}}>{element}</div>
+        )})} */}
     </div>
     // <div className="front-tester-container">
     //   <div className="api-dropdown"></div>

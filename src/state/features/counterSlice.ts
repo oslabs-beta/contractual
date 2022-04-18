@@ -33,5 +33,5 @@ export const counterSlice = createSlice({
 // export your actions here by destructuring counterSlice
 export const { increment, decrement } = counterSlice.actions;
 
-// export the reducer build by counterSlice // contains reducers methods
+// export the reducer built by counterSlice // contains reducers methods
 export default counterSlice.reducer;

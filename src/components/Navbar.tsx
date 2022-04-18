@@ -1,15 +1,8 @@
 /* This example requires Tailwind CSS v2.0+ */
-import React, { Fragment, useState } from 'react';
-import { Disclosure, Menu, Transition, Combobox } from '@headlessui/react';
-import {
-  UserIcon,
-  BellIcon,
-  MenuIcon,
-  XIcon,
-  CheckIcon,
-  SelectorIcon,
-} from '@heroicons/react/outline';
-import { Link, Outlet, useLocation } from 'react-router-dom';
+import React, { Fragment, useState } from 'react'
+import { Disclosure, Menu, Transition, Combobox } from '@headlessui/react'
+import { UserIcon, BellIcon, MenuIcon, XIcon, CheckIcon, SelectorIcon } from '@heroicons/react/outline'
+import { Link, Outlet, useLocation, useNavigate } from 'react-router-dom';
 
 interface EnumContractItem {
   id: number;
@@ -34,8 +27,9 @@ function classNames(...classes) {
 }
 
 export default function Navbar() {
-  const [query, setQuery] = useState('');
-  const [selectedContract, setSelectedContract] = useState();
+  const navigate = useNavigate()
+  const [query, setQuery] = useState('')
+  const [selectedContract, setSelectedContract] = useState()
 
   const filteredContracts =
     query === ''

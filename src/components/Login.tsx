@@ -39,7 +39,7 @@ const Login = () => {
         .then((response) => {
           console.log(response);
           if (response.status === 200) {
-            navigate('navbar');
+            navigate("navbar");
           }
         })
         .catch((error) => {
@@ -94,11 +94,7 @@ const Login = () => {
                     onBlur={formik.handleBlur}
                   />
                 </div>
-                {formik.touched.email && formik.errors.email ? (
-                  <p>{formik.errors.email}</p>
-                ) : (
-                  <p>&nbsp;</p>
-                )}
+                {formik.touched.email && formik.errors.email ? (<p style={{color: 'red'}}>{formik.errors.email}</p>) : (<p>&nbsp;</p>)}
               </div>
 
               <div>
@@ -122,11 +118,7 @@ const Login = () => {
                     onBlur={formik.handleBlur}
                   />
                 </div>
-                {formik.touched.password && formik.errors.password ? (
-                  <p>{formik.errors.password}</p>
-                ) : (
-                  <p>&nbsp;</p>
-                )}
+                {formik.touched.password && formik.errors.password ? (<p style={{color: 'red'}}>{formik.errors.password}</p>) : (<p>&nbsp;</p>)}
               </div>
 
               <div>

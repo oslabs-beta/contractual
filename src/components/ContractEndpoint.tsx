@@ -36,25 +36,23 @@ type KeyAndType = {
 };
 type BodyInputs = KeyAndType[];
 
-interface ContractEndpointProps {
-  reqMethod: string;
-  setReqMethod: (e: any) => void;
-  endpoint: string;
-  setEndpoint: (e: any) => void;
-  reqInputs: BodyInputs;
-  resInputs: BodyInputs;
+
+interface ContractEndpointProps{
+  reqMethod: string,
+  setReqMethod: (e: any) => void,
+  endpoint: string,
+  setEndpoint: (e: any) => void,
+  reqInputs: BodyInputs,
+  resInputs: BodyInputs,
+  resetFields: () => void,
 }
 
-const ContractEndpoint: React.FC<ContractEndpointProps> = ({
-  reqMethod,
-  setReqMethod,
-  endpoint,
-  setEndpoint,
-  reqInputs,
-  resInputs,
-}): JSX.Element => {
-  const { currentContract } = useSelector((store: RootState) => store.contract);
-  const dispatch = useDispatch();
+
+
+const ContractEndpoint: React.FC<ContractEndpointProps> = ({ reqMethod, setReqMethod, endpoint, setEndpoint, reqInputs, resInputs, resetFields }): JSX.Element => {
+
+  const { currentContract } = useSelector((store: RootState)=> store.contract);
+  const dispatch = useDispatch()
 
   // save contract needs to be a reducer function adding to our store object
   // would also pass in req body and res body
@@ -82,11 +80,13 @@ const ContractEndpoint: React.FC<ContractEndpointProps> = ({
     newContract[`Req@${reqMethod}@${endpoint}`] = reqBody; // should pass in request object here
     newContract[`Res@${reqMethod}@${endpoint}`] = resBody; // should pass in response object here
     console.log(newContract);
+    
+    dispatch(addToContract(newContract))
+    
 
-    dispatch(addToContract(newContract));
-    // newContract can be the payload of an action
-    // contract.concat(newContract) can be the reducer function
-  };
+    //Reset form fields
+    resetFields()
+  }
 
   const [query, setQuery] = useState('');
   const [selectedEndpoint, setSelectedEndpoint] = useState();
