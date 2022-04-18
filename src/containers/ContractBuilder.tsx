@@ -1,17 +1,15 @@
-import { useState } from 'react'
+import { useState } from 'react';
 import ContractEndpoint from '../components/ContractEndpoint';
 import ContractEditor from '../components/ContractEditor';
 
-
 /////TESTING DYNAMIC INPUTS
 type KeyAndType = {
-  [key: string]: string
+  [key: string]: string;
 };
 type BodyInputs = KeyAndType[];
 /// TEST END///////
 
 export default function ContractBuilder() {
-
   const [reqMethod, setReqMethod] = useState('GET');
   const [endpoint, setEndpoint] = useState('');
   const [reqInputs, setReqInputs] = useState<BodyInputs>([{reqKey:'', reqValType: 'Boolean'}])
@@ -19,17 +17,16 @@ export default function ContractBuilder() {
 
   ///// RECORD CHANGES TO REQ TYPE DROPDOWN IN CONTRACTENDPOINT COMPONENT
   const handleSetReqMethod = (e: any): void => {
-    const method:string = e.target.value
-    console.log("method changed: ", method)
+    const method: string = e.target.value;
+    console.log('method changed: ', method);
     setReqMethod(method);
   };
-
 
   //// RECORD CHANGES IN ENDPOINT INPUT FIELD IN CONTRACTENDPOINT COMPONENET
   const handleSetEndpoint = (e: any): void => {
     const endpoint: string = e.target.value;
-    console.log("current endpoint string: ", e.target.value);
-    setEndpoint(endpoint)
+    console.log('current endpoint string: ', e.target.value);
+    setEndpoint(endpoint);
   };
 
 
@@ -37,25 +34,25 @@ export default function ContractBuilder() {
     let data = [...reqInputs];
     data[index][e.target.name] = e.target.value;
     console.log('Request Box changed: ', data);
-    setReqInputs(data)
-  }
+    setReqInputs(data);
+  };
   const handleSetResInputs = (index, e) => {
     let data = [...resInputs];
-    data[index][e.target.name] = e.target.value
+    data[index][e.target.name] = e.target.value;
     console.log('Response Box changed: ', data);
-    setResInputs(data)
-  }
+    setResInputs(data);
+  };
 
   const addReqField = () => {
-    let additional = {reqKey: '', reqValType: 'Boolean'};
-    console.log('new Request field added')
-    setReqInputs([...reqInputs, additional])
-  }
+    let additional = { reqKey: '', reqValType: 'Boolean' };
+    console.log('new Request field added');
+    setReqInputs([...reqInputs, additional]);
+  };
   const addResField = () => {
-    let additional = {resKey: '', resValType: 'Boolean'};
-    console.log('new Response field added')
-    setResInputs([...resInputs, additional])
-  }
+    let additional = { resKey: '', resValType: 'Boolean' };
+    console.log('new Response field added');
+    setResInputs([...resInputs, additional]);
+  };
 
   const resetFields = () => {
     setReqInputs([{reqKey:'', reqValType: 'Boolean'}])
@@ -64,16 +61,16 @@ export default function ContractBuilder() {
 
   return (
     <div className='bg-gray-900 h-screen'>
-      <ContractEndpoint 
-        reqMethod={reqMethod} 
-        setReqMethod={handleSetReqMethod} 
-        endpoint={endpoint} 
+      <ContractEndpoint
+        reqMethod={reqMethod}
+        setReqMethod={handleSetReqMethod}
+        endpoint={endpoint}
         setEndpoint={handleSetEndpoint}
         reqInputs={reqInputs}
         resInputs={resInputs}
         resetFields={resetFields}
       />
-      <ContractEditor  
+      <ContractEditor
         reqInputs={reqInputs}
         resInputs={resInputs}
         setReqInputs={handleSetReqInputs}
@@ -81,7 +78,7 @@ export default function ContractBuilder() {
         addReqField={addReqField}
         addResField={addResField}
       />
-     {/* <div className="request-specification-container">
+      {/* <div className="request-specification-container">
        <div className="request-method">Request type</div>
        <div>endpoint</div>
        <div>save as</div>

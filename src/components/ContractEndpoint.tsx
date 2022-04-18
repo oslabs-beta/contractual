@@ -1,15 +1,19 @@
 import React, { useState } from 'react';
-import { Menu, Transition, Combobox } from '@headlessui/react'
-import { ChevronDownIcon, CheckIcon, SelectorIcon } from '@heroicons/react/solid'
+import { Menu, Transition, Combobox } from '@headlessui/react';
+import {
+  ChevronDownIcon,
+  CheckIcon,
+  SelectorIcon,
+} from '@heroicons/react/solid';
 import { string } from 'yup';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '../state/store';
 import { addToContract } from '../state/features/contractSlice';
 
 interface EnumEndpointItem {
-  id: number,
-  name: string
-};
+  id: number;
+  name: string;
+}
 
 const endpoints: EnumEndpointItem[] = [
   { id: 1, name: '/login' },
@@ -21,17 +25,14 @@ const endpoints: EnumEndpointItem[] = [
   { id: 7, name: '/frontend' },
   { id: 8, name: '/backend' },
   // More endpoints...
-]
-
+];
 
 function classNames(...classes) {
-  return classes.filter(Boolean).join(' ')
+  return classes.filter(Boolean).join(' ');
 }
 
-
-
 type KeyAndType = {
-  [key: string]: string
+  [key: string]: string;
 };
 type BodyInputs = KeyAndType[];
 
@@ -58,22 +59,26 @@ const ContractEndpoint: React.FC<ContractEndpointProps> = ({ reqMethod, setReqMe
   // concat our 'newContract' object to the store state?
   // one pair each implementation
 
-
-  const saveContract = (reqMethod: string, endpoint: string, reqInputs: BodyInputs, resInputs: BodyInputs): void => {
+  const saveContract = (
+    reqMethod: string,
+    endpoint: string,
+    reqInputs: BodyInputs,
+    resInputs: BodyInputs
+  ): void => {
     // name of contract could be argument
     const reqBody = {};
-    const resBody = {}
-    const newContract = {}
+    const resBody = {};
+    const newContract = {};
 
     reqInputs.forEach((input) => {
-      reqBody[input.reqKey] = input.reqValType
-    })
+      reqBody[input.reqKey] = input.reqValType;
+    });
     resInputs.forEach((input) => {
-      resBody[input.resKey] = input.resValType
-    })
+      resBody[input.resKey] = input.resValType;
+    });
 
-    newContract[`Req@${reqMethod}@${endpoint}`] = reqBody // should pass in request object here
-    newContract[`Res@${reqMethod}@${endpoint}`] = resBody // should pass in response object here
+    newContract[`Req@${reqMethod}@${endpoint}`] = reqBody; // should pass in request object here
+    newContract[`Res@${reqMethod}@${endpoint}`] = resBody; // should pass in response object here
     console.log(newContract);
     
     dispatch(addToContract(newContract))
@@ -83,38 +88,38 @@ const ContractEndpoint: React.FC<ContractEndpointProps> = ({ reqMethod, setReqMe
     resetFields()
   }
 
-  const [query, setQuery] = useState('')
-  const [selectedEndpoint, setSelectedEndpoint] = useState()
+  const [query, setQuery] = useState('');
+  const [selectedEndpoint, setSelectedEndpoint] = useState();
 
   const endpointChange = (event) => {
     setQuery(event.target.value);
     setEndpoint(event);
-  }
+  };
 
-
- 
   const filteredEndpoints =
     query === ''
       ? endpoints
       : endpoints.filter((endpoint: EnumEndpointItem) => {
-          return endpoint.name.toLowerCase().includes(query.toLowerCase())
-        })
+          return endpoint.name.toLowerCase().includes(query.toLowerCase());
+        });
 
   return (
     <div>
       <div className='grid grid-cols-12 gap-1 px-3 py-3 grid-flow-col'>
-        <div className="col-span-3 sm:col-span-2 md:col-span-2 lg:col-span-1">
+        <div className='col-span-3 sm:col-span-2 md:col-span-2 lg:col-span-1'>
           <select
-            id="reqMethod"
-            name="reqMethod"
-            onChange={(e) => {setReqMethod(e)}}
-            className="mt-1 block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+            id='reqMethod'
+            name='reqMethod'
+            onChange={(e) => {
+              setReqMethod(e);
+            }}
+            className='mt-1 block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm'
           >
-            <option value="GET" >GET</option>
-            <option value="POST" >POST</option>
-            <option value="PUT" >PUT</option>
-            <option value="PATCH" >PATCH</option>
-            <option value="DELETE" >DELETE</option>
+            <option value='GET'>GET</option>
+            <option value='POST'>POST</option>
+            <option value='PUT'>PUT</option>
+            <option value='PATCH'>PATCH</option>
+            <option value='DELETE'>DELETE</option>
           </select>
         </div>
         {/* <button onClick={() => {console.log(currentContract)}}>check current state of contract</button> */}
@@ -128,24 +133,31 @@ const ContractEndpoint: React.FC<ContractEndpointProps> = ({ reqMethod, setReqMe
             className="h-[2.4rem] mt-1 block w-full shadow-sm sm:text-md border-gray-300 rounded-md px-3 py-2"
           />
         </div> */}
-        <div className="col-span-7 sm:col-span-8 md:col-span-8 lg:col-span-9">
-          <Combobox as="div" value={selectedEndpoint} onChange={setSelectedEndpoint}>
-            <div className="relative mt-1">
+        <div className='col-span-7 sm:col-span-8 md:col-span-8 lg:col-span-9'>
+          <Combobox
+            as='div'
+            value={selectedEndpoint}
+            onChange={setSelectedEndpoint}
+          >
+            <div className='relative mt-1'>
               <Combobox.Input
-                type="endpoint"
-                name="endpoint"
-                id="endpoint"
+                type='endpoint'
+                name='endpoint'
+                id='endpoint'
                 value={endpoint}
-                className="w-full rounded-md border border-gray-300 bg-white py-2 pl-3 pr-10 shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-1 focus:ring-indigo-500 sm:text-sm"
+                className='w-full rounded-md border border-gray-300 bg-white py-2 pl-3 pr-10 shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-1 focus:ring-indigo-500 sm:text-sm'
                 onChange={(event) => endpointChange(event)}
                 displayValue={(endpoint: EnumEndpointItem) => endpoint.name}
               />
-              <Combobox.Button className="absolute inset-y-0 right-0 flex items-center rounded-r-md px-2 focus:outline-none">
-                <SelectorIcon className="h-5 w-5 text-gray-400" aria-hidden="true" />
+              <Combobox.Button className='absolute inset-y-0 right-0 flex items-center rounded-r-md px-2 focus:outline-none'>
+                <SelectorIcon
+                  className='h-5 w-5 text-gray-400'
+                  aria-hidden='true'
+                />
               </Combobox.Button>
 
               {filteredEndpoints.length > 0 && (
-                <Combobox.Options className="absolute z-10 mt-1 max-h-60 w-full overflow-auto rounded-md bg-white py-1 text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm">
+                <Combobox.Options className='absolute z-10 mt-1 max-h-60 w-full overflow-auto rounded-md bg-white py-1 text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm'>
                   {filteredEndpoints.map((endpoint) => (
                     <Combobox.Option
                       key={endpoint.id}
@@ -159,7 +171,14 @@ const ContractEndpoint: React.FC<ContractEndpointProps> = ({ reqMethod, setReqMe
                     >
                       {({ active, selected }) => (
                         <>
-                          <span className={classNames('block truncate', selected && 'font-semibold')}>{endpoint.name}</span>
+                          <span
+                            className={classNames(
+                              'block truncate',
+                              selected && 'font-semibold'
+                            )}
+                          >
+                            {endpoint.name}
+                          </span>
 
                           {selected && (
                             <span
@@ -168,7 +187,10 @@ const ContractEndpoint: React.FC<ContractEndpointProps> = ({ reqMethod, setReqMe
                                 active ? 'text-white' : 'text-indigo-600'
                               )}
                             >
-                              <CheckIcon className="h-5 w-5" aria-hidden="true" />
+                              <CheckIcon
+                                className='h-5 w-5'
+                                aria-hidden='true'
+                              />
                             </span>
                           )}
                         </>
@@ -181,11 +203,12 @@ const ContractEndpoint: React.FC<ContractEndpointProps> = ({ reqMethod, setReqMe
           </Combobox>
         </div>
 
-
-        <div className="col-span-2 sm:col-span-2 md:col-span-2 lg:col-span-3 text-right">
+        <div className='col-span-2 sm:col-span-2 md:col-span-2 lg:col-span-3 text-right'>
           <button
-            className="inline-flex w-full justify-center mt-1 py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
-            onClick={() => {saveContract(reqMethod, endpoint, reqInputs, resInputs)}}
+            className='inline-flex w-full justify-center mt-1 py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500'
+            onClick={() => {
+              saveContract(reqMethod, endpoint, reqInputs, resInputs);
+            }}
           >
             Save
           </button>
@@ -210,7 +233,7 @@ const ContractEndpoint: React.FC<ContractEndpointProps> = ({ reqMethod, setReqMe
         </form>
       </div> */}
     </div>
-  )
-}
+  );
+};
 
 export default ContractEndpoint;

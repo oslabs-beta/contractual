@@ -2,11 +2,10 @@ import BackEndpoint from '../components/BackEndpoint';
 import BackLog from '../components/BackLog';
 
 export default function BackTester() {
-
   return (
     <div className='bg-gray-900 h-screen'>
-      <BackEndpoint/>
-      <BackLog/>
+      <BackEndpoint />
+      <BackLog />
     </div>
     // <div className="back-tester-container">
     //   <div className="request-container">
