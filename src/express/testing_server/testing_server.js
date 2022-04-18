@@ -30,7 +30,7 @@ wss.on("connection", (ws) => {
     console.log(`received: %s`, message);
     ws.send(`2. SERVER 1234 GOT YOUR MESSAGE: ${message}`);
   });
-  app2.use("/", (req, res) => {
+  app2.use("/", middleware1(check type),MW2(generate response),(req, res) => {
     console.log(req.path);
     console.log(req.method);
     currentContract = { haha: "haha" };
