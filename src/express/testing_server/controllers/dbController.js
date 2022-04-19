@@ -1,4 +1,4 @@
-const db = require("../models/dbModel.js");
+const db = require('../models/dbModel.js');
 
 const dbController = {};
 
@@ -17,7 +17,7 @@ dbController.getContent = async (req, res, next) => {
     return next();
   } catch (error) {
     return next({
-      log: "Express error in getContent middleware",
+      log: 'Express error in getContent middleware',
       status: 400,
       message: {
         err: `dbController.getContent: ERROR: ${error}`,
@@ -25,6 +25,5 @@ dbController.getContent = async (req, res, next) => {
     });
   }
 };
-
 
 module.exports = dbController;
