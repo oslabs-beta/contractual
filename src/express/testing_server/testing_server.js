@@ -8,23 +8,26 @@ const dbController = require(path.resolve(
   '../src/express/testing_server/controllers/dbController.js'
 ));
 
+const checkController = require(path.resolve(
+  __dirname,
+  '../src/express/testing_server/controllers/checkController.js'
+));
+
+const mockController = require(path.resolve(
+  __dirname,
+  '../src/express/testing_server/controllers/mockController.js'
+));
+
 app2.use(express.json());
 app2.use(express.urlencoded({ extended: true }));
 
 const wss = new WebSocket.Server({ server: server });
 
-let currentContract = {
-  'Req@POST@/login': { username: 'string', age: 'number' },
-  'Res@POST@/login': { success: 'boolean' },
-  'Req@POST@/habits': { habitname: 'string', target: 'number' },
-  'Res@POST@/habits': { currentHabits: 'array-boolean-7' },
-  'Req@GET@/': { email: 'string', pw: 'string' },
-  'Res@GET@/': { success: 'boolean' },
-};
+let currentContract = {};
 
 // receive current contract from contractual frontend
 app2.get('/contract/:token', dbController.getContent, (req, res) => {
-  console.log('updated contract:', currentContract);
+  // console.log('updated contract:', currentContract);
   return res.status(200).json({ success: true });
 });
 
@@ -34,26 +37,23 @@ wss.on('connection', (ws) => {
   ws.send('Welcome New Client');
   // Trigger when server receives anything from a client
   ws.on('message', (message) => {
-    console.log(`received: %s`, message);
+    //console.log(`received: %s`, message);
     ws.send(`2. SERVER 1234 GOT YOUR MESSAGE: ${message}`);
   });
-  app2.use('/', dbController.generateMock, (req, res) => {
-    console.log(req.path);
-    console.log(req.method);
-    currentContract = { haha: 'haha' };
-    console.log(currentContract);
-    //send a websocket message here
-    ws.send(
-      JSON.stringify({
-        endpoint: '/login',
-        method: 'POST',
-        status: 'success',
-        time: '11:18:21 Feb 05',
-        error: '',
-      })
-    );
-    res.status(200).send('AYOOOOOOOOOOOO!!!!!');
-  });
+
+  app2.use(
+    '/',
+    checkController.checkReq,
+    mockController.generateMock,
+    (req, res) => {
+      //send a websocket message here
+      ws.send(JSON.stringify(res.locals.report));
+      console.log('report', res.locals.report);
+
+      // Send back mock response
+      res.status(200).send(res.locals.mockRes);
+    }
+  );
 });
 
 // app2.use('/', (req, res) => {

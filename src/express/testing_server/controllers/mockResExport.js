@@ -52,21 +52,20 @@ function genMockResponse(contracts, condition) {
   // Set the corresponding condition O(n), req@... => res@...
   let reqOrRes = condition[2] === 'q' ? 's' : 'q';
   const resCondition = condition.replace(condition[2], reqOrRes);
-
   // Retreive the expected data contract from user
-  const mockResponse = contracts[resCondition];
-
+  const mockResponseTemplate = contracts[resCondition];
   // Generate mock with homemade randomize obj method
-  for (let key in mockResponse) {
-    const dataType = mockResponse[key];
+  const mockRes = {};
+  for (let key in mockResponseTemplate) {
+    const dataType = mockResponseTemplate[key];
     if (dataType.includes('array')) {
       const parsedArrType = extractArrType(dataType);
-      mockResponse[key] = randomize.array(parsedArrType[0], parsedArrType[1]);
+      mockRes[key] = randomize.array(parsedArrType[0], parsedArrType[1]);
     } else {
-      mockResponse[key] = randomize[dataType]();
+      mockRes[key] = randomize[dataType]();
     }
   }
-  return mockResponse;
+  return mockRes;
 }
 
 // Extract array-type-length format
@@ -79,12 +78,12 @@ function extractArrType(dataTypeStr) {
   return [mockArrContent, Number(mockArrLength)];
 }
 
-const dataContract = {
-  'Req@POST@/login': { username: 'string', age: 'number' },
-  'Res@POST@/login': { success: 'boolean' },
-  'Req@POST@/habits': { habitname: 'string', target: 'number' },
-  'Res@POST@/habits': { currentHabits: 'array-boolean-7' },
-};
+// const dataContract = {
+//   'Req@POST@/login': { username: 'string', age: 'number' },
+//   'Res@POST@/login': { success: 'boolean' },
+//   'Req@POST@/habits': { habitname: 'string', target: 'number' },
+//   'Res@POST@/habits': { currentHabits: 'array-boolean-7' },
+// };
 
 // console.log(genMockResponse(dataContract, 'Req@POST@/habits'));
 
