@@ -35,6 +35,8 @@ const randomize = {
   // Array Generator
   array: (content, length) =>
     Array.from({ length: length }, randomize[content]),
+
+  // Data Contract Method
 };
 
 /**
@@ -43,7 +45,7 @@ const randomize = {
  * @param condition - key in data contracts
  */
 
-function mockResponse(contracts, condition) {
+function genMockResponse(contracts, condition) {
   // Check if condition exists in contracts
   if (!(condition in contracts)) return 'Condition not found!';
 
@@ -84,8 +86,9 @@ const dataContract = {
   'Res@POST@/habits': { currentHabits: 'array-boolean-7' },
 };
 
-console.log(mockResponse(dataContract, 'Req@POST@/habits'));
+// console.log(genMockResponse(dataContract, 'Req@POST@/habits'));
 
-module.exports = randomize;
+exports.mock = randomize;
+exports.mockResponse = genMockResponse;
 
 // string 5
