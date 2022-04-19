@@ -100,8 +100,8 @@ export default function BackEndpoint({ reqMethod, setReqMethod, endpoint, setEnd
 
   return (
     <div className='sticky top-16 z-50 bg-gray-900 shadow-lg'>
-      <div className='grid grid-cols-12 gap-1 px-3 py-3 grid-flow-col'>
-        <div className='col-span-2 sm:col-span-2'>
+      <div className='grid grid-cols-12 gap-1 px-3 py-3'>
+        <div className='col-span-4 sm:col-span-2'>
           <div>
             <select
               id="reqMethod"
@@ -165,7 +165,7 @@ export default function BackEndpoint({ reqMethod, setReqMethod, endpoint, setEnd
             </div>
           </Combobox>
         </div>
-        <div className='col-span-2 sm:col-span-3'>
+        <div className='col-span-12 sm:col-span-3'>
           <button
             type="button"
             className="items-center text-center h-[38px] w-full mt-1 px-2.5 py-1.5 border border-transparent text-sm font-medium rounded shadow-sm text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"

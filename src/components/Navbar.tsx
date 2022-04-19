@@ -35,14 +35,16 @@ export default function Navbar() {
     query === ''
       ? contracts
       : contracts.filter((contract: EnumContractItem) => {
-          return contract.name.toLowerCase().includes(query.toLowerCase());
-        });
+        return contract.name.toLowerCase().includes(query.toLowerCase());
+      });
 
   const location = useLocation();
   let currentStyle =
     'bg-gray-900 text-white px-3 py-2 rounded-md text-sm font-medium';
   let defaultStyle =
     'text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium';
+  let currentStyleMobile = 'bg-gray-900 text-white block px-3 py-2 rounded-md text-base font-medium';
+  let defaultStyleMobile = 'text-gray-300 hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium';
 
   console.log('location: ' + location.pathname);
 
@@ -146,7 +148,7 @@ export default function Navbar() {
                         to='contract'
                         className={
                           location.pathname === '/navbar' ||
-                          location.pathname === '/navbar/contract'
+                            location.pathname === '/navbar/contract'
                             ? currentStyle
                             : defaultStyle
                         }
@@ -279,34 +281,63 @@ export default function Navbar() {
             <Disclosure.Panel className='sm:hidden'>
               <div className='px-2 pt-2 pb-3 space-y-1'>
                 {/* Current: "bg-gray-900 text-white", Default: "text-gray-300 hover:bg-gray-700 hover:text-white" */}
-                <Disclosure.Button
-                  as='a'
-                  href='#'
-                  className='bg-gray-900 text-white block px-3 py-2 rounded-md text-base font-medium'
-                >
-                  Contract
-                </Disclosure.Button>
-                <Disclosure.Button
-                  as='a'
-                  href='#'
-                  className='text-gray-300 hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium'
-                >
-                  Frontend
-                </Disclosure.Button>
-                <Disclosure.Button
-                  as='a'
-                  href='#'
-                  className='text-gray-300 hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium'
-                >
-                  Backend
-                </Disclosure.Button>
-                <Disclosure.Button
-                  as='a'
-                  href='#'
-                  className='text-gray-300 hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium'
-                >
-                  Documentation
-                </Disclosure.Button>
+                <Link to='contract'>
+                  <Disclosure.Button
+                    as='a'
+                    href='#'
+                    className={
+                      location.pathname === '/navbar' ||
+                        location.pathname === '/navbar/contract'
+                        ? currentStyleMobile
+                        : defaultStyleMobile
+                    }
+                  >
+                    Contract
+                  </Disclosure.Button>
+                </Link>
+
+                <Link to='front'>
+                  <Disclosure.Button
+                    as='a'
+                    href='#'
+                    className={
+                      location.pathname === '/navbar/front'
+                        ? currentStyleMobile
+                        : defaultStyleMobile
+                    }
+                  >
+                    Frontend
+                  </Disclosure.Button>
+                </Link>
+
+                <Link to='back'>
+                  <Disclosure.Button
+                    as='a'
+                    href='#'
+                    className={
+                      location.pathname === '/navbar/back'
+                        ? currentStyleMobile
+                        : defaultStyleMobile
+                    }
+                  >
+                    Backend
+                  </Disclosure.Button>
+                </Link>
+
+                <Link to='document'>
+                  <Disclosure.Button
+                    as='a'
+                    href='#'
+                    className={
+                      location.pathname === '/navbar/document'
+                        ? currentStyleMobile
+                        : defaultStyleMobile
+                    }
+                  >
+                    Documentation
+                  </Disclosure.Button>
+                </Link>
+
               </div>
               <div className='pt-4 pb-3 border-t border-gray-700'>
                 <div className='flex items-center px-5'>

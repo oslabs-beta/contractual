@@ -13,22 +13,22 @@ import Register from './components/Register';
 export default function App() {
   return (
     <div>
-     <Router>
-      <div className="App">
-        <Routes>
-          <Route index element={<Login/>} />
-          <Route path="/" element={<Login/>} />
-          <Route path="register" element={<Register/>} />
-          <Route path="navbar" element={<Navbar/>} >
-            <Route index element={<ContractBuilder/>} />
-            <Route path="contract" element={<ContractBuilder/>} />
-            <Route path="front" element={<> <FrontTester/> </>} />
-            <Route path="back" element={<> <BackTester/> </>} />
-            <Route path="document" element={<> <DocumentCreator/> </>} />
-          </Route>
-        </Routes>
-      </div>
-    </Router>
+      <Router>
+        <div className="App bg-gray-900">
+          <Routes>
+            <Route index element={<Login />} />
+            <Route path="/" element={<Login />} />
+            <Route path="register" element={<Register />} />
+            <Route path="navbar" element={<Navbar />} >
+              <Route index element={<ContractBuilder />} />
+              <Route path="contract" element={<ContractBuilder />} />
+              <Route path="front" element={<> <FrontTester /> </>} />
+              <Route path="back" element={<> <BackTester /> </>} />
+              <Route path="document" element={<> <DocumentCreator /> </>} />
+            </Route>
+          </Routes>
+        </div>
+      </Router>
     </div>
   );
 }
