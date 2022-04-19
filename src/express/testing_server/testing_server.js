@@ -36,17 +36,10 @@ wss.on("connection", (ws) => {
     //console.log(`received: %s`, message);
     ws.send(`2. SERVER 1234 GOT YOUR MESSAGE: ${message}`);
   });
-  app2.use("/", checkController.checkReq,(req, res) => {
+  app2.use("/", checkController.checkReq, (req, res) => {
     //send a websocket message here
-    ws.send(
-      JSON.stringify({
-        endpoint: "/login",
-        method: "POST",
-        pass: true,
-        time: "11:18:21 Feb 05",
-        error: "",
-      })
-    );
+    ws.send(JSON.stringify(res.locals.report));
+    console.log(res.locals.report);
     res.status(200).send("AYOOOOOOOOOOOO!!!!!");
     // throw new Error();
   });

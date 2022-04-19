@@ -23,7 +23,7 @@ checkController.checkReq = async (req, res, next) => {
   report["pass"] = result.pass;
   report["time"] = getTime();
   report["error"] = result.error;
-  
+  res.locals.report = report;
   return next();
 };
 
