@@ -37,7 +37,7 @@ type KeyAndType = {
 type BodyInputs = KeyAndType[];
 
 
-interface ContractEndpointProps{
+interface ContractEndpointProps {
   reqMethod: string,
   setReqMethod: (e: any) => void,
   endpoint: string,
@@ -51,7 +51,7 @@ interface ContractEndpointProps{
 
 const ContractEndpoint: React.FC<ContractEndpointProps> = ({ reqMethod, setReqMethod, endpoint, setEndpoint, reqInputs, resInputs, resetFields }): JSX.Element => {
 
-  const { currentContract } = useSelector((store: RootState)=> store.contract);
+  const { currentContract } = useSelector((store: RootState) => store.contract);
   const dispatch = useDispatch()
 
   // save contract needs to be a reducer function adding to our store object
@@ -80,9 +80,9 @@ const ContractEndpoint: React.FC<ContractEndpointProps> = ({ reqMethod, setReqMe
     newContract[`Req@${reqMethod}@${endpoint}`] = reqBody; // should pass in request object here
     newContract[`Res@${reqMethod}@${endpoint}`] = resBody; // should pass in response object here
     console.log(newContract);
-    
+
     dispatch(addToContract(newContract))
-    
+
 
     //Reset form fields
     resetFields()
@@ -100,8 +100,8 @@ const ContractEndpoint: React.FC<ContractEndpointProps> = ({ reqMethod, setReqMe
     query === ''
       ? endpoints
       : endpoints.filter((endpoint: EnumEndpointItem) => {
-          return endpoint.name.toLowerCase().includes(query.toLowerCase());
-        });
+        return endpoint.name.toLowerCase().includes(query.toLowerCase());
+      });
 
   return (
     <div>
