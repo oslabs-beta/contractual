@@ -12,8 +12,8 @@ type BodyInputs = KeyAndType[];
 export default function ContractBuilder() {
   const [reqMethod, setReqMethod] = useState('GET');
   const [endpoint, setEndpoint] = useState('');
-  const [reqInputs, setReqInputs] = useState<BodyInputs>([{reqKey:'', reqValType: 'Boolean'}])
-  const [resInputs, setResInputs] = useState<BodyInputs>([{resKey:'', resValType: 'Boolean'}])
+  const [reqInputs, setReqInputs] = useState<BodyInputs>([{ reqKey: '', reqValType: 'Boolean' }])
+  const [resInputs, setResInputs] = useState<BodyInputs>([{ resKey: '', resValType: 'Boolean' }])
 
   ///// RECORD CHANGES TO REQ TYPE DROPDOWN IN CONTRACTENDPOINT COMPONENT
   const handleSetReqMethod = (e: any): void => {
@@ -44,19 +44,19 @@ export default function ContractBuilder() {
   };
 
   const addReqField = () => {
-    let additional = { reqKey: '', reqValType: 'Boolean' };
+    let additional = { reqKey: '', reqValType: 'boolean' };
     console.log('new Request field added');
     setReqInputs([...reqInputs, additional]);
   };
   const addResField = () => {
-    let additional = { resKey: '', resValType: 'Boolean' };
+    let additional = { resKey: '', resValType: 'boolean' };
     console.log('new Response field added');
     setResInputs([...resInputs, additional]);
   };
 
   const resetFields = () => {
-    setReqInputs([{reqKey:'', reqValType: 'Boolean'}])
-    setResInputs([{resKey:'', resValType: 'Boolean'}])
+    setReqInputs([{ reqKey: '', reqValType: 'boolean' }])
+    setResInputs([{ resKey: '', resValType: 'boolean' }])
   }
 
   return (

@@ -37,7 +37,7 @@ type KeyAndType = {
 type BodyInputs = KeyAndType[];
 
 
-interface ContractEndpointProps{
+interface ContractEndpointProps {
   reqMethod: string,
   setReqMethod: (e: any) => void,
   endpoint: string,
@@ -51,7 +51,7 @@ interface ContractEndpointProps{
 
 const ContractEndpoint: React.FC<ContractEndpointProps> = ({ reqMethod, setReqMethod, endpoint, setEndpoint, reqInputs, resInputs, resetFields }): JSX.Element => {
 
-  const { currentContract } = useSelector((store: RootState)=> store.contract);
+  const { currentContract } = useSelector((store: RootState) => store.contract);
   const dispatch = useDispatch()
 
   // save contract needs to be a reducer function adding to our store object
@@ -80,9 +80,9 @@ const ContractEndpoint: React.FC<ContractEndpointProps> = ({ reqMethod, setReqMe
     newContract[`Req@${reqMethod}@${endpoint}`] = reqBody; // should pass in request object here
     newContract[`Res@${reqMethod}@${endpoint}`] = resBody; // should pass in response object here
     console.log(newContract);
-    
+
     dispatch(addToContract(newContract))
-    
+
 
     //Reset form fields
     resetFields()
@@ -100,13 +100,13 @@ const ContractEndpoint: React.FC<ContractEndpointProps> = ({ reqMethod, setReqMe
     query === ''
       ? endpoints
       : endpoints.filter((endpoint: EnumEndpointItem) => {
-          return endpoint.name.toLowerCase().includes(query.toLowerCase());
-        });
+        return endpoint.name.toLowerCase().includes(query.toLowerCase());
+      });
 
   return (
     <div>
-      <div className='grid grid-cols-12 gap-1 px-3 py-3 grid-flow-col'>
-        <div className='col-span-3 sm:col-span-2 md:col-span-2 lg:col-span-1'>
+      <div className='grid grid-cols-12 gap-1 px-3 py-3'>
+        <div className='col-span-4 sm:col-span-2 md:col-span-2 lg:col-span-1'>
           <select
             id='reqMethod'
             name='reqMethod'
@@ -133,7 +133,7 @@ const ContractEndpoint: React.FC<ContractEndpointProps> = ({ reqMethod, setReqMe
             className="h-[2.4rem] mt-1 block w-full shadow-sm sm:text-md border-gray-300 rounded-md px-3 py-2"
           />
         </div> */}
-        <div className='col-span-7 sm:col-span-8 md:col-span-8 lg:col-span-9'>
+        <div className='col-span-8 sm:col-span-8 md:col-span-8 lg:col-span-9'>
           <Combobox
             as='div'
             value={selectedEndpoint}
@@ -203,7 +203,7 @@ const ContractEndpoint: React.FC<ContractEndpointProps> = ({ reqMethod, setReqMe
           </Combobox>
         </div>
 
-        <div className='col-span-2 sm:col-span-2 md:col-span-2 lg:col-span-3 text-right'>
+        <div className='col-span-12 sm:col-span-2 md:col-span-2 lg:col-span-3 text-right'>
           <button
             className='inline-flex w-full justify-center mt-1 py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500'
             onClick={() => {
