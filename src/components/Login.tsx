@@ -3,6 +3,8 @@ import { Link, Navigate, useNavigate } from 'react-router-dom';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import axios from 'axios';
+import { useDispatch} from 'react-redux'
+import { getUserData } from '../state/features/contractSlice';
 
 type FormValues = {
   email: string;
@@ -16,8 +18,9 @@ const initialValues: FormValues = {
 
 const Login = () => {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
-  //formik.handleSubmit: prevents default and invokes the onSubmit function in formik object
+  // formik.handleSubmit: prevents default and invokes the onSubmit function in formik object
 
   // formik.handleChange: updates the state of our values in formik object based on the value attribute of the html element
 
@@ -40,6 +43,7 @@ const Login = () => {
           console.log(response);
           if (response.status === 200) {
             navigate("navbar");
+            dispatch(getUserData(response.data));
           }
         })
         .catch((error) => {
@@ -50,7 +54,7 @@ const Login = () => {
 
   return (
     <>
-      <div className='min-h-full flex flex-col justify-center py-12 sm:px-6 lg:px-8 bg-white'>
+      <div className='min-h-full flex flex-col justify-center py-12 sm:px-6 lg:px-8 bg-white h-screen'>
         <div className='sm:mx-auto sm:w-full sm:max-w-md'>
           <img
             className='mx-auto h-12 w-auto'
