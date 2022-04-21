@@ -3,7 +3,7 @@ import React, { Fragment, useState } from 'react'
 import { Disclosure, Menu, Transition, Combobox } from '@headlessui/react'
 import { UserIcon, BellIcon, MenuIcon, XIcon, CheckIcon, SelectorIcon } from '@heroicons/react/outline'
 import { Link, Outlet, useLocation, useNavigate } from 'react-router-dom';
-import ModalNewContract from '../components/ModalNewContract';
+import ModalNewContract from './ModalNewContract';
 import { RootState } from '../state/store';
 import { useDispatch, useSelector } from 'react-redux';
 
@@ -47,7 +47,7 @@ export default function Navbar() {
   const handleCloseModal = (): void => {
     setOpen(false);
   }
-
+  
   const filteredContracts =
     query === ''
       ? contracts
