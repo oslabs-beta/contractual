@@ -104,7 +104,7 @@ const ContractEndpoint: React.FC<ContractEndpointProps> = ({ reqMethod, setReqMe
       });
 
   return (
-    <div>
+    <div className='sticky top-16 z-40 bg-gray-900 shadow-lg'>
       <div className='grid grid-cols-12 gap-1 px-3 py-3'>
         <div className='col-span-4 sm:col-span-2 md:col-span-2 lg:col-span-1'>
           <select

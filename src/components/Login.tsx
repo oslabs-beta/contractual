@@ -50,7 +50,7 @@ const Login = () => {
 
   return (
     <>
-      <div className='min-h-full flex flex-col justify-center py-12 sm:px-6 lg:px-8 bg-white'>
+      <div className='min-h-full flex flex-col justify-center py-12 sm:px-6 lg:px-8 bg-white h-screen'>
         <div className='sm:mx-auto sm:w-full sm:max-w-md'>
           <img
             className='mx-auto h-12 w-auto'
