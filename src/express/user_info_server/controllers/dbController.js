@@ -29,11 +29,36 @@ dbController.getContent = async (req, res, next) => {
   }
 };
 
+
+// Contract Route => Update content based on token in contracts table
+dbController.updateContent = async (req, res, next) => {
+  const { content, token } = req.body;
+  const param = [content, token.toUpperCase()];
+  try {
+    const updateContent = `
+    UPDATE contracts SET content = $1 WHERE token = $2;
+    `;
+    const newContent = await db.query(updateContent, param);
+    return next();
+  } catch (error) {
+    return next({
+      log: 'Express error in updateContent middleware',
+      status: 400,
+      message: {
+        err: `dbController.updateContent: ERROR: ${error}`,
+      },
+    });
+  }
+};
+
+// Contract Route => Delete the entire contract
+// const deleteContractQuery = ` DELETE FROM contracts WHERE token = $1; `
+
 // Contract Route => Create token and contract and store in contracts Table
 dbController.addContract = async (req, res, next) => {
   const { title, content, userId } = req.body;
-  console.log('HIT');
-  console.log(title);
+  // console.log('HIT');
+  // console.log(title);
   // function to generate random token
   function makeid(length) {
     let result = '';
@@ -66,7 +91,7 @@ dbController.addContract = async (req, res, next) => {
     RETURNING *
     ;`;
     const addContract = await db.query(addContractQuery, param1);
-    console.log(addContract);
+    // console.log(addContract);
     contractId = addContract['rows'][0]['contract_id'];
 
     res.locals.token = token;

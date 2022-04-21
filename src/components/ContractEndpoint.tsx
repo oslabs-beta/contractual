@@ -1,14 +1,11 @@
 import React, { useState } from 'react';
 import { Menu, Transition, Combobox } from '@headlessui/react';
-import {
-  ChevronDownIcon,
-  CheckIcon,
-  SelectorIcon,
-} from '@heroicons/react/solid';
+import { ChevronDownIcon,CheckIcon,SelectorIcon } from '@heroicons/react/solid';
 import { string } from 'yup';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '../state/store';
-import { addToContract } from '../state/features/contractSlice';
+import { updateContract } from '../state/features/contractSlice';
+import axios from 'axios';
 
 interface EnumEndpointItem {
   id: number;
@@ -50,8 +47,8 @@ interface ContractEndpointProps {
 
 
 const ContractEndpoint: React.FC<ContractEndpointProps> = ({ reqMethod, setReqMethod, endpoint, setEndpoint, reqInputs, resInputs, resetFields }): JSX.Element => {
-
-  const { currentContract } = useSelector((store: RootState) => store.contract);
+  const store = useSelector((store: RootState) => store.contract)
+  const { currentContract, currentContractToken } = useSelector((store: RootState) => store.contract);
   const dispatch = useDispatch()
 
   // save contract needs to be a reducer function adding to our store object
@@ -81,11 +78,28 @@ const ContractEndpoint: React.FC<ContractEndpointProps> = ({ reqMethod, setReqMe
     newContract[`Res@${reqMethod}@${endpoint}`] = resBody; // should pass in response object here
     console.log(newContract);
 
-    dispatch(addToContract(newContract))
+    
+    const contractCopy = {...currentContract, ...newContract}
+    // post new req/res to database
+    axios
+        .patch('http://localhost:4321/contract', {
+          content: contractCopy,
+          // token: currentContractToken
+          token: 'A1B2'
+        })
+        .then((response) => {
+          console.log(response);
+          if (response.status === 200) {
+            dispatch(updateContract(contractCopy))
+            //Reset form fields
+            resetFields()
+          }
+        })
+        .catch((error) => {
+          console.log(error);
+        });
 
-
-    //Reset form fields
-    resetFields()
+  
   }
 
   const [query, setQuery] = useState('');
@@ -122,7 +136,7 @@ const ContractEndpoint: React.FC<ContractEndpointProps> = ({ reqMethod, setReqMe
             <option value='DELETE'>DELETE</option>
           </select>
         </div>
-        {/* <button onClick={() => {console.log(currentContract)}}>check current state of contract</button> */}
+        <button onClick={() => {console.log(store)}}>check current state of store</button>
         {/* <div className="col-span-7 sm:col-span-8 md:col-span-8 lg:col-span-9">
           <input
             type="endpoint"
