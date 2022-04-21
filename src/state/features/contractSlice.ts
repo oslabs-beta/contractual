@@ -32,8 +32,8 @@ type CurrentContract = {
 type ContractState = {
   userName: string,
   userId: number,
-  contracts: Contracts,
-  owner: string[],
+  tokens: Contracts,
+  owns: string[],
   currentContractToken: string,
   currentContract: CurrentContract,
   // frontEndPort: string
@@ -46,12 +46,10 @@ type ContractState = {
 const initialState: ContractState = {
   userName: '',
   userId: 0,
-  contracts: {},
-  owner: [],
+  tokens: {},
+  owns: [],
   currentContractToken: '',
   currentContract: {},
-  // frontEndPort: '8080',
-  // backEndPort: '3000'
   // status: '',
 };
 
@@ -65,15 +63,15 @@ export const contractSlice = createSlice({
       // state.contract = response data?
       // this may need to be in extra reducers after building asyncThunk function
     },
-    addToContract: (state, action: PayloadAction<CurrentContract>) => {
-      state.currentContract = {...state.currentContract, ...action.payload}
+    updateContract: (state, action: PayloadAction<CurrentContract>) => {
+      state.currentContract = action.payload
     },
     // invoke on successful login
     getUserData: (state, action) => {
       state.userName = action.payload.userName,
       state.userId = action.payload.userId,
-      state.contracts = action.payload.contracts,
-      state.owner = action.payload.owner
+      state.tokens = action.payload.tokens,
+      state.owns = action.payload.owns
     },
     // changeCurrentContractToken: () => {},
     // createNewContractToken: () => {},
@@ -93,7 +91,10 @@ export const contractSlice = createSlice({
   //     .addCase(getUserData.fulfilled, (state, action) => {
   //       state.status = 'success'
   //       //add functionality here
-  //       state
+  //       state.userName = action.payload.userName,
+  //       state.userId = action.payload.userId,
+  //       state.contracts = action.payload.contracts,
+  //       state.owner = action.payload.owner
   //     })
   //     .addCase(getUserData.rejected, (state, action) => {
   //       state.status = 'failed'
@@ -103,6 +104,6 @@ export const contractSlice = createSlice({
   // use builder syntax
 });
 
-export const { getContract, addToContract, getUserData } = contractSlice.actions;
+export const { getContract, updateContract, getUserData } = contractSlice.actions;
 
 export default contractSlice.reducer;
