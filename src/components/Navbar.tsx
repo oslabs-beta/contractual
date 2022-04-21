@@ -8,29 +8,37 @@ import { RootState } from '../state/store';
 import { useDispatch, useSelector } from 'react-redux';
 
 interface EnumContractItem {
-  id: number;
+  token: string;
   name: string;
 }
 
-const contracts: EnumContractItem[] = [
-  { id: 1, name: 'Habitual' },
-  { id: 2, name: 'Escape Date' },
-  { id: 3, name: 'Svelcro' },
-  { id: 4, name: 'Spearmint' },
-  { id: 5, name: 'ReSvelte' },
-  { id: 6, name: 'Recoilize' },
-  { id: 7, name: 'SeeQR' },
-  { id: 8, name: 'LitForms' },
-  { id: 9, name: 'Chromogen' },
+// const contracts: EnumContractItem[] = [
+//   { id: 1, name: 'Habitual' },
+//   { id: 2, name: 'Escape Date' },
+//   { id: 3, name: 'Svelcro' },
+//   { id: 4, name: 'Spearmint' },
+//   { id: 5, name: 'ReSvelte' },
+//   { id: 6, name: 'Recoilize' },
+//   { id: 7, name: 'SeeQR' },
+//   { id: 8, name: 'LitForms' },
+//   { id: 9, name: 'Chromogen' },
   // More contracts...
-];
+//];
 
 function classNames(...classes) {
-  // const { tokens } = useSelector((store: RootState) => store.contract);
   return classes.filter(Boolean).join(' ');
 }
 
 export default function Navbar() {
+  const { tokens } = useSelector((store: RootState) => store.contract);
+  const contracts: EnumContractItem[] = [];
+  for (let key in tokens) {
+    contracts.push({
+      name: key,
+      token: tokens[key]
+    })
+  }
+  console.log(contracts);
   const navigate = useNavigate()
   const [query, setQuery] = useState('')
   const [selectedContract, setSelectedContract] = useState()
@@ -109,7 +117,7 @@ export default function Navbar() {
                             <Combobox.Options className='absolute z-10 mt-1 max-h-60 w-full overflow-auto rounded-md bg-white py-1 text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm'>
                               {filteredContracts.map((contract) => (
                                 <Combobox.Option
-                                  key={contract.id}
+                                  key={contract.token}
                                   value={contract}
                                   className={({ active }) =>
                                     classNames(
