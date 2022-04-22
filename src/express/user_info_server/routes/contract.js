@@ -5,7 +5,7 @@ const cors = require('cors');
 const router = express.Router();
 
 // // Get content with token Route
-router.get('/', dbController.getContent, (req, res) => {
+router.post('/details', dbController.getContent, (req, res) => {
   return res.status(200).json(res.locals.content);
 });
 
@@ -14,7 +14,7 @@ router.patch('/', dbController.updateContent, (req, res) => {
 });
 
 // Create Contract Route
-router.post('/', dbController.addContract, (req, res) => {
+router.post('/add', dbController.addContract, (req, res) => {
   return res.status(200).json(res.locals.token);
 });
 

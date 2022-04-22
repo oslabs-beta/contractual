@@ -5,30 +5,86 @@ const dbController = {};
 
 // Contract Route => Retrieve content based on token in contracts table
 dbController.getContent = async (req, res, next) => {
-  // console.log("request is:", req);
-  const { name, token } = req.query;
-  const param = [name, token.toUpperCase()];
-  try {
-    const getContent = `
+  // the user imports someone else's contract
+  if (req.body.import) {
+    const { name, token, userId } = req.body;
+    const param = [name, token.toUpperCase()];
+    // get contract details for him
+    try {
+      const getContent = `
       SELECT * FROM contracts
       WHERE token = $2 AND title = $1;
     `;
 
-    const targetContent = await db.query(getContent, param);
-    // targetContent returns a JSON object
-    const parsedContent = JSON.parse(targetContent.rows[0].content);
-    res.locals.content = { content: parsedContent };
-    return next();
-  } catch (error) {
-    return next({
-      // log: 'Express error in getContent middleware',
-      log: `dbController.getContent: ERROR: ${error}`,
+      const targetContent = await db.query(getContent, param);
+      // targetContent returns a JSON object
+      const parsedContent = JSON.parse(targetContent.rows[0].content);
+      res.locals.content = { content: parsedContent };
+    } catch (error) {
+      return next({
+        // log: 'Express error in getContent middleware',
+        log: `dbController.getContent: ERROR: ${error}`,
 
-      status: 400,
-      message: {
-        err: `dbController.getContent: ERROR: ${error}`,
-      },
-    });
+        status: 400,
+        message: {
+          err: `dbController.getContent: ERROR: ${error}`,
+        },
+      });
+    }
+
+    // add this contract to history
+    try {
+      const getContentId = `
+      SELECT contract_id FROM contracts
+      WHERE token = $1;
+    `;
+
+      const contractIdRes = await db.query(getContentId, [token]);
+      // targetContent returns a JSON object
+      const contractId = JSON.parse(contractIdRes.rows[0].contract_id);
+      const param2 = [userId, contractId, false];
+      console.log('222222', param2);
+
+      const addHistoryQuery = `
+    INSERT INTO users_contracts(user_id, contract_id, permission)
+    VALUES($1, $2, $3)
+    RETURNING *
+    ;`;
+      await db.query(addHistoryQuery, param2);
+      return next();
+    } catch (error) {
+      return next({
+        log: 'Express error in adding to history in getContent middleware',
+        status: 400,
+        message: {
+          err: `dbController.getContent: ERROR: ${error}`,
+        },
+      });
+    }
+  }
+
+  // user selects his contract, and frontend needs detailed content of the contract
+  else {
+    const { token } = req.body;
+    try {
+      const getContent = `
+      SELECT * FROM contracts
+      WHERE token = $1;
+    `;
+
+      const targetContent = await db.query(getContent, [token]);
+      const parsedContent = JSON.parse(targetContent.rows[0].content);
+      res.locals.content = { content: parsedContent };
+      return next();
+    } catch (error) {
+      return next({
+        log: `dbController.getContent: ERROR: ${error}`,
+        status: 400,
+        message: {
+          err: `dbController.getContent: ERROR: ${error}`,
+        },
+      });
+    }
   }
 };
 
@@ -41,9 +97,7 @@ dbController.updateContent = async (req, res, next) => {
     const updateContent = `
     UPDATE contracts SET content = $1 WHERE token = $2;
     `;
-    // console.log('parameters', param);
-    const newContent = await db.query(updateContent, param);
-
+    await db.query(updateContent, param);
     return next();
   } catch (error) {
     return next({
@@ -97,8 +151,9 @@ dbController.addContract = async (req, res, next) => {
     RETURNING *
     ;`;
     const addContract = await db.query(addContractQuery, param1);
+    // console.log(addContract);
     contractId = addContract['rows'][0]['contract_id'];
-    // console.log('CONTRACT ID', contractId);
+
     res.locals.token = token;
   } catch (error) {
     // res.locals.token = false;
