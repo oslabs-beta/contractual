@@ -5,13 +5,13 @@ const dbController = {};
 
 // Contract Route => Retrieve content based on token in contracts table
 dbController.getContent = async (req, res, next) => {
-  console.log("request is:", req);
-  const { token } = req.params;
-  const param = [token.toUpperCase()];
+  // console.log("request is:", req);
+  const { name, token } = req.query;
+  const param = [name, token.toUpperCase()];
   try {
     const getContent = `
       SELECT * FROM contracts
-      WHERE token = $1;
+      WHERE token = $2 AND title = $1;
     `;
 
     const targetContent = await db.query(getContent, param);
@@ -36,16 +36,22 @@ dbController.getContent = async (req, res, next) => {
 // Contract Route => Update content based on token in contracts table
 dbController.updateContent = async (req, res, next) => {
   const { content, token } = req.body;
-  const param = [content, token.toUpperCase()];
+  const param = [JSON.stringify(content), token.toUpperCase()];
+  console.log("update Content req::::",req)
   try {
     const updateContent = `
     UPDATE contracts SET content = $1 WHERE token = $2;
     `;
+    console.log("1")
+    console.log('parameters', param)
     const newContent = await db.query(updateContent, param);
+        console.log("2")
+
     return next();
   } catch (error) {
     return next({
-      log: 'Express error in updateContent middleware',
+      log: `dbController.updateContent: ERROR: ${error}`,
+      // log: 'Express error in updateContent middleware',
       status: 400,
       message: {
         err: `dbController.updateContent: ERROR: ${error}`,

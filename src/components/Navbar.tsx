@@ -57,7 +57,7 @@ export default function Navbar() {
   }
   const changeContract = (input: EnumContractItem): void => {
     axios
-        .get(`http://localhost:4321/contract/${input.token}`)
+        .get(`http://localhost:4321/contract/?name=${input.name}&token=${input.token}`)
         .then((response) => {
           console.log(response);
           if (response.status === 200) {

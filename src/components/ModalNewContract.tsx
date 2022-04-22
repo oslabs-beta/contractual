@@ -1,6 +1,6 @@
 import { Fragment, useRef, useState } from 'react'
 import { Dialog, Transition } from '@headlessui/react'
-import { CheckIcon, PlusIcon } from '@heroicons/react/outline'
+import { CheckIcon, SparklesIcon } from '@heroicons/react/outline'
 import axios from 'axios'
 import { useDispatch, useSelector } from 'react-redux'
 import { RootState } from '../state/store';
@@ -74,7 +74,7 @@ const ModalNewContract: React.FC<ModalProps> = ({ visibility, closeModal, setSel
             <div className="relative inline-block align-bottom bg-white rounded-lg px-4 pt-5 pb-4 text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full sm:p-6">
               <div>
                 <div className="mx-auto flex items-center justify-center h-12 w-12 rounded-full bg-green-100">
-                  <PlusIcon className="h-6 w-6 text-green-600" aria-hidden="true" />
+                  <SparklesIcon className="h-6 w-6 text-green-600" aria-hidden="true" />
                 </div>
                 <div className="mt-3 text-center sm:mt-5">
                   <Dialog.Title as="h3" className="text-lg leading-6 font-medium text-gray-900">
@@ -88,7 +88,7 @@ const ModalNewContract: React.FC<ModalProps> = ({ visibility, closeModal, setSel
                 </div>
               </div>
               <div>
-                <div className="mt-1">
+                <div className="mt-2">
                   <input
                     type="text"
                     name="newContractName"

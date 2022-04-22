@@ -35,6 +35,11 @@ type AddContract = {
   token: string
 }
 
+type JoinContract = {
+  name: string,
+  token: string,
+  contract: Contracts
+}
 type ContractState = {
   userName: string,
   userId: number,
@@ -88,7 +93,12 @@ export const contractSlice = createSlice({
       state.currentContractToken = action.payload.token,
       state.owns.push(action.payload.token)
       state.tokens[action.payload.name] = action.payload.token
-    }
+    },
+    joinContract: (state, action: PayloadAction<JoinContract>) => {
+      state.currentContract = action.payload.contract,
+      state.currentContractToken = action.payload.token,
+      state.tokens[action.payload.name] = action.payload.token
+    },
     // changeCurrentContractToken: () => {},
     // createNewContractToken: () => {},
     // changeFrontEndPort: (state, action: PayloadAction<string>) => {
@@ -120,6 +130,6 @@ export const contractSlice = createSlice({
   // use builder syntax
 });
 
-export const { getContract, updateContract, getUserData, loadContract, addContract } = contractSlice.actions;
+export const { getContract, updateContract, getUserData, loadContract, addContract, joinContract } = contractSlice.actions;
 
 export default contractSlice.reducer;
