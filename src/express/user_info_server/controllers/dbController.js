@@ -41,8 +41,10 @@ dbController.getContent = async (req, res, next) => {
 
       const contractIdRes = await db.query(getContentId, [token]);
       // targetContent returns a JSON object
-      const contractId = JSON.parse(contractIdRes.rows[0]);
+      const contractId = JSON.parse(contractIdRes.rows[0].contract_id);
       const param2 = [userId, contractId, false];
+      console.log("222222", param2);
+
       const addHistoryQuery = `
     INSERT INTO users_contracts(user_id, contract_id, permission)
     VALUES($1, $2, $3)
@@ -62,25 +64,27 @@ dbController.getContent = async (req, res, next) => {
   }
 
   // user selects his contract, and frontend needs detailed content of the contract
-  const { token } = req.body;
-  try {
-    const getContent = `
+  else {
+    const { token } = req.body;
+    try {
+      const getContent = `
       SELECT * FROM contracts
       WHERE token = $1;
     `;
 
-    const targetContent = await db.query(getContent, [token]);
-    const parsedContent = JSON.parse(targetContent.rows[0].content);
-    res.locals.content = { content: parsedContent };
-    return next();
-  } catch (error) {
-    return next({
-      log: `dbController.getContent: ERROR: ${error}`,
-      status: 400,
-      message: {
-        err: `dbController.getContent: ERROR: ${error}`,
-      },
-    });
+      const targetContent = await db.query(getContent, [token]);
+      const parsedContent = JSON.parse(targetContent.rows[0].content);
+      res.locals.content = { content: parsedContent };
+      return next();
+    } catch (error) {
+      return next({
+        log: `dbController.getContent: ERROR: ${error}`,
+        status: 400,
+        message: {
+          err: `dbController.getContent: ERROR: ${error}`,
+        },
+      });
+    }
   }
 };
 
