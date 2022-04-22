@@ -5,6 +5,7 @@ import { UserIcon, BellIcon, MenuIcon, XIcon, CheckIcon, SelectorIcon } from '@h
 import { Link, Outlet, useLocation, useNavigate } from 'react-router-dom';
 import ModalNewContract from './ModalNewContract';
 import ModalJoinContract from './ModalJoinContract';
+import ModalContractDetails from './ModalContractDetails';
 import { RootState } from '../state/store';
 import { useDispatch, useSelector } from 'react-redux';
 import { loadContract } from '../state/features/contractSlice';
@@ -48,12 +49,16 @@ export default function Navbar() {
   const [selectedContract, setSelectedContract] = useState<EnumContractItem>()
   const [newOpen, setNewOpen] = useState<boolean>(false)
   const [joinOpen, setJoinOpen] = useState<boolean>(false)
+  const [detailsOpen, setDetailsOpen] = useState<boolean>(false)
 
   const handleCloseNewModal = (): void => {
     setNewOpen(false);
   }
   const handleCloseJoinModal = (): void => {
     setJoinOpen(false);
+  }
+  const handleCloseDetailsModal = (): void => {
+    setDetailsOpen(false);
   }
   const changeContract = (input: EnumContractItem): void => {
     axios
@@ -107,6 +112,7 @@ export default function Navbar() {
     <>
       <ModalNewContract visibility={newOpen} closeModal={handleCloseNewModal} setSelectedContract={setSelectedContract} sendToken={sendToken}/>
       <ModalJoinContract visibility={joinOpen} closeModal={handleCloseJoinModal} setSelectedContract={setSelectedContract} sendToken={sendToken}/>
+      <ModalContractDetails visibility={detailsOpen} closeModal={handleCloseDetailsModal}/>
       <Disclosure
         as='nav'
         className='bg-gray-800 sticky top-0 z-[60] shadow-lg'
@@ -326,6 +332,20 @@ export default function Navbar() {
                             {({ active }) => (
                               <a
                                 href='#'
+                                onClick={() => setDetailsOpen(true)}
+                                className={classNames(
+                                  active ? 'bg-gray-100' : '',
+                                  'block px-4 py-2 text-sm text-gray-700'
+                                )}
+                              >
+                                Contract details
+                              </a>
+                            )}
+                          </Menu.Item>
+                          <Menu.Item>
+                            {({ active }) => (
+                              <a
+                                href='#'
                                 className={classNames(
                                   active ? 'bg-gray-100' : '',
                                   'block px-4 py-2 text-sm text-gray-700'
@@ -467,6 +487,17 @@ export default function Navbar() {
                       className='block px-3 py-2 rounded-md text-base font-medium text-gray-400 hover:text-white hover:bg-gray-700'
                     >
                       Join contract
+                    </Disclosure.Button>
+
+                  </div>
+                  <div onClick={() => setDetailsOpen(true)}>
+
+                    <Disclosure.Button
+                      as='a'
+                      href='#'
+                      className='block px-3 py-2 rounded-md text-base font-medium text-gray-400 hover:text-white hover:bg-gray-700'
+                    >
+                      Contract details
                     </Disclosure.Button>
 
                   </div>
