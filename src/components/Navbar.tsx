@@ -4,8 +4,11 @@ import { Disclosure, Menu, Transition, Combobox } from '@headlessui/react'
 import { UserIcon, BellIcon, MenuIcon, XIcon, CheckIcon, SelectorIcon } from '@heroicons/react/outline'
 import { Link, Outlet, useLocation, useNavigate } from 'react-router-dom';
 import ModalNewContract from './ModalNewContract';
+import ModalJoinContract from './ModalJoinContract';
 import { RootState } from '../state/store';
 import { useDispatch, useSelector } from 'react-redux';
+import { loadContract } from '../state/features/contractSlice';
+import axios from 'axios';
 
 interface EnumContractItem {
   token: string;
@@ -30,6 +33,7 @@ function classNames(...classes) {
 }
 
 export default function Navbar() {
+  const dispatch = useDispatch();
   const { tokens } = useSelector((store: RootState) => store.contract);
   const contracts: EnumContractItem[] = [];
   for (let key in tokens) {
@@ -41,11 +45,34 @@ export default function Navbar() {
   console.log(contracts);
   const navigate = useNavigate()
   const [query, setQuery] = useState('')
-  const [selectedContract, setSelectedContract] = useState()
-  const [open, setOpen] = useState<boolean>(false)
+  const [selectedContract, setSelectedContract] = useState<EnumContractItem>()
+  const [newOpen, setNewOpen] = useState<boolean>(false)
+  const [joinOpen, setJoinOpen] = useState<boolean>(false)
 
-  const handleCloseModal = (): void => {
-    setOpen(false);
+  const handleCloseNewModal = (): void => {
+    setNewOpen(false);
+  }
+  const handleCloseJoinModal = (): void => {
+    setJoinOpen(false);
+  }
+  const changeContract = (input: EnumContractItem): void => {
+    axios
+        .post('http://localhost:4321/contract/details', {
+          token: input.token,
+          import: false
+        })
+        .then((response) => {
+          console.log(response);
+          if (response.status === 200) {
+            dispatch(loadContract({
+              contract: response.data.content,
+              token: input.token
+            }))
+          }
+        })
+        .catch((error) => {
+          console.log(error);
+        });
   }
   
   const filteredContracts =
@@ -69,7 +96,8 @@ export default function Navbar() {
 
   return (
     <>
-      <ModalNewContract visibility={open} closeModal={handleCloseModal} />
+      <ModalNewContract visibility={newOpen} closeModal={handleCloseNewModal} setSelectedContract={setSelectedContract} />
+      <ModalJoinContract visibility={joinOpen} closeModal={handleCloseJoinModal} setSelectedContract={setSelectedContract} />
       <Disclosure
         as='nav'
         className='bg-gray-800 sticky top-0 z-[60] shadow-lg'
@@ -96,13 +124,13 @@ export default function Navbar() {
                       <Combobox
                         as='div'
                         value={selectedContract}
-                        onChange={setSelectedContract}
+                        onChange={(contract) => {setSelectedContract(contract); changeContract(contract)}}
                       >
                         <div className='relative mt-1'>
                           <Combobox.Input
                             className='w-full rounded-md border border-gray-300 bg-white py-1 pl-3 pr-10 shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-1 focus:ring-indigo-500 sm:text-sm'
-                            onChange={(event) => setQuery(event.target.value)}
-                            displayValue={(contract: EnumContractItem) =>
+                            onChange={(event) => {setQuery(event.target.value) }}
+                            displayValue={(contract: EnumContractItem) => 
                               contract.name
                             }
                           />
@@ -261,13 +289,27 @@ export default function Navbar() {
                             {({ active }) => (
                               <a
                                 href='#'
-                                onClick={() => setOpen(true)}
+                                onClick={() => setNewOpen(true)}
                                 className={classNames(
                                   active ? 'bg-gray-100' : '',
                                   'block px-4 py-2 text-sm text-gray-700'
                                 )}
                               >
                                 New contract
+                              </a>
+                            )}
+                          </Menu.Item>
+                          <Menu.Item>
+                            {({ active }) => (
+                              <a
+                                href='#'
+                                onClick={() => setJoinOpen(true)}
+                                className={classNames(
+                                  active ? 'bg-gray-100' : '',
+                                  'block px-4 py-2 text-sm text-gray-700'
+                                )}
+                              >
+                                Join contract
                               </a>
                             )}
                           </Menu.Item>
@@ -397,7 +439,7 @@ export default function Navbar() {
                 >
                   Your Profile
                 </Disclosure.Button> */}
-                  <div onClick={() => setOpen(true)}>
+                  <div onClick={() => setNewOpen(true)}>
 
                     <Disclosure.Button
                       as='a'
@@ -405,6 +447,17 @@ export default function Navbar() {
                       className='block px-3 py-2 rounded-md text-base font-medium text-gray-400 hover:text-white hover:bg-gray-700'
                     >
                       New contract
+                    </Disclosure.Button>
+
+                  </div>
+                  <div onClick={() => setJoinOpen(true)}>
+
+                    <Disclosure.Button
+                      as='a'
+                      href='#'
+                      className='block px-3 py-2 rounded-md text-base font-medium text-gray-400 hover:text-white hover:bg-gray-700'
+                    >
+                      Join contract
                     </Disclosure.Button>
 
                   </div>

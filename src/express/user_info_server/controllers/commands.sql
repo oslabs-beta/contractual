@@ -62,3 +62,11 @@ TRUNCATE TABLE contracts
 -- Add column to table
 ALTER TABLE contracts
 ADD COLUMN title VARCHAR(255) NOT NULL
+
+
+-- Alter Column to be Unique
+ALTER TABLE contracts ADD CONSTRAINT make_unique UNIQUE (title);
+
+-- Alter Column data type
+ALTER TABLE contracts
+ALTER COLUMN content TYPE VARCHAR

@@ -70,11 +70,15 @@ function genMockResponse(contracts, condition) {
 
 // Extract array-type-length format
 function extractArrType(dataTypeStr) {
+  // const 
   const mockArrContent = dataTypeStr.split('-')[1];
   const mockArrLength = dataTypeStr.split('-')[2];
   if (mockArrLength === 'any') {
     return [mockArrContent, randomize.number()];
-  }
+  } 
+  // else if (mockArrLength === 'any') {
+  //   return 
+  // }
   return [mockArrContent, Number(mockArrLength)];
 }
 

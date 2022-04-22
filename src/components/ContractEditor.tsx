@@ -108,7 +108,7 @@ export default function ContractEditor({
                       <option value='number'>Number</option>
                       <option value='string'>String</option>
                       <option value='object'>Object</option>
-                      <option value='array'>Array</option>
+                      <option value='array-any-any'>Array</option>
                     </select>
                   </div>
                 </div>
@@ -276,7 +276,7 @@ export default function ContractEditor({
                       <option value='boolean'>Boolean</option>
                       <option value='number'>Number</option>
                       <option value='string'>String</option>
-                      <option value='array'>Array</option>
+                      <option value='array-any-any'>Array</option>
                       <option value='object'>Object</option>
                     </select>
                   </div>

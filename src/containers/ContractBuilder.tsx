@@ -12,8 +12,8 @@ type BodyInputs = KeyAndType[];
 export default function ContractBuilder() {
   const [reqMethod, setReqMethod] = useState('GET');
   const [endpoint, setEndpoint] = useState('');
-  const [reqInputs, setReqInputs] = useState<BodyInputs>([{ reqKey: '', reqValType: 'Boolean' }])
-  const [resInputs, setResInputs] = useState<BodyInputs>([{ resKey: '', resValType: 'Boolean' }])
+  const [reqInputs, setReqInputs] = useState<BodyInputs>([{ reqKey: '', reqValType: 'boolean' }])
+  const [resInputs, setResInputs] = useState<BodyInputs>([{ resKey: '', resValType: 'boolean' }])
 
   ///// RECORD CHANGES TO REQ TYPE DROPDOWN IN CONTRACTENDPOINT COMPONENT
   const handleSetReqMethod = (e: any): void => {
