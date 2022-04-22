@@ -59,7 +59,9 @@ function genMockResponse(contracts, condition) {
   for (let key in mockResponseTemplate) {
     const dataType = mockResponseTemplate[key];
     if (dataType.includes('array')) {
-      const parsedArrType = extractArrType(dataType);
+      // Handle mock array here!
+
+      const parsedArrType = handleArray(dataType);
       mockRes[key] = randomize.array(parsedArrType[0], parsedArrType[1]);
     } else {
       mockRes[key] = randomize[dataType]();
@@ -69,12 +71,16 @@ function genMockResponse(contracts, condition) {
 }
 
 // Extract array-type-length format
-function extractArrType(dataTypeStr) {
+function handleArray(dataTypeStr) {
+  // const 
   const mockArrContent = dataTypeStr.split('-')[1];
   const mockArrLength = dataTypeStr.split('-')[2];
   if (mockArrLength === 'any') {
     return [mockArrContent, randomize.number()];
-  }
+  } 
+  // else if (mockArrLength === 'any') {
+  //   return 
+  // }
   return [mockArrContent, Number(mockArrLength)];
 }
 

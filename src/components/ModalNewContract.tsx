@@ -8,13 +8,14 @@ import { addContract } from '../state/features/contractSlice';
 interface ModalProps {
   visibility: boolean,
   closeModal: () => void,
-  setSelectedContract: (contract: EnumContractItem) => void
+  setSelectedContract: (contract: EnumContractItem) => void,
+  sendToken: (token: string) => void
 }
 interface EnumContractItem {
   token: string;
   name: string;
 }
-const ModalNewContract: React.FC<ModalProps> = ({ visibility, closeModal, setSelectedContract }): JSX.Element => {
+const ModalNewContract: React.FC<ModalProps> = ({ visibility, closeModal, setSelectedContract, sendToken }): JSX.Element => {
   const dispatch = useDispatch()
   const [contractName, setContractName] = useState('')
   const cancelButtonRef = useRef(null);
@@ -34,6 +35,7 @@ const ModalNewContract: React.FC<ModalProps> = ({ visibility, closeModal, setSel
               token: response.data,
             }));
             setSelectedContract({name: contractName, token: response.data});
+            sendToken(response.data);
           }
         })
         .catch((error) => {

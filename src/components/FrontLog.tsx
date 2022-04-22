@@ -132,13 +132,13 @@ export default function FrontLog() {
                 <tbody className='divide-y divide-gray-200 bg-white'>
                   {requests.map((request, index) => {
                     let reqStatus;
-                    if (request.status === 'success') {
+                    if (request.pass === true) {
                       reqStatus = (
                         <span className='inline-flex rounded-full bg-green-100 px-2 text-xs font-semibold leading-5 text-green-800'>
                           Success
                         </span>
                       );
-                    } else if (request.status === 'error') {
+                    } else if (request.pass === false) {
                       reqStatus = (
                         <span className='inline-flex rounded-full bg-red-100 px-2 text-xs font-semibold leading-5 text-red-800'>
                           Error

@@ -9,13 +9,14 @@ import { joinContract } from '../state/features/contractSlice';
 interface ModalProps {
   visibility: boolean,
   closeModal: () => void,
-  setSelectedContract: (contract: EnumContractItem) => void
+  setSelectedContract: (contract: EnumContractItem) => void,
+  sendToken: (token: string) => void
 }
 interface EnumContractItem {
   token: string;
   name: string;
 }
-const ModalJoinContract: React.FC<ModalProps> = ({ visibility, closeModal, setSelectedContract }): JSX.Element => {
+const ModalJoinContract: React.FC<ModalProps> = ({ visibility, closeModal, setSelectedContract, sendToken }): JSX.Element => {
   const dispatch = useDispatch()
   const [contractName, setContractName] = useState('')
   const [contractToken, setContractToken] = useState('')
@@ -38,7 +39,8 @@ const ModalJoinContract: React.FC<ModalProps> = ({ visibility, closeModal, setSe
               token: contractToken,
               contract: response.data.content
             }));
-            setSelectedContract({name: contractName, token: response.data});
+            setSelectedContract({name: contractName, token: contractToken});
+            sendToken(contractToken)
           }
         })
         .catch((error) => {

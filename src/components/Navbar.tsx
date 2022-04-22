@@ -74,7 +74,16 @@ export default function Navbar() {
           console.log(error);
         });
   }
-  
+  const sendToken = (token) => {
+    axios
+      .get(`http://localhost:1234/contract/${token}`)
+      .then((response) => {
+        console.log(response)
+      })
+      .catch((error) => {
+        console.log('Error is: ', error)
+      })
+  }
   const filteredContracts =
     query === ''
       ? contracts
@@ -96,8 +105,8 @@ export default function Navbar() {
 
   return (
     <>
-      <ModalNewContract visibility={newOpen} closeModal={handleCloseNewModal} setSelectedContract={setSelectedContract} />
-      <ModalJoinContract visibility={joinOpen} closeModal={handleCloseJoinModal} setSelectedContract={setSelectedContract} />
+      <ModalNewContract visibility={newOpen} closeModal={handleCloseNewModal} setSelectedContract={setSelectedContract} sendToken={sendToken}/>
+      <ModalJoinContract visibility={joinOpen} closeModal={handleCloseJoinModal} setSelectedContract={setSelectedContract} sendToken={sendToken}/>
       <Disclosure
         as='nav'
         className='bg-gray-800 sticky top-0 z-[60] shadow-lg'
@@ -124,7 +133,7 @@ export default function Navbar() {
                       <Combobox
                         as='div'
                         value={selectedContract}
-                        onChange={(contract) => {setSelectedContract(contract); changeContract(contract)}}
+                        onChange={(contract) => {setSelectedContract(contract); changeContract(contract); sendToken(contract.token)}}
                       >
                         <div className='relative mt-1'>
                           <Combobox.Input
