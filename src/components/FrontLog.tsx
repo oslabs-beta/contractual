@@ -2,12 +2,9 @@ import { useState, useEffect } from 'react';
 
 const socket = new WebSocket('ws://localhost:1234');
 
-
-
 socket.addEventListener('open', (event) => {
   console.log('CONNECTED TO WEB SOCKET FROM CLIENT Side');
 });
-
 
 // const success = (
 //   <span className='inline-flex rounded-full bg-green-100 px-2 text-xs font-semibold leading-5 text-green-800'>
@@ -59,22 +56,21 @@ socket.addEventListener('open', (event) => {
 //   // More requests...
 // ];
 
-
 export default function FrontLog() {
   const [requests, updateRequests] = useState([]);
 
-  socket.onmessage = ((event) => {
+  socket.onmessage = (event) => {
     // logic to display received data here
     // likely use state components
     console.log('MESSAGE RECEIVED FROM 1234: ', event.data);
     updateRequests([...requests, JSON.parse(event.data)]);
-  });
+  };
 
   const sendMessage = () => {
     socket.send('1. CLIENT 1 JUST SEND THIS MESSAGE TO SERVER!!!!');
   };
 
-  useEffect(() => { }, []);
+  useEffect(() => {}, []);
   return (
     <div className='col-span-6 px-3'>
       <div className='sm:flex sm:items-center'>
@@ -136,19 +132,20 @@ export default function FrontLog() {
                 <tbody className='divide-y divide-gray-200 bg-white'>
                   {requests.map((request, index) => {
                     let reqStatus;
-                    if (request.status === 'success') {
+                    if (request.pass === true) {
                       reqStatus = (
                         <span className='inline-flex rounded-full bg-green-100 px-2 text-xs font-semibold leading-5 text-green-800'>
                           Success
                         </span>
                       );
-                    } else if (request.status === 'error') {
+                    } else if (request.pass === false) {
                       reqStatus = (
                         <span className='inline-flex rounded-full bg-red-100 px-2 text-xs font-semibold leading-5 text-red-800'>
                           Error
                         </span>
                       );
-                    } 8
+                    }
+                    8;
                     return (
                       <tr key={index}>
                         <td className='whitespace-nowrap py-4 pl-4 pr-3 text-sm sm:pl-6'>
@@ -188,11 +185,13 @@ export default function FrontLog() {
                             className='text-indigo-600 hover:text-indigo-900'
                           >
                             Edit
-                            <span className='sr-only'>, {request.endpoint}</span>
+                            <span className='sr-only'>
+                              , {request.endpoint}
+                            </span>
                           </a>
                         </td>
                       </tr>
-                    )
+                    );
                   })}
                 </tbody>
               </table>

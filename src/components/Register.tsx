@@ -3,6 +3,8 @@ import { Link, Navigate, useNavigate } from 'react-router-dom';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import axios from 'axios';
+import { useDispatch} from 'react-redux'
+import { getUserData } from '../state/features/contractSlice';
 
 type FormValues = {
   name: string;
@@ -18,6 +20,7 @@ const initialValues: FormValues = {
 
 const Register = () => {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   //formik.handleSubmit: prevents default and invokes the onSubmit function in formik object
 
@@ -45,6 +48,7 @@ const Register = () => {
         .then((response) => {
           console.log(response);
           navigate('../navbar');
+          dispatch(getUserData(response.data));
         })
         .catch((error) => {
           console.log(error);

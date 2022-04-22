@@ -62,7 +62,10 @@ export default function Navbar() {
   }
   const changeContract = (input: EnumContractItem): void => {
     axios
-        .get(`http://localhost:4321/contract/?name=${input.name}&token=${input.token}`)
+        .post('http://localhost:4321/contract/details', {
+          token: input.token,
+          import: false
+        })
         .then((response) => {
           console.log(response);
           if (response.status === 200) {
@@ -76,7 +79,16 @@ export default function Navbar() {
           console.log(error);
         });
   }
-  
+  const sendToken = (token) => {
+    axios
+      .get(`http://localhost:1234/contract/${token}`)
+      .then((response) => {
+        console.log(response)
+      })
+      .catch((error) => {
+        console.log('Error is: ', error)
+      })
+  }
   const filteredContracts =
     query === ''
       ? contracts
@@ -98,8 +110,8 @@ export default function Navbar() {
 
   return (
     <>
-      <ModalNewContract visibility={newOpen} closeModal={handleCloseNewModal} setSelectedContract={setSelectedContract}/>
-      <ModalJoinContract visibility={joinOpen} closeModal={handleCloseJoinModal} />
+      <ModalNewContract visibility={newOpen} closeModal={handleCloseNewModal} setSelectedContract={setSelectedContract} sendToken={sendToken}/>
+      <ModalJoinContract visibility={joinOpen} closeModal={handleCloseJoinModal} setSelectedContract={setSelectedContract} sendToken={sendToken}/>
       <ModalContractDetails visibility={detailsOpen} closeModal={handleCloseDetailsModal}/>
       <Disclosure
         as='nav'
@@ -127,7 +139,7 @@ export default function Navbar() {
                       <Combobox
                         as='div'
                         value={selectedContract}
-                        onChange={(contract) => {setSelectedContract(contract); changeContract(contract)}}
+                        onChange={(contract) => {setSelectedContract(contract); changeContract(contract); sendToken(contract.token)}}
                       >
                         <div className='relative mt-1'>
                           <Combobox.Input

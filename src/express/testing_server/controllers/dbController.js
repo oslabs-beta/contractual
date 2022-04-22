@@ -1,9 +1,10 @@
-const db = require('../models/dbModel.js');
+const db = require("../models/dbModel.js");
 
 const dbController = {};
 
 dbController.getContent = async (req, res, next) => {
   const { token } = req.params;
+  console.log("TOKEN IS ", token);
   const param = [token.toUpperCase()];
   try {
     const getContent = `
@@ -17,7 +18,7 @@ dbController.getContent = async (req, res, next) => {
     return next();
   } catch (error) {
     return next({
-      log: 'Express error in getContent middleware',
+      log: `Express error in getContent middleware ${error}`,
       status: 400,
       message: {
         err: `dbController.getContent: ERROR: ${error}`,
