@@ -1,46 +1,17 @@
 import { Fragment, useRef, useState } from 'react'
 import { Dialog, Transition } from '@headlessui/react'
-import { CheckIcon, PlusIcon } from '@heroicons/react/outline'
-import axios from 'axios'
-import { useDispatch, useSelector } from 'react-redux'
-import { RootState } from '../state/store';
-import { addContract } from '../state/features/contractSlice';
+import { CheckIcon, LoginIcon } from '@heroicons/react/outline'
+
 interface ModalProps {
   visibility: boolean,
-  closeModal: () => void,
-  setSelectedContract: (contract: EnumContractItem) => void
+  closeModal: () => void
 }
-interface EnumContractItem {
-  token: string;
-  name: string;
-}
-const ModalNewContract: React.FC<ModalProps> = ({ visibility, closeModal, setSelectedContract }): JSX.Element => {
-  const dispatch = useDispatch()
-  const [contractName, setContractName] = useState('')
-  const cancelButtonRef = useRef(null);
-  const { userId } = useSelector((store: RootState) => store.contract);
 
-  const createContract = (): void => {
-    axios
-        .post('http://localhost:4321/contract', {
-          title: contractName,
-          content: {},
-          userId: userId
-        })
-        .then((response) => {
-          console.log(response);
-          if (response.status === 200) {
-            dispatch(addContract({
-              name: contractName,
-              token: response.data,
-            }));
-            setSelectedContract({name: contractName, token: response.data});
-          }
-        })
-        .catch((error) => {
-          console.log(error);
-        });
-  };
+const ModalJoinContract: React.FC<ModalProps> = ({ visibility, closeModal }) => {
+
+  // const [open, setOpen] = useState(true)
+
+  const cancelButtonRef = useRef(null)
 
   return (
     <Transition.Root show={visibility} as={Fragment} >
@@ -74,29 +45,36 @@ const ModalNewContract: React.FC<ModalProps> = ({ visibility, closeModal, setSel
             <div className="relative inline-block align-bottom bg-white rounded-lg px-4 pt-5 pb-4 text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full sm:p-6">
               <div>
                 <div className="mx-auto flex items-center justify-center h-12 w-12 rounded-full bg-green-100">
-                  <PlusIcon className="h-6 w-6 text-green-600" aria-hidden="true" />
+                  <LoginIcon className="h-6 w-6 text-green-600" aria-hidden="true" />
                 </div>
                 <div className="mt-3 text-center sm:mt-5">
                   <Dialog.Title as="h3" className="text-lg leading-6 font-medium text-gray-900">
-                    Add new data contract
+                    Join existing data contract
                   </Dialog.Title>
                   <div className="mt-2">
                     <p className="text-sm text-gray-500">
-                      Choose a descriptive name for your new contract.
+                      Provide contract name and token
                     </p>
                   </div>
                 </div>
               </div>
               <div>
-                <div className="mt-1">
+                <div className="mt-2">
                   <input
                     type="text"
-                    name="newContractName"
-                    id="newContractName"
-                    value={contractName}
-                    onChange={(e) => setContractName(e.target.value)}
+                    name="contractName"
+                    id="contractName"
                     className="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md"
-                    placeholder=""
+                    placeholder="Contract name"
+                  />
+                </div>
+                <div className="mt-2">
+                  <input
+                    type="text"
+                    name="contractToken"
+                    id="contractToken"
+                    className="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md"
+                    placeholder="Token"
                   />
                 </div>
               </div>
@@ -104,9 +82,9 @@ const ModalNewContract: React.FC<ModalProps> = ({ visibility, closeModal, setSel
                 <button
                   type="button"
                   className="w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-indigo-600 text-base font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 sm:col-start-2 sm:text-sm"
-                  onClick={() => {createContract(); closeModal()}}
+                  onClick={closeModal}
                 >
-                  Create
+                  Join
                 </button>
                 <button
                   type="button"
@@ -125,4 +103,4 @@ const ModalNewContract: React.FC<ModalProps> = ({ visibility, closeModal, setSel
   )
 }
 
-export default ModalNewContract;
+export default ModalJoinContract;

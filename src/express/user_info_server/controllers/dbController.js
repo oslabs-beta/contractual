@@ -5,6 +5,7 @@ const dbController = {};
 
 // Contract Route => Retrieve content based on token in contracts table
 dbController.getContent = async (req, res, next) => {
+  console.log("request is:", req);
   const { token } = req.params;
   const param = [token.toUpperCase()];
   try {
@@ -20,7 +21,9 @@ dbController.getContent = async (req, res, next) => {
     return next();
   } catch (error) {
     return next({
-      log: 'Express error in getContent middleware',
+      // log: 'Express error in getContent middleware',
+      log: `dbController.getContent: ERROR: ${error}`,
+      
       status: 400,
       message: {
         err: `dbController.getContent: ERROR: ${error}`,
@@ -217,13 +220,15 @@ dbController.saveUser = async (req, res, next) => {
       bcrypt.hash(password, saltRounds, async (err, hash) => {
         if (err) return err;
         try {
-          params = [name, email, hash];
+          const params = [name, email, hash];
           const saveUserQuery = `
           INSERT INTO users (name, email, password)
           VALUES($1, $2, $3)
           RETURNING *
           `;
           const newUser = await db.query(saveUserQuery, params);
+          const userId = newUser.rows[0].user_id
+          res.locals.userInfo = {success: true, userId: userId, userName : name}
           return next();
         } catch (error) {
           return next({
