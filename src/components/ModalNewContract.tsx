@@ -22,9 +22,8 @@ const ModalNewContract: React.FC<ModalProps> = ({ visibility, closeModal, setSel
 
   const createContract = (): void => {
     axios
-        .post('http://localhost:4321/contract', {
+        .post('http://localhost:4321/contract/add', {
           title: contractName,
-          content: {},
           userId: userId
         })
         .then((response) => {

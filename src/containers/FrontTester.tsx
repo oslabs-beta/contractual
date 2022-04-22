@@ -1,11 +1,7 @@
 import FrontLog from '../components/FrontLog';
 import { useState, useEffect } from 'react';
 
-
-
-
 export default function FrontTester() {
-  
   return (
     <div className='bg-gray-900 h-screen'>
       <FrontLog />

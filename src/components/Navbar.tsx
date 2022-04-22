@@ -57,7 +57,10 @@ export default function Navbar() {
   }
   const changeContract = (input: EnumContractItem): void => {
     axios
-        .get(`http://localhost:4321/contract/?name=${input.name}&token=${input.token}`)
+        .post('http://localhost:4321/contract/details', {
+          token: input.token,
+          import: false
+        })
         .then((response) => {
           console.log(response);
           if (response.status === 200) {
@@ -93,8 +96,8 @@ export default function Navbar() {
 
   return (
     <>
-      <ModalNewContract visibility={newOpen} closeModal={handleCloseNewModal} setSelectedContract={setSelectedContract}/>
-      <ModalJoinContract visibility={joinOpen} closeModal={handleCloseJoinModal} />
+      <ModalNewContract visibility={newOpen} closeModal={handleCloseNewModal} setSelectedContract={setSelectedContract} />
+      <ModalJoinContract visibility={joinOpen} closeModal={handleCloseJoinModal} setSelectedContract={setSelectedContract} />
       <Disclosure
         as='nav'
         className='bg-gray-800 sticky top-0 z-[60] shadow-lg'

@@ -8,19 +8,28 @@ import { joinContract } from '../state/features/contractSlice';
 
 interface ModalProps {
   visibility: boolean,
-  closeModal: () => void
+  closeModal: () => void,
+  setSelectedContract: (contract: EnumContractItem) => void
 }
-
-const ModalJoinContract: React.FC<ModalProps> = ({ visibility, closeModal }) => {
+interface EnumContractItem {
+  token: string;
+  name: string;
+}
+const ModalJoinContract: React.FC<ModalProps> = ({ visibility, closeModal, setSelectedContract }): JSX.Element => {
   const dispatch = useDispatch()
   const [contractName, setContractName] = useState('')
   const [contractToken, setContractToken] = useState('')
-  // const [open, setOpen] = useState(true)
+  const { userId } = useSelector((store: RootState) => store.contract);
 
   const cancelButtonRef = useRef(null)
   const handleJoinContract = (): void => {
     axios
-        .get(`http://localhost:4321/contract/?name=${contractName}&token=${contractToken}`)
+        .post('http://localhost:4321/contract/details', {
+          import: true,
+          userId,
+          name: contractName,
+          token: contractToken
+        })
         .then((response) => {
           console.log(response);
           if (response.status === 200) {
@@ -29,7 +38,7 @@ const ModalJoinContract: React.FC<ModalProps> = ({ visibility, closeModal }) => 
               token: contractToken,
               contract: response.data.content
             }));
-            // setSelectedContract({name: contractName, token: response.data});
+            setSelectedContract({name: contractName, token: response.data});
           }
         })
         .catch((error) => {
