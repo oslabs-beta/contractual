@@ -13,30 +13,33 @@ export default function DocumentPreview() {
         <div className='border-t border-gray-200 px-4 py-5 sm:px-6'>
           <dl className='grid grid-cols-1 gap-x-4 gap-y-8 sm:grid-cols-2'>
             <div className='sm:col-span-1'>
-              <dt className='text-md font-medium text-gray-500'>
-                Request Type
+              <dt className='text-md font-medium text-gray-500 mb-4'>
+                Request Type: <strong>Object</strong>
               </dt>
-              <dd className='mt-1 text-md text-gray-900'>Object</dd>
+              {/* <dd className='mt-1 text-md text-gray-900'>Object</dd> */}
+              <div className='sm:col-span-1'>
+                <dt className='text-sm font-medium text-gray-500'>username</dt>
+                <dd className='mt-1 text-sm text-gray-900'>string</dd>
+                <br></br>
+                <dt className='text-sm font-medium text-gray-500'>password</dt>
+                <dd className='mt-1 text-sm text-gray-900'>string</dd>
+              </div>
             </div>
+
+
             <div className='sm:col-span-1'>
-              <dt className='text-md font-medium text-gray-500'>
-                Response Type
+              <dt className='text-md font-medium text-gray-500 mb-4'>
+                Response Type: <strong>Object</strong>
               </dt>
-              <dd className='mt-1 text-md text-gray-900'>Object</dd>
+              {/* <dd className='mt-1 text-md text-gray-900'>Object</dd> */}
+              <div className='sm:col-span-1'>
+                <dt className='text-sm font-medium text-gray-500'>authStatus</dt>
+                <dd className='mt-1 text-sm text-gray-900'>boolean</dd>
+              </div>
             </div>
-            <div className='sm:col-span-1'>
-              <dt className='text-sm font-medium text-gray-500'>username</dt>
-              <dd className='mt-1 text-sm text-gray-900'>string</dd>
-              <br></br>
-              <dt className='text-sm font-medium text-gray-500'>password</dt>
-              <dd className='mt-1 text-sm text-gray-900'>string</dd>
-            </div>
-            <div className='sm:col-span-1'>
-              <dt className='text-sm font-medium text-gray-500'>authStatus</dt>
-              <dd className='mt-1 text-sm text-gray-900'>boolean</dd>
-            </div>
+
             <div className='sm:col-span-2'>
-              <dt className='text-sm font-medium text-gray-500'>Usage</dt>
+              <dt className='text-md font-semibold text-gray-500'>Usage</dt>
               <dd className='mt-1 text-sm text-gray-900'>
                 Fugiat ipsum ipsum deserunt culpa aute sint do nostrud anim
                 incididunt cillum culpa consequat. Excepteur qui ipsum aliquip
@@ -49,10 +52,10 @@ export default function DocumentPreview() {
         </div>
       </div>
 
-      <div className='bg-white shadow overflow-hidden sm:rounded-lg mb-3'>
-        <div className='px-4 py-5 sm:px-6'>
-          <h3 className='text-lg leading-6 font-medium text-gray-900'>/feed</h3>
-          <p className='mt-1 max-w-2xl text-sm text-gray-500'>GET</p>
+      <div className="bg-white shadow overflow-hidden sm:rounded-lg mb-3">
+        <div className="px-4 py-5 sm:px-6">
+          <h3 className="text-lg leading-6 font-medium text-gray-900">/feed</h3>
+          <p className="mt-1 max-w-2xl text-sm text-gray-500">POST</p>
         </div>
         <div className='border-t border-gray-200 px-4 py-5 sm:px-6'>
           <dl className='grid grid-cols-1 gap-x-4 gap-y-8 sm:grid-cols-2'>
@@ -72,9 +75,9 @@ export default function DocumentPreview() {
               <dt className='text-sm font-medium text-gray-500'>userId</dt>
               <dd className='mt-1 text-sm text-gray-900'>number</dd>
             </div>
-            <div className='sm:col-span-1'>
-              <dt className='text-sm font-medium text-gray-500'>feedItems</dt>
-              <dd className='mt-1 text-sm text-gray-900'>object</dd>
+            <div className="sm:col-span-1">
+              <dt className="text-sm font-medium text-gray-500">feedItems</dt>
+              <dd className="mt-1 text-sm text-gray-900">array</dd>
             </div>
             <div className='sm:col-span-2'>
               <dt className='text-sm font-medium text-gray-500'>Usage</dt>
@@ -90,12 +93,10 @@ export default function DocumentPreview() {
         </div>
       </div>
 
-      <div className='bg-white shadow overflow-hidden sm:rounded-lg mb-3'>
-        <div className='px-4 py-5 sm:px-6'>
-          <h3 className='text-lg leading-6 font-medium text-gray-900'>
-            /addKey
-          </h3>
-          <p className='mt-1 max-w-2xl text-sm text-gray-500'>POST</p>
+      <div className="bg-white shadow overflow-hidden sm:rounded-lg mb-3">
+        <div className="px-4 py-5 sm:px-6">
+          <h3 className="text-lg leading-6 font-medium text-gray-900">/addKey</h3>
+          <p className="mt-1 max-w-2xl text-sm text-gray-500">POST</p>
         </div>
         <div className='border-t border-gray-200 px-4 py-5 sm:px-6'>
           <dl className='grid grid-cols-1 gap-x-4 gap-y-8 sm:grid-cols-2'>

@@ -5,8 +5,12 @@ const cors = require('cors');
 const router = express.Router();
 
 // // Get content with token Route
-router.get('/:token', dbController.getContent, (req, res) => {
+router.get('/', dbController.getContent, (req, res) => {
   return res.status(200).json(res.locals.content);
+});
+
+router.patch('/', dbController.updateContent, (req, res) => {
+  return res.status(200).json("success");
 });
 
 // Create Contract Route

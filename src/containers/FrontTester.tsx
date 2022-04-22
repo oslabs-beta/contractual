@@ -1,6 +1,7 @@
 import FrontLog from '../components/FrontLog';
 import { useState, useEffect } from 'react';
 
+<<<<<<< HEAD
 const socket = new WebSocket('ws://localhost:1234');
 
 export default function FrontTester() {
@@ -28,6 +29,23 @@ export default function FrontTester() {
         SEND MESSAGE
       </button>
       <div style={{ color: 'white' }}>{message}</div>
+=======
+
+
+
+export default function FrontTester() {
+  
+  return (
+    <div className='bg-gray-900 h-screen'>
+      <FrontLog />
+      {/* <button onClick={sendMessage} style={{ color: 'white' }}>
+                SEND MESSAGE
+      </button>
+      {message.map((element, index) => {
+        return (
+        <div style={{color: 'white'}}>{element}</div>
+        )})} */}
+>>>>>>> 93625a40a5914727e2f812188552873103b1216a
     </div>
     // <div className="front-tester-container">
     //   <div className="api-dropdown"></div>

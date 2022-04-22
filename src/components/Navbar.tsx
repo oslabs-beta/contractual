@@ -1,59 +1,100 @@
 /* This example requires Tailwind CSS v2.0+ */
-import React, { Fragment, useState } from 'react';
-import { Disclosure, Menu, Transition, Combobox } from '@headlessui/react';
-import {
-  UserIcon,
-  BellIcon,
-  MenuIcon,
-  XIcon,
-  CheckIcon,
-  SelectorIcon,
-} from '@heroicons/react/outline';
-import { Link, Outlet, useLocation } from 'react-router-dom';
+import React, { Fragment, useState } from 'react'
+import { Disclosure, Menu, Transition, Combobox } from '@headlessui/react'
+import { UserIcon, BellIcon, MenuIcon, XIcon, CheckIcon, SelectorIcon } from '@heroicons/react/outline'
+import { Link, Outlet, useLocation, useNavigate } from 'react-router-dom';
+import ModalNewContract from './ModalNewContract';
+import ModalJoinContract from './ModalJoinContract';
+import { RootState } from '../state/store';
+import { useDispatch, useSelector } from 'react-redux';
+import { loadContract } from '../state/features/contractSlice';
+import axios from 'axios';
 
 interface EnumContractItem {
-  id: number;
+  token: string;
   name: string;
 }
 
-const contracts: EnumContractItem[] = [
-  { id: 1, name: 'Habitual' },
-  { id: 2, name: 'Escape Date' },
-  { id: 3, name: 'Svelcro' },
-  { id: 4, name: 'Spearmint' },
-  { id: 5, name: 'ReSvelte' },
-  { id: 6, name: 'Recoilize' },
-  { id: 7, name: 'SeeQR' },
-  { id: 8, name: 'LitForms' },
-  { id: 9, name: 'Chromogen' },
+// const contracts: EnumContractItem[] = [
+//   { id: 1, name: 'Habitual' },
+//   { id: 2, name: 'Escape Date' },
+//   { id: 3, name: 'Svelcro' },
+//   { id: 4, name: 'Spearmint' },
+//   { id: 5, name: 'ReSvelte' },
+//   { id: 6, name: 'Recoilize' },
+//   { id: 7, name: 'SeeQR' },
+//   { id: 8, name: 'LitForms' },
+//   { id: 9, name: 'Chromogen' },
   // More contracts...
-];
+//];
 
 function classNames(...classes) {
   return classes.filter(Boolean).join(' ');
 }
 
 export default function Navbar() {
-  const [query, setQuery] = useState('');
-  const [selectedContract, setSelectedContract] = useState();
+  const dispatch = useDispatch();
+  const { tokens } = useSelector((store: RootState) => store.contract);
+  const contracts: EnumContractItem[] = [];
+  for (let key in tokens) {
+    contracts.push({
+      name: key,
+      token: tokens[key]
+    })
+  }
+  console.log(contracts);
+  const navigate = useNavigate()
+  const [query, setQuery] = useState('')
+  const [selectedContract, setSelectedContract] = useState<EnumContractItem>()
+  const [newOpen, setNewOpen] = useState<boolean>(false)
+  const [joinOpen, setJoinOpen] = useState<boolean>(false)
 
+  const handleCloseNewModal = (): void => {
+    setNewOpen(false);
+  }
+  const handleCloseJoinModal = (): void => {
+    setJoinOpen(false);
+  }
+  const changeContract = (input: EnumContractItem): void => {
+    axios
+        .get(`http://localhost:4321/contract/?name=${input.name}&token=${input.token}`)
+        .then((response) => {
+          console.log(response);
+          if (response.status === 200) {
+            dispatch(loadContract({
+              contract: response.data.content,
+              token: input.token
+            }))
+          }
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+  }
+  
   const filteredContracts =
     query === ''
       ? contracts
       : contracts.filter((contract: EnumContractItem) => {
-          return contract.name.toLowerCase().includes(query.toLowerCase());
-        });
+        return contract.name.toLowerCase().includes(query.toLowerCase());
+      });
 
   const location = useLocation();
   let currentStyle =
     'bg-gray-900 text-white px-3 py-2 rounded-md text-sm font-medium';
   let defaultStyle =
     'text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium';
+  let currentStyleMobile = 'bg-gray-900 text-white block px-3 py-2 rounded-md text-base font-medium';
+  let defaultStyleMobile = 'text-gray-300 hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium';
 
   console.log('location: ' + location.pathname);
 
+
+
   return (
     <>
+      <ModalNewContract visibility={newOpen} closeModal={handleCloseNewModal} setSelectedContract={setSelectedContract}/>
+      <ModalJoinContract visibility={joinOpen} closeModal={handleCloseJoinModal} />
       <Disclosure
         as='nav'
         className='bg-gray-800 sticky top-0 z-[60] shadow-lg'
@@ -80,13 +121,13 @@ export default function Navbar() {
                       <Combobox
                         as='div'
                         value={selectedContract}
-                        onChange={setSelectedContract}
+                        onChange={(contract) => {setSelectedContract(contract); changeContract(contract)}}
                       >
                         <div className='relative mt-1'>
                           <Combobox.Input
                             className='w-full rounded-md border border-gray-300 bg-white py-1 pl-3 pr-10 shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-1 focus:ring-indigo-500 sm:text-sm'
-                            onChange={(event) => setQuery(event.target.value)}
-                            displayValue={(contract: EnumContractItem) =>
+                            onChange={(event) => {setQuery(event.target.value) }}
+                            displayValue={(contract: EnumContractItem) => 
                               contract.name
                             }
                           />
@@ -101,7 +142,7 @@ export default function Navbar() {
                             <Combobox.Options className='absolute z-10 mt-1 max-h-60 w-full overflow-auto rounded-md bg-white py-1 text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm'>
                               {filteredContracts.map((contract) => (
                                 <Combobox.Option
-                                  key={contract.id}
+                                  key={contract.token}
                                   value={contract}
                                   className={({ active }) =>
                                     classNames(
@@ -152,7 +193,7 @@ export default function Navbar() {
                         to='contract'
                         className={
                           location.pathname === '/navbar' ||
-                          location.pathname === '/navbar/contract'
+                            location.pathname === '/navbar/contract'
                             ? currentStyle
                             : defaultStyle
                         }
@@ -205,13 +246,17 @@ export default function Navbar() {
                     {/* Profile dropdown */}
                     <Menu as='div' className='ml-3 relative'>
                       <div>
-                        <Menu.Button className='bg-gray-800 flex text-sm rounded-full focus:outline-none'>
+                        <Menu.Button className='bg-gray-600 px-1 py-1 flex text-sm rounded-full focus:outline-none'>
                           <span className='sr-only'>Open user menu</span>
-                          <img
+                          <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                            <path strokeLinecap="round" strokeLinejoin="round" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z" />
+                            <path strokeLinecap="round" strokeLinejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                          </svg>
+                          {/* <img
                             className='h-8 w-8 rounded-full'
                             src='../assets/img/icon-user.png'
                             alt=''
-                          />
+                          /> */}
                         </Menu.Button>
                       </div>
                       <Transition
@@ -241,12 +286,27 @@ export default function Navbar() {
                             {({ active }) => (
                               <a
                                 href='#'
+                                onClick={() => setNewOpen(true)}
                                 className={classNames(
                                   active ? 'bg-gray-100' : '',
                                   'block px-4 py-2 text-sm text-gray-700'
                                 )}
                               >
-                                Settings
+                                New contract
+                              </a>
+                            )}
+                          </Menu.Item>
+                          <Menu.Item>
+                            {({ active }) => (
+                              <a
+                                href='#'
+                                onClick={() => setJoinOpen(true)}
+                                className={classNames(
+                                  active ? 'bg-gray-100' : '',
+                                  'block px-4 py-2 text-sm text-gray-700'
+                                )}
+                              >
+                                Join contract
                               </a>
                             )}
                           </Menu.Item>
@@ -285,34 +345,63 @@ export default function Navbar() {
             <Disclosure.Panel className='sm:hidden'>
               <div className='px-2 pt-2 pb-3 space-y-1'>
                 {/* Current: "bg-gray-900 text-white", Default: "text-gray-300 hover:bg-gray-700 hover:text-white" */}
-                <Disclosure.Button
-                  as='a'
-                  href='#'
-                  className='bg-gray-900 text-white block px-3 py-2 rounded-md text-base font-medium'
-                >
-                  Contract
-                </Disclosure.Button>
-                <Disclosure.Button
-                  as='a'
-                  href='#'
-                  className='text-gray-300 hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium'
-                >
-                  Frontend
-                </Disclosure.Button>
-                <Disclosure.Button
-                  as='a'
-                  href='#'
-                  className='text-gray-300 hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium'
-                >
-                  Backend
-                </Disclosure.Button>
-                <Disclosure.Button
-                  as='a'
-                  href='#'
-                  className='text-gray-300 hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium'
-                >
-                  Documentation
-                </Disclosure.Button>
+                <Link to='contract'>
+                  <Disclosure.Button
+                    as='a'
+                    href='#'
+                    className={
+                      location.pathname === '/navbar' ||
+                        location.pathname === '/navbar/contract'
+                        ? currentStyleMobile
+                        : defaultStyleMobile
+                    }
+                  >
+                    Contract
+                  </Disclosure.Button>
+                </Link>
+
+                <Link to='front'>
+                  <Disclosure.Button
+                    as='a'
+                    href='#'
+                    className={
+                      location.pathname === '/navbar/front'
+                        ? currentStyleMobile
+                        : defaultStyleMobile
+                    }
+                  >
+                    Frontend
+                  </Disclosure.Button>
+                </Link>
+
+                <Link to='back'>
+                  <Disclosure.Button
+                    as='a'
+                    href='#'
+                    className={
+                      location.pathname === '/navbar/back'
+                        ? currentStyleMobile
+                        : defaultStyleMobile
+                    }
+                  >
+                    Backend
+                  </Disclosure.Button>
+                </Link>
+
+                <Link to='document'>
+                  <Disclosure.Button
+                    as='a'
+                    href='#'
+                    className={
+                      location.pathname === '/navbar/document'
+                        ? currentStyleMobile
+                        : defaultStyleMobile
+                    }
+                  >
+                    Documentation
+                  </Disclosure.Button>
+                </Link>
+
               </div>
               <div className='pt-4 pb-3 border-t border-gray-700'>
                 <div className='flex items-center px-5'>
@@ -347,13 +436,28 @@ export default function Navbar() {
                 >
                   Your Profile
                 </Disclosure.Button> */}
-                  <Disclosure.Button
-                    as='a'
-                    href='#'
-                    className='block px-3 py-2 rounded-md text-base font-medium text-gray-400 hover:text-white hover:bg-gray-700'
-                  >
-                    Settings
-                  </Disclosure.Button>
+                  <div onClick={() => setNewOpen(true)}>
+
+                    <Disclosure.Button
+                      as='a'
+                      href='#'
+                      className='block px-3 py-2 rounded-md text-base font-medium text-gray-400 hover:text-white hover:bg-gray-700'
+                    >
+                      New contract
+                    </Disclosure.Button>
+
+                  </div>
+                  <div onClick={() => setJoinOpen(true)}>
+
+                    <Disclosure.Button
+                      as='a'
+                      href='#'
+                      className='block px-3 py-2 rounded-md text-base font-medium text-gray-400 hover:text-white hover:bg-gray-700'
+                    >
+                      Join contract
+                    </Disclosure.Button>
+
+                  </div>
                   <Disclosure.Button
                     as='a'
                     href='#'

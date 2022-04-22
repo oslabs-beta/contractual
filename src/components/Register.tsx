@@ -55,7 +55,7 @@ const Register = () => {
 
   return (
     <>
-      <div className='min-h-full flex flex-col justify-center py-12 sm:px-6 lg:px-8'>
+      <div className='min-h-full flex flex-col justify-center py-12 sm:px-6 lg:px-8 bg-white h-screen'>
         <div className='sm:mx-auto sm:w-full sm:max-w-md'>
           <img
             className='mx-auto h-12 w-auto'
@@ -99,11 +99,7 @@ const Register = () => {
                     onBlur={formik.handleBlur}
                   />
                 </div>
-                {formik.touched.name && formik.errors.name ? (
-                  <p>{formik.errors.name}</p>
-                ) : (
-                  <p>&nbsp;</p>
-                )}
+                {formik.touched.name && formik.errors.name ? (<p style={{color: 'red'}}>{formik.errors.name}</p>) : (<p>&nbsp;</p>)}
               </div>
 
               <div>
@@ -127,11 +123,7 @@ const Register = () => {
                     onBlur={formik.handleBlur}
                   />
                 </div>
-                {formik.touched.email && formik.errors.email ? (
-                  <p>{formik.errors.email}</p>
-                ) : (
-                  <p>&nbsp;</p>
-                )}
+                {formik.touched.email && formik.errors.email ? (<p style={{color: 'red'}}>{formik.errors.email}</p>) : (<p>&nbsp;</p>)}
               </div>
 
               <div>
@@ -155,11 +147,7 @@ const Register = () => {
                     onBlur={formik.handleBlur}
                   />
                 </div>
-                {formik.touched.password && formik.errors.password ? (
-                  <p>{formik.errors.password}</p>
-                ) : (
-                  <p>&nbsp;</p>
-                )}
+                {formik.touched.password && formik.errors.password ? (<p style={{color: 'red'}}>{formik.errors.password}</p>) : (<p>&nbsp;</p>)}
               </div>
 
               <div>

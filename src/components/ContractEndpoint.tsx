@@ -1,14 +1,11 @@
 import React, { useState } from 'react';
 import { Menu, Transition, Combobox } from '@headlessui/react';
-import {
-  ChevronDownIcon,
-  CheckIcon,
-  SelectorIcon,
-} from '@heroicons/react/solid';
+import { ChevronDownIcon,CheckIcon,SelectorIcon } from '@heroicons/react/solid';
 import { string } from 'yup';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '../state/store';
-import { addToContract } from '../state/features/contractSlice';
+import { updateContract } from '../state/features/contractSlice';
+import axios from 'axios';
 
 interface EnumEndpointItem {
   id: number;
@@ -36,25 +33,23 @@ type KeyAndType = {
 };
 type BodyInputs = KeyAndType[];
 
+
 interface ContractEndpointProps {
-  reqMethod: string;
-  setReqMethod: (e: any) => void;
-  endpoint: string;
-  setEndpoint: (e: any) => void;
-  reqInputs: BodyInputs;
-  resInputs: BodyInputs;
+  reqMethod: string,
+  setReqMethod: (e: any) => void,
+  endpoint: string,
+  setEndpoint: (e: any) => void,
+  reqInputs: BodyInputs,
+  resInputs: BodyInputs,
+  resetFields: () => void,
 }
 
-const ContractEndpoint: React.FC<ContractEndpointProps> = ({
-  reqMethod,
-  setReqMethod,
-  endpoint,
-  setEndpoint,
-  reqInputs,
-  resInputs,
-}): JSX.Element => {
-  const { currentContract } = useSelector((store: RootState) => store.contract);
-  const dispatch = useDispatch();
+
+
+const ContractEndpoint: React.FC<ContractEndpointProps> = ({ reqMethod, setReqMethod, endpoint, setEndpoint, reqInputs, resInputs, resetFields }): JSX.Element => {
+  const store = useSelector((store: RootState) => store.contract)
+  const { currentContract, currentContractToken } = useSelector((store: RootState) => store.contract);
+  const dispatch = useDispatch()
 
   // save contract needs to be a reducer function adding to our store object
   // would also pass in req body and res body
@@ -83,10 +78,29 @@ const ContractEndpoint: React.FC<ContractEndpointProps> = ({
     newContract[`Res@${reqMethod}@${endpoint}`] = resBody; // should pass in response object here
     console.log(newContract);
 
-    dispatch(addToContract(newContract));
-    // newContract can be the payload of an action
-    // contract.concat(newContract) can be the reducer function
-  };
+    
+    const contractCopy = {...currentContract, ...newContract}
+    // post new req/res to database
+    axios
+        .patch('http://localhost:4321/contract', {
+          content: contractCopy,
+          token: currentContractToken
+          // token: 'A1B2'
+        })
+        .then((response) => {
+          console.log(response);
+          if (response.status === 200) {
+            dispatch(updateContract(contractCopy))
+            //Reset form fields
+            resetFields()
+          }
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+
+  
+  }
 
   const [query, setQuery] = useState('');
   const [selectedEndpoint, setSelectedEndpoint] = useState();
@@ -100,13 +114,13 @@ const ContractEndpoint: React.FC<ContractEndpointProps> = ({
     query === ''
       ? endpoints
       : endpoints.filter((endpoint: EnumEndpointItem) => {
-          return endpoint.name.toLowerCase().includes(query.toLowerCase());
-        });
+        return endpoint.name.toLowerCase().includes(query.toLowerCase());
+      });
 
   return (
-    <div>
-      <div className='grid grid-cols-12 gap-1 px-3 py-3 grid-flow-col'>
-        <div className='col-span-3 sm:col-span-2 md:col-span-2 lg:col-span-1'>
+    <div className='sticky top-16 z-40 bg-gray-900 shadow-lg'>
+      <div className='grid grid-cols-12 gap-1 px-3 py-3'>
+        <div className='col-span-4 sm:col-span-2 md:col-span-2 lg:col-span-1'>
           <select
             id='reqMethod'
             name='reqMethod'
@@ -122,7 +136,7 @@ const ContractEndpoint: React.FC<ContractEndpointProps> = ({
             <option value='DELETE'>DELETE</option>
           </select>
         </div>
-        {/* <button onClick={() => {console.log(currentContract)}}>check current state of contract</button> */}
+        <button onClick={() => {console.log(store)}}>check current state of store</button>
         {/* <div className="col-span-7 sm:col-span-8 md:col-span-8 lg:col-span-9">
           <input
             type="endpoint"
@@ -133,7 +147,7 @@ const ContractEndpoint: React.FC<ContractEndpointProps> = ({
             className="h-[2.4rem] mt-1 block w-full shadow-sm sm:text-md border-gray-300 rounded-md px-3 py-2"
           />
         </div> */}
-        <div className='col-span-7 sm:col-span-8 md:col-span-8 lg:col-span-9'>
+        <div className='col-span-8 sm:col-span-8 md:col-span-8 lg:col-span-9'>
           <Combobox
             as='div'
             value={selectedEndpoint}
@@ -203,7 +217,7 @@ const ContractEndpoint: React.FC<ContractEndpointProps> = ({
           </Combobox>
         </div>
 
-        <div className='col-span-2 sm:col-span-2 md:col-span-2 lg:col-span-3 text-right'>
+        <div className='col-span-12 sm:col-span-2 md:col-span-2 lg:col-span-3 text-right'>
           <button
             className='inline-flex w-full justify-center mt-1 py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500'
             onClick={() => {

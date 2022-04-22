@@ -1,14 +1,23 @@
 import { createSlice, createAsyncThunk, PayloadAction } from "@reduxjs/toolkit";
-
+import axios from "axios";
+import { string } from "yup";
 
 ///// FUNCTIONS
+// const retrieve  = async (id) => {
+//   const response = await axios.post(`https://localhost:3000/contract/userid=${id}`)
+//   return response.data;
+// }
 
 // export const getUserData = createAsyncThunk(
 //   // action type string
 //   'contract/getUserData',
-//   async (id) => {
-//     const response = await fetch(`https://localhost:3000/contract/userid=${id}`)
-//       .then((data) = data.json())
+//   async (id, thunkAPI) => {
+//     try {
+//       return await retrieve(id)
+//     } catch (error) {
+//       const message = (error.response && error.response.data && error.response.data.message || error.message || error.toString()
+//       return thunkAPI.rejectWithValue(message)
+//     }
 //   }
 // )
 
@@ -17,19 +26,29 @@ type Contracts = {
   [key: string]: string
 }
 
-type CurrentContract = {
-  [key: string]: {}
-};
+type LoadContract = {
+  token: string,
+  contract: Contracts
+}
+type AddContract = {
+  name: string,
+  token: string
+}
 
+type JoinContract = {
+  name: string,
+  token: string,
+  contract: Contracts
+}
 type ContractState = {
   userName: string,
   userId: number,
-  contracts: Contracts,
-  owner: string[],
+  tokens: Contracts,
+  owns: string[],
   currentContractToken: string,
-  currentContract: CurrentContract,
-  frontEndPort: string
-  backendPort: string
+  currentContract: Contracts,
+  // frontEndPort: string
+  // backEndPort: string
   // status: string
 };
 
@@ -38,12 +57,10 @@ type ContractState = {
 const initialState: ContractState = {
   userName: '',
   userId: 0,
-  contracts: {},
-  owner: [],
+  tokens: {},
+  owns: [],
   currentContractToken: '',
   currentContract: {},
-  frontEndPort: '8080',
-  backendPort: '3000'
   // status: '',
 };
 
@@ -51,26 +68,45 @@ export const contractSlice = createSlice({
   name: "contract",
   initialState,
   reducers: {
+
     getContract: (state, action: PayloadAction<string>) => {
       state.currentContractToken = action.payload;
       // state.contract = response data?
       // this may need to be in extra reducers after building asyncThunk function
     },
-    addToContract: (state, action: PayloadAction<CurrentContract>) => {
-      state.currentContract = {...state.currentContract, ...action.payload}
+    updateContract: (state, action: PayloadAction<Contracts>) => {
+      state.currentContract = action.payload
     },
+    // invoke on successful login
     getUserData: (state, action) => {
       state.userName = action.payload.userName,
       state.userId = action.payload.userId,
-      state.contracts = action.payload.contracts,
-      state.owner = action.payload.owner
+      state.tokens = action.payload.tokens,
+      state.owns = action.payload.owns
     },
-    changeFrontEndPort: (state, action: PayloadAction<string>) => {
-      state.frontEndPort = action.payload
+    loadContract: (state, action: PayloadAction<LoadContract>) => {
+      state.currentContract = action.payload.contract;
+      state.currentContractToken = action.payload.token;
     },
-    changeBackEndPort: (state, action: PayloadAction<string>) => {
-      state.backendPort = action.payload
+    addContract: (state, action: PayloadAction<AddContract>) => {
+      state.currentContract = initialState.currentContract,
+      state.currentContractToken = action.payload.token,
+      state.owns.push(action.payload.token)
+      state.tokens[action.payload.name] = action.payload.token
     },
+    joinContract: (state, action: PayloadAction<JoinContract>) => {
+      state.currentContract = action.payload.contract,
+      state.currentContractToken = action.payload.token,
+      state.tokens[action.payload.name] = action.payload.token
+    },
+    // changeCurrentContractToken: () => {},
+    // createNewContractToken: () => {},
+    // changeFrontEndPort: (state, action: PayloadAction<string>) => {
+    //   state.frontEndPort = action.payload
+    // },
+    // changeBackEndPort: (state, action: PayloadAction<string>) => {
+    //   state.backEndPort = action.payload
+    // },
   //   deleteFromContract:,
   },
   // extraReducers(builder) {
@@ -81,7 +117,10 @@ export const contractSlice = createSlice({
   //     .addCase(getUserData.fulfilled, (state, action) => {
   //       state.status = 'success'
   //       //add functionality here
-  //       state
+  //       state.userName = action.payload.userName,
+  //       state.userId = action.payload.userId,
+  //       state.contracts = action.payload.contracts,
+  //       state.owner = action.payload.owner
   //     })
   //     .addCase(getUserData.rejected, (state, action) => {
   //       state.status = 'failed'
@@ -91,6 +130,6 @@ export const contractSlice = createSlice({
   // use builder syntax
 });
 
-export const { getContract, addToContract, getUserData, changeFrontEndPort, changeBackEndPort } = contractSlice.actions;
+export const { getContract, updateContract, getUserData, loadContract, addContract, joinContract } = contractSlice.actions;
 
 export default contractSlice.reducer;

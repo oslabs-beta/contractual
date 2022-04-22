@@ -4,7 +4,7 @@ const randomize = {
   // Primitive
   string: () => chance.string({ alpha: true }), // length, pool, alpha, casing, symbols
   letter: () => chance.letter(), // casing: lower
-  number: () => chance.integer({ min: 0, max: 100 }),
+  number: () => chance.integer({ min: 0, max: 30 }),
   floating: () => chance.floating({ min: 0, max: 100 }), // min, max, fixed
   boolean: () => chance.bool(),
   falsy: () => chance.falsy(),
@@ -33,7 +33,10 @@ const randomize = {
   timestamp: () => chance.timestamp(),
 
   // Array Generator
-  array: (content) => Array.from({ length: 3 }, content),
+  array: (content, length) =>
+    Array.from({ length: length }, randomize[content]),
+
+  // Data Contract Method
 };
 
 /**
@@ -42,36 +45,49 @@ const randomize = {
  * @param condition - key in data contracts
  */
 
-function mockResponse(contracts, condition) {
+function genMockResponse(contracts, condition) {
   // Check if condition exists in contracts
   if (!(condition in contracts)) return 'Condition not found!';
 
   // Set the corresponding condition O(n), req@... => res@...
   let reqOrRes = condition[2] === 'q' ? 's' : 'q';
   const resCondition = condition.replace(condition[2], reqOrRes);
-
   // Retreive the expected data contract from user
-  const mockResponse = contracts[resCondition];
-
+  const mockResponseTemplate = contracts[resCondition];
   // Generate mock with homemade randomize obj method
-  for (let key in mockResponse) {
-    const dataType = mockResponse[key];
-    if (dataType === 'array') {
-      mockResponse[key] = randomize[dataType](randomize.string);
+  const mockRes = {};
+  for (let key in mockResponseTemplate) {
+    const dataType = mockResponseTemplate[key];
+    if (dataType.includes('array')) {
+      const parsedArrType = extractArrType(dataType);
+      mockRes[key] = randomize.array(parsedArrType[0], parsedArrType[1]);
     } else {
-      mockResponse[key] = randomize[dataType]();
+      mockRes[key] = randomize[dataType]();
     }
   }
-  return mockResponse;
+  return mockRes;
 }
 
-const dataCon = {
-  'Req@POST@/login': { username: 'string', age: 'number' },
-  'Res@POST@/login': { success: 'boolean' },
-  'Req@POST@/habits': { habitname: 'string', target: 'number' },
-  'Res@POST@/habits': { currentHabits: 'array' },
-};
+// Extract array-type-length format
+function extractArrType(dataTypeStr) {
+  const mockArrContent = dataTypeStr.split('-')[1];
+  const mockArrLength = dataTypeStr.split('-')[2];
+  if (mockArrLength === 'any') {
+    return [mockArrContent, randomize.number()];
+  }
+  return [mockArrContent, Number(mockArrLength)];
+}
 
-console.log(mockResponse(dataCon, 'Res@POST@/habits'));
+// const dataContract = {
+//   'Req@POST@/login': { username: 'string', age: 'number' },
+//   'Res@POST@/login': { success: 'boolean' },
+//   'Req@POST@/habits': { habitname: 'string', target: 'number' },
+//   'Res@POST@/habits': { currentHabits: 'array-boolean-7' },
+// };
 
-module.exports = randomize;
+// console.log(genMockResponse(dataContract, 'Req@POST@/habits'));
+
+exports.mock = randomize;
+exports.mockResponse = genMockResponse;
+
+// string 5

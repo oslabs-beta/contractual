@@ -1,70 +1,76 @@
-const success = (
-  <span className='inline-flex rounded-full bg-green-100 px-2 text-xs font-semibold leading-5 text-green-800'>
-    Success
-  </span>
-);
-const error = (
-  <span className='inline-flex rounded-full bg-red-100 px-2 text-xs font-semibold leading-5 text-red-800'>
-    Error
-  </span>
-);
+import { useState, useEffect } from 'react';
 
-const requests = [
-  {
-    endpoint: '/login',
-    method: 'POST',
-    status: success,
-    time: '11:18:21 Feb 05',
-    error: '',
-  },
-  {
-    endpoint: '/register',
-    method: 'POST',
-    status: error,
-    time: '11:18:21 Feb 05',
-    error: 'Wrong key',
-  },
-  {
-    endpoint: '/login',
-    method: 'POST',
-    status: success,
-    time: '23:10:01 Feb 03',
-    error: '',
-  },
-  {
-    endpoint: '/feed',
-    method: 'GET',
-    status: success,
-    time: '07:23:22 Feb 02',
-    error: '',
-  },
-  {
-    endpoint: '/feed',
-    method: 'GET',
-    status: error,
-    time: '19:00:56 Feb 01',
-    error: 'Wrong type',
-  },
-  // More requests...
-];
+const socket = new WebSocket('ws://localhost:1234');
 
-// const socket = new WebSocket('ws://localhost:1234');
+socket.addEventListener('open', (event) => {
+  console.log('CONNECTED TO WEB SOCKET FROM CLIENT Side');
+});
 
-// socket.addEventListener('open', (event) => {
-//   console.log('CONNECTED TO WEB SOCKET FROM CLIENT Side');
-// });
+// const success = (
+//   <span className='inline-flex rounded-full bg-green-100 px-2 text-xs font-semibold leading-5 text-green-800'>
+//     Success
+//   </span>
+// );
+// const error = (
+//   <span className='inline-flex rounded-full bg-red-100 px-2 text-xs font-semibold leading-5 text-red-800'>
+//     Error
+//   </span>
+// );
 
-// socket.addEventListener('message', (event) => {
-//   // logic to display received data here
-//   // likely use state components
-//   console.log('MESSAGE RECEIVED FROM 1234: ', event.data);
-// });
-
-// const sendMessage = () => {
-//   socket.send('1. CLIENT 1 JUST SEND THIS MESSAGE TO SERVER!!!!!!');
-// };
+// const requestsOld = [
+//   {
+//     endpoint: '/login',
+//     method: 'POST',
+//     status: success,
+//     time: '11:18:21 Feb 05',
+//     error: '',
+//   },
+//   {
+//     endpoint: '/register',
+//     method: 'POST',
+//     status: error,
+//     time: '11:18:21 Feb 05',
+//     error: 'Wrong key',
+//   },
+//   {
+//     endpoint: '/login',
+//     method: 'POST',
+//     status: success,
+//     time: '23:10:01 Feb 03',
+//     error: '',
+//   },
+//   {
+//     endpoint: '/feed',
+//     method: 'GET',
+//     status: success,
+//     time: '07:23:22 Feb 02',
+//     error: '',
+//   },
+//   {
+//     endpoint: '/feed',
+//     method: 'GET',
+//     status: error,
+//     time: '19:00:56 Feb 01',
+//     error: 'Wrong type',
+//   },
+//   // More requests...
+// ];
 
 export default function FrontLog() {
+  const [requests, updateRequests] = useState([]);
+
+  socket.onmessage = (event) => {
+    // logic to display received data here
+    // likely use state components
+    console.log('MESSAGE RECEIVED FROM 1234: ', event.data);
+    updateRequests([...requests, JSON.parse(event.data)]);
+  };
+
+  const sendMessage = () => {
+    socket.send('1. CLIENT 1 JUST SEND THIS MESSAGE TO SERVER!!!!');
+  };
+
+  useEffect(() => {}, []);
   return (
     <div className='col-span-6 px-3'>
       <div className='sm:flex sm:items-center'>
@@ -124,50 +130,69 @@ export default function FrontLog() {
                   </tr>
                 </thead>
                 <tbody className='divide-y divide-gray-200 bg-white'>
-                  {requests.map((request) => (
-                    <tr key={request.method}>
-                      <td className='whitespace-nowrap py-4 pl-4 pr-3 text-sm sm:pl-6'>
-                        <div className='flex items-center'>
-                          {/* <div className="h-10 w-10 flex-shrink-0">
+                  {requests.map((request, index) => {
+                    let reqStatus;
+                    if (request.status === 'success') {
+                      reqStatus = (
+                        <span className='inline-flex rounded-full bg-green-100 px-2 text-xs font-semibold leading-5 text-green-800'>
+                          Success
+                        </span>
+                      );
+                    } else if (request.status === 'error') {
+                      reqStatus = (
+                        <span className='inline-flex rounded-full bg-red-100 px-2 text-xs font-semibold leading-5 text-red-800'>
+                          Error
+                        </span>
+                      );
+                    }
+                    8;
+                    return (
+                      <tr key={index}>
+                        <td className='whitespace-nowrap py-4 pl-4 pr-3 text-sm sm:pl-6'>
+                          <div className='flex items-center'>
+                            {/* <div className="h-10 w-10 flex-shrink-0">
                             <img className="h-10 w-10 rounded-full" src={person.image} alt="" />
                           </div> */}
-                          <div>
-                            <div className='font-medium text-gray-900'>
-                              {request.endpoint}
-                            </div>
-                            <div className='text-gray-500'>
-                              {request.method}
+                            <div>
+                              <div className='font-medium text-gray-900'>
+                                {request.endpoint}
+                              </div>
+                              <div className='text-gray-500'>
+                                {request.method}
+                              </div>
                             </div>
                           </div>
-                        </div>
-                      </td>
-                      {/* <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
+                        </td>
+                        {/* <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
                         <div className="text-gray-900">{person.title}</div>
                         <div className="text-gray-500">{person.department}</div>
                       </td> */}
-                      <td className='whitespace-nowrap px-3 py-4 text-sm text-gray-500'>
-                        {request.status}
-                        {/* <span className="inline-flex rounded-full bg-green-100 px-2 text-xs font-semibold leading-5 text-green-800">
+                        <td className='whitespace-nowrap px-3 py-4 text-sm text-gray-500'>
+                          {reqStatus}
+                          {/* <span className="inline-flex rounded-full bg-green-100 px-2 text-xs font-semibold leading-5 text-green-800">
                           Active
                         </span> */}
-                      </td>
-                      <td className='whitespace-nowrap px-3 py-4 text-sm text-gray-500'>
-                        {request.time}
-                      </td>
-                      <td className='whitespace-nowrap px-3 py-4 text-sm text-gray-500'>
-                        {request.error}
-                      </td>
-                      <td className='relative whitespace-nowrap py-4 pl-3 pr-4 text-right text-sm font-medium sm:pr-6'>
-                        <a
-                          href='#'
-                          className='text-indigo-600 hover:text-indigo-900'
-                        >
-                          Edit
-                          <span className='sr-only'>, {request.endpoint}</span>
-                        </a>
-                      </td>
-                    </tr>
-                  ))}
+                        </td>
+                        <td className='whitespace-nowrap px-3 py-4 text-sm text-gray-500'>
+                          {request.time}
+                        </td>
+                        <td className='whitespace-nowrap px-3 py-4 text-sm text-gray-500'>
+                          {request.error}
+                        </td>
+                        <td className='relative whitespace-nowrap py-4 pl-3 pr-4 text-right text-sm font-medium sm:pr-6'>
+                          <a
+                            href='#'
+                            className='text-indigo-600 hover:text-indigo-900'
+                          >
+                            Edit
+                            <span className='sr-only'>
+                              , {request.endpoint}
+                            </span>
+                          </a>
+                        </td>
+                      </tr>
+                    );
+                  })}
                 </tbody>
               </table>
             </div>
