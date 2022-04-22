@@ -42,6 +42,7 @@ const DocumentPreview: React.FC<PreviewProps> = ({ currentContract, reqKeys }): 
     // console.log(endpoints);
     return endpoints;
   }
+
   const docObj = buildPreview(currentContract, reqKeys);
   console.log('DOCUMENTATION');
   console.log(docObj);
@@ -63,7 +64,7 @@ const DocumentPreview: React.FC<PreviewProps> = ({ currentContract, reqKeys }): 
         </>
       )
     }
-    for (let response of docObj[key][0]) {
+    for (let response of docObj[key][1]) {
       responses.push(
         <>
           <dt className='text-sm font-medium text-gray-500'>{Object.keys(response)[0]}</dt>
