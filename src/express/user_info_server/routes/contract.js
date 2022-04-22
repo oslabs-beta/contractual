@@ -4,7 +4,7 @@ const cors = require('cors');
 
 const router = express.Router();
 
-// // Get content with token Route
+// //  Get content with token Route
 router.post('/details', dbController.getContent, (req, res) => {
   return res.status(200).json(res.locals.content);
 });

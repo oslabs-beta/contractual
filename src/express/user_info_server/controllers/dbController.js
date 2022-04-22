@@ -1,5 +1,5 @@
-const db = require('../models/dbModel.js');
-const bcrypt = require('bcrypt');
+const db = require("../models/dbModel.js");
+const bcrypt = require("bcrypt");
 
 const dbController = {};
 
@@ -8,6 +8,7 @@ dbController.getContent = async (req, res, next) => {
   // the user imports someone else's contract
   if (req.body.import) {
     const { name, token, userId } = req.body;
+
     const param = [name, token.toUpperCase()];
     // get contract details for him
     try {
@@ -39,11 +40,11 @@ dbController.getContent = async (req, res, next) => {
       WHERE token = $1;
     `;
 
-      const contractIdRes = await db.query(getContentId, [token]);
+      const contractIdRes = await db.query(getContentId, [token.toUpperCase()]);
       // targetContent returns a JSON object
       const contractId = JSON.parse(contractIdRes.rows[0].contract_id);
       const param2 = [userId, contractId, false];
-      console.log('222222', param2);
+      console.log("222222", param2);
 
       const addHistoryQuery = `
     INSERT INTO users_contracts(user_id, contract_id, permission)
@@ -54,7 +55,7 @@ dbController.getContent = async (req, res, next) => {
       return next();
     } catch (error) {
       return next({
-        log: 'Express error in adding to history in getContent middleware',
+        log: "Express error in adding to history in getContent middleware",
         status: 400,
         message: {
           err: `dbController.getContent: ERROR: ${error}`,
@@ -72,7 +73,7 @@ dbController.getContent = async (req, res, next) => {
       WHERE token = $1;
     `;
 
-      const targetContent = await db.query(getContent, [token]);
+      const targetContent = await db.query(getContent, [token.toUpperCase()]);
       const parsedContent = JSON.parse(targetContent.rows[0].content);
       res.locals.content = { content: parsedContent };
       return next();
@@ -92,7 +93,7 @@ dbController.getContent = async (req, res, next) => {
 dbController.updateContent = async (req, res, next) => {
   const { content, token } = req.body;
   const param = [JSON.stringify(content), token.toUpperCase()];
-  console.log('update Content req::::', req);
+  console.log("update Content req::::", req);
   try {
     const updateContent = `
     UPDATE contracts SET content = $1 WHERE token = $2;
@@ -119,8 +120,8 @@ dbController.addContract = async (req, res, next) => {
   const { title, userId } = req.body;
   // function to generate random token
   function makeid(length) {
-    let result = '';
-    const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
+    let result = "";
+    const characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
     const charactersLength = characters.length;
     for (let i = 0; i < length; i++) {
       result += characters.charAt(Math.floor(Math.random() * charactersLength));
@@ -152,7 +153,7 @@ dbController.addContract = async (req, res, next) => {
     ;`;
     const addContract = await db.query(addContractQuery, param1);
     // console.log(addContract);
-    contractId = addContract['rows'][0]['contract_id'];
+    contractId = addContract["rows"][0]["contract_id"];
 
     res.locals.token = token;
   } catch (error) {
@@ -169,7 +170,7 @@ dbController.addContract = async (req, res, next) => {
 
   // Store contract in user-contract table
   try {
-    console.log('CHECKPOINT----------------');
+    console.log("CHECKPOINT----------------");
     const param2 = [userId, contractId, true];
     const addHistoryQuery = `
     INSERT INTO users_contracts(user_id, contract_id, permission)
@@ -203,7 +204,7 @@ dbController.checkUser = async (req, res, next) => {
     if (userInfo.rows[0] === undefined) {
       return res
         .status(404)
-        .json({ success: false, message: 'Incorrect Email!' });
+        .json({ success: false, message: "Incorrect Email!" });
     }
     bcrypt.compare(password, userInfo.rows[0].password, (err, result) => {
       if (err) return err;
@@ -211,7 +212,7 @@ dbController.checkUser = async (req, res, next) => {
       if (!result)
         return res
           .status(404)
-          .json({ success: false, message: 'Incorrect Password!' });
+          .json({ success: false, message: "Incorrect Password!" });
       const loginRes = {
         success: true,
         userId: userInfo.rows[0].user_id,
