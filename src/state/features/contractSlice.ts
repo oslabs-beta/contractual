@@ -1,5 +1,6 @@
 import { createSlice, createAsyncThunk, PayloadAction } from "@reduxjs/toolkit";
 import axios from "axios";
+import { string } from "yup";
 
 ///// FUNCTIONS
 // const retrieve  = async (id) => {
@@ -25,17 +26,27 @@ type Contracts = {
   [key: string]: string
 }
 
-type CurrentContract = {
+type LoadContract = {
+  token: string,
+  contract: Contracts
+}
+type AddContract = {
+  name: string,
+  token: string
+}
 
-};
-
+type JoinContract = {
+  name: string,
+  token: string,
+  contract: Contracts
+}
 type ContractState = {
   userName: string,
   userId: number,
   tokens: Contracts,
   owns: string[],
   currentContractToken: string,
-  currentContract: CurrentContract,
+  currentContract: Contracts,
   // frontEndPort: string
   // backEndPort: string
   // status: string
@@ -63,7 +74,7 @@ export const contractSlice = createSlice({
       // state.contract = response data?
       // this may need to be in extra reducers after building asyncThunk function
     },
-    updateContract: (state, action: PayloadAction<CurrentContract>) => {
+    updateContract: (state, action: PayloadAction<Contracts>) => {
       state.currentContract = action.payload
     },
     // invoke on successful login
@@ -72,6 +83,21 @@ export const contractSlice = createSlice({
       state.userId = action.payload.userId,
       state.tokens = action.payload.tokens,
       state.owns = action.payload.owns
+    },
+    loadContract: (state, action: PayloadAction<LoadContract>) => {
+      state.currentContract = action.payload.contract;
+      state.currentContractToken = action.payload.token;
+    },
+    addContract: (state, action: PayloadAction<AddContract>) => {
+      state.currentContract = initialState.currentContract,
+      state.currentContractToken = action.payload.token,
+      state.owns.push(action.payload.token)
+      state.tokens[action.payload.name] = action.payload.token
+    },
+    joinContract: (state, action: PayloadAction<JoinContract>) => {
+      state.currentContract = action.payload.contract,
+      state.currentContractToken = action.payload.token,
+      state.tokens[action.payload.name] = action.payload.token
     },
     // changeCurrentContractToken: () => {},
     // createNewContractToken: () => {},
@@ -104,6 +130,6 @@ export const contractSlice = createSlice({
   // use builder syntax
 });
 
-export const { getContract, updateContract, getUserData } = contractSlice.actions;
+export const { getContract, updateContract, getUserData, loadContract, addContract, joinContract } = contractSlice.actions;
 
 export default contractSlice.reducer;

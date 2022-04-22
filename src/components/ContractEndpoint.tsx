@@ -84,8 +84,8 @@ const ContractEndpoint: React.FC<ContractEndpointProps> = ({ reqMethod, setReqMe
     axios
         .patch('http://localhost:4321/contract', {
           content: contractCopy,
-          // token: currentContractToken
-          token: 'A1B2'
+          token: currentContractToken
+          // token: 'A1B2'
         })
         .then((response) => {
           console.log(response);

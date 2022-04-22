@@ -5,12 +5,13 @@ const dbController = {};
 
 // Contract Route => Retrieve content based on token in contracts table
 dbController.getContent = async (req, res, next) => {
-  const { token } = req.params;
-  const param = [token.toUpperCase()];
+  // console.log("request is:", req);
+  const { name, token } = req.query;
+  const param = [name, token.toUpperCase()];
   try {
     const getContent = `
       SELECT * FROM contracts
-      WHERE token = $1;
+      WHERE token = $2 AND title = $1;
     `;
 
     const targetContent = await db.query(getContent, param);
@@ -20,7 +21,9 @@ dbController.getContent = async (req, res, next) => {
     return next();
   } catch (error) {
     return next({
-      log: 'Express error in getContent middleware',
+      // log: 'Express error in getContent middleware',
+      log: `dbController.getContent: ERROR: ${error}`,
+      
       status: 400,
       message: {
         err: `dbController.getContent: ERROR: ${error}`,
@@ -33,16 +36,22 @@ dbController.getContent = async (req, res, next) => {
 // Contract Route => Update content based on token in contracts table
 dbController.updateContent = async (req, res, next) => {
   const { content, token } = req.body;
-  const param = [content, token.toUpperCase()];
+  const param = [JSON.stringify(content), token.toUpperCase()];
+  console.log("update Content req::::",req)
   try {
     const updateContent = `
     UPDATE contracts SET content = $1 WHERE token = $2;
     `;
+    console.log("1")
+    console.log('parameters', param)
     const newContent = await db.query(updateContent, param);
+        console.log("2")
+
     return next();
   } catch (error) {
     return next({
-      log: 'Express error in updateContent middleware',
+      log: `dbController.updateContent: ERROR: ${error}`,
+      // log: 'Express error in updateContent middleware',
       status: 400,
       message: {
         err: `dbController.updateContent: ERROR: ${error}`,
@@ -217,13 +226,15 @@ dbController.saveUser = async (req, res, next) => {
       bcrypt.hash(password, saltRounds, async (err, hash) => {
         if (err) return err;
         try {
-          params = [name, email, hash];
+          const params = [name, email, hash];
           const saveUserQuery = `
           INSERT INTO users (name, email, password)
           VALUES($1, $2, $3)
           RETURNING *
           `;
           const newUser = await db.query(saveUserQuery, params);
+          const userId = newUser.rows[0].user_id
+          res.locals.userInfo = {success: true, userId: userId, userName : name}
           return next();
         } catch (error) {
           return next({
