@@ -6,20 +6,20 @@ import axios from 'axios';
 
 export default function FrontTester() {
   const {  currentContractToken } = useSelector((store: RootState) => store.contract);
-  const sendToken = () => {
-    axios
-      .get(`http://localhost:1234/contract/${currentContractToken}`)
-      .then((response) => {
-        console.log(response)
-      })
-      .catch((error) => {
-        console.log('Error is: ', error)
-      })
-  }
+  // const sendToken = () => {
+  //   axios
+  //     .get(`http://localhost:1234/contract/${currentContractToken}`)
+  //     .then((response) => {
+  //       console.log(response)
+  //     })
+  //     .catch((error) => {
+  //       console.log('Error is: ', error)
+  //     })
+  // }
 
   return (
     <div className='bg-gray-900 h-screen'>
-      <button style={{color: 'white'}} onClick={sendToken}>CONNECT CONTRACT</button>
+      {/* <button style={{color: 'white'}} onClick={sendToken}>CONNECT CONTRACT</button> */}
       <FrontLog />
       {/* <button onClick={sendMessage} style={{ color: 'white' }}>
                 SEND MESSAGE
