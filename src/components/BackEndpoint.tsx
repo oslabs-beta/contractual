@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import { CheckIcon, SelectorIcon } from '@heroicons/react/solid'
 import { Combobox } from '@headlessui/react'
+import axios from 'axios';
 
 interface EnumEndpointItem {
   id: number,
@@ -16,8 +17,28 @@ function classNames(...classes) {
   return classes.filter(Boolean).join(' ')
 }
 
+// type KeyAndType = {
+//   [key: string]: string;
+// };
+// type BodyInputs = KeyAndType[];
+type KeyTypeValue = {
+  reqKey: string;
+  reqValType: string;
+  reqVal: string | number | boolean | any[]
+};
+type BodyInputs = KeyTypeValue[]
 
-export default function BackEndpoint() {
+
+interface ContractEndpointProps {
+  reqMethod: string,
+  setReqMethod: (e: any) => void,
+  endpoint: string,
+  setEndpoint: (e: any) => void,
+  reqInputs: BodyInputs,
+  resetFields: () => void,
+}
+
+export default function BackEndpoint({ reqMethod, setReqMethod, endpoint, setEndpoint, reqInputs, resetFields }) {
 
   const [query, setQuery] = useState('')
   const [selectedEndpoint, setSelectedEndpoint] = useState()
@@ -30,10 +51,57 @@ export default function BackEndpoint() {
       })
 
 
+  const sendRequest = (
+    reqMethod: string,
+    endpoint: string,
+    reqInputs: BodyInputs,
+  ): void => {
+    // DO A CHECK AGAINS THE DATA CONTRACT HERE
+    // name of contract could be argument
+    const reqBody = {};
+
+    reqInputs.forEach((input) => {
+      reqBody[input.reqKey] = input.reqVal;
+    });
+
+
+    // perform ajax request passing in built request body from above
+    // use template literals to send to right endpoints
+    // need to perform data contract check
+    if (reqMethod === 'GET') {
+      axios.get(endpoint);
+    }
+    else if (reqMethod === 'POST') {
+      axios.post(endpoint, reqBody)
+        .then((response) => console.log(response))
+        .catch((error) => console.log(error))
+    }
+    else if (reqMethod === 'PUT') {
+      axios.put(endpoint)
+        .then((response) => console.log(response))
+        .catch((error) => console.log(error))
+    }
+    else if (reqMethod === 'PATCH') {
+      axios.patch(endpoint)
+        .then((response) => console.log(response))
+        .catch((error) => console.log(error))
+    }
+    else if (reqMethod === 'DELETE') {
+      axios.delete(endpoint)
+        .then((response) => console.log(response))
+        .catch((error) => console.log(error))
+    }
+
+    //Reset form fields
+
+  }
+  // add new button to reset fields
+  // resetFields()
+
   return (
     <div className='sticky top-16 z-50 bg-gray-900 shadow-lg'>
-      <div className='grid grid-cols-12 gap-1 px-3 py-3 grid-flow-col'>
-        <div className='col-span-2 sm:col-span-2'>
+      <div className='grid grid-cols-12 gap-1 px-3 py-3'>
+        <div className='col-span-4 sm:col-span-2'>
           <div>
             <select
               id="reqMethod"
@@ -97,10 +165,13 @@ export default function BackEndpoint() {
             </div>
           </Combobox>
         </div>
-        <div className='col-span-2 sm:col-span-3'>
+        <div className='col-span-12 sm:col-span-3'>
           <button
             type="button"
             className="items-center text-center h-[38px] w-full mt-1 px-2.5 py-1.5 border border-transparent text-sm font-medium rounded shadow-sm text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+            onClick={() => {
+              sendRequest(reqMethod, endpoint, reqInputs);
+            }}
           >
             Send Request
           </button>

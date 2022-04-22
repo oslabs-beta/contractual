@@ -1,6 +1,6 @@
 //RTK follows the ducks pattern and combines reducers, actions, and constants in one file called a slice. Each slice will provide an initial state and a reducer function for an object in store.
 
-import { createSlice, PayloadAction } from "@reduxjs/toolkit"; 
+import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 // define types of contents in your state object with interface or object type
 type CounterState = {

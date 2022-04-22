@@ -1,8 +1,8 @@
 const success = <span className="inline-flex rounded-full bg-green-100 px-2 text-xs font-semibold leading-5 text-green-800">
-Success
+  Success
 </span>;
 const error = <span className="inline-flex rounded-full bg-red-100 px-2 text-xs font-semibold leading-5 text-red-800">
-Error
+  Error
 </span>
 
 const requests = [
@@ -82,8 +82,8 @@ export default function BackLog() {
                   </tr>
                 </thead>
                 <tbody className="divide-y divide-gray-200 bg-white">
-                  {requests.map((request) => (
-                    <tr key={request.method}>
+                  {requests.map((request, index) => (
+                    <tr key={index}>
                       <td className="whitespace-nowrap py-4 pl-4 pr-3 text-sm sm:pl-6">
                         <div className="flex items-center">
                           {/* <div className="h-10 w-10 flex-shrink-0">
