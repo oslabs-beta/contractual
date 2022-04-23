@@ -1,7 +1,10 @@
-import BackEndpoint from '../components/BackEndpoint';
-import BackRequestEditor from '../components/BackRequestEditor';
-import BackLog from '../components/BackLog';
-import { useState } from 'react'
+import BackEndpoint from "../components/BackEndpoint";
+import BackRequestEditor from "../components/BackRequestEditor";
+import BackLog from "../components/BackLog";
+import { useState } from "react";
+import { useSelector } from 'react-redux';
+import { RootState } from '../state/store';
+import { checkInput } from "../express/testing_server/controllers/contractOp";
 
 // type KeyAndType = {
 //   [key: string]: string;
@@ -11,56 +14,81 @@ import { useState } from 'react'
 type KeyTypeValue = {
   reqKey: string;
   reqValType: string;
-  reqVal: string | number | boolean | any[]
+  reqVal: string | number | boolean | any[];
 };
-type BodyInputs = KeyTypeValue[]
+type BodyInputs = KeyTypeValue[];
 
 export default function BackTester() {
-  const [reqMethod, setReqMethod] = useState('GET');
-  const [endpoint, setEndpoint] = useState('');
-  const [reqInputs, setReqInputs] = useState<BodyInputs>([{ reqKey: '', reqValType: 'boolean', reqVal: 'true' }])
-
-  ///// RECORD CHANGES TO REQ TYPE DROPDOWN IN CONTRACTENDPOINT COMPONENT
+  const [reqMethod, setReqMethod] = useState("GET");
+  const [endpoint, setEndpoint] = useState("");
+  const [URLString, setURLString] = useState("");
+  const [reqInputs, setReqInputs] = useState<BodyInputs>([
+    { reqKey: "", reqValType: "boolean", reqVal: "true" },
+  ]);
+  const { currentContract } = useSelector((state: RootState) => state.contract);
+  const getEndpoints = (contract) => {
+    const endpoints = [];
+    let id = 1;
+    for (let key in contract) {
+      if (key.slice(0,3) === 'Req') {
+        const endpoint = key.split('@')[2];
+        endpoints.push({ id, name: endpoint });
+        id++
+      }
+    }
+    return endpoints
+    // return reqKeys;
+    // console.log(getReqKeys(currentContract));
+  };
+  const reqEndpoints = getEndpoints(currentContract);
+  ///// RECORD CHANGES TO REQ TYPE DROPDOWN IN BACKENDPOINT COMPONENT
   const handleSetReqMethod = (e: any): void => {
     const method: string = e.target.value;
-    console.log('method changed: ', method);
+    console.log("method changed: ", method);
     setReqMethod(method);
   };
 
-  //// RECORD CHANGES IN ENDPOINT INPUT FIELD IN CONTRACTENDPOINT COMPONENET
+  //// RECORD CHANGES IN ENDPOINT INPUT FIELD IN BACKENDPOINT COMPONENET
+  const handleSetURL = (e: any): void => {
+    const URLString: string = e.target.value;
+    console.log("current URL string: ", e.target.value);
+    setURLString(URLString);
+  };
   const handleSetEndpoint = (e: any): void => {
     const endpoint: string = e.target.value;
-    console.log('current endpoint string: ', e.target.value);
+    console.log("current endpoint string: ", e.target.value);
     setEndpoint(endpoint);
-
   };
 
   const handleSetReqInputs = (index, e) => {
     let data = [...reqInputs];
     data[index][e.target.name] = e.target.value;
-    console.log('Request Box changed: ', data);
+    console.log("Request Box changed: ", data);
     setReqInputs(data);
   };
 
   const addReqField = () => {
-    let additional = { reqKey: '', reqValType: 'boolean', reqVal: 'true' };
-    console.log('new Request field added');
+    let additional = { reqKey: "", reqValType: "boolean", reqVal: "true" };
+    console.log("new Request field added");
     setReqInputs([...reqInputs, additional]);
   };
 
   const resetReqFields = () => {
-    setReqInputs([{ reqKey: '', reqValType: 'boolean', reqVal: 'true' }])
-  }
+    setReqInputs([{ reqKey: "", reqValType: "boolean", reqVal: "true" }]);
+  };
 
   return (
-    <div className='bg-gray-900 h-screen'>
+    <div className="bg-gray-900 h-screen">
       <BackEndpoint
         reqMethod={reqMethod}
         setReqMethod={handleSetReqMethod}
+        URLString={URLString}
+        setURLString={handleSetURL}
         endpoint={endpoint}
         setEndpoint={handleSetEndpoint}
         reqInputs={reqInputs}
         resetFields={resetReqFields}
+        endpoints={reqEndpoints}
       />
       <BackRequestEditor
         reqInputs={reqInputs}
