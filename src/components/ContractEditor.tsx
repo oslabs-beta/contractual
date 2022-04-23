@@ -14,6 +14,8 @@ interface ContractEndpointProps {
   setResInputs: (index: string, e: Event) => void;
   addReqField: () => void;
   addResField: () => void;
+  subtractReqField: () => void;
+  subtractResField: () => void;
 }
 
 export default function ContractEditor({
@@ -23,6 +25,8 @@ export default function ContractEditor({
   setResInputs,
   addReqField,
   addResField,
+  subtractReqField,
+  subtractResField
 }) {
   return (
     <form className='divide-gray-200 px-3 grid grid-cols-12 gap-3'>
@@ -117,59 +121,6 @@ export default function ContractEditor({
           );
         })}
 
-        {/* <div>
-          <div className="mt-6 grid grid-cols-1 gap-y-6 gap-x-2 sm:grid-cols-6">
-
-          <div className="sm:col-span-6">
-              <div className="mt-1">
-                <select
-                  id='reqLocation'
-                  name='reqLocation'
-                  className='shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md'
-                >
-                  <option value='body'>Body</option>
-                  <option value='query'>Query</option>
-                  <option value='params'>Params</option>
-                </select>
-              </div>
-            </div>
-
-            <div className='sm:col-span-3'>
-              <div className='mt-1'>
-                <input
-                  type='text'
-                  name='reqKey'
-                  id='reqKey'
-                  // test
-                  onChange={(e) => {
-                    handleBodyInput(e);
-                  }}
-                  className='shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md'
-                />
-              </div>
-            </div>
-
-            <div className='sm:col-span-3'>
-              <div className='mt-1'>
-                <select
-                  id='reqValType'
-                  name='reqValType'
-                  onChange={(e) => {
-                    handleBodyInput(e);
-                  }}
-                  className='shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md'
-                >
-                  <option value='boolean'>Boolean</option>
-                  <option value='number'>Number</option>
-                  <option value='string'>String</option>
-                  <option value='object'>Object</option>
-                  <option value='array'>Array</option>
-                </select>
-              </div>
-            </div>
-          </div>
-        </div> */}
-        {/* ////////// */}
         <button
           type='button'
           onClick={addReqField}
@@ -190,6 +141,10 @@ export default function ContractEditor({
             />
           </svg>
         </button>
+        {Array.isArray(reqInputs)&&reqInputs.length > 1 ?  <button
+        onClick={subtractReqField}
+        className='inline-flex w-full items-center px-2.5 py-1.5 border border-transparent text-xs font-medium rounded text-indigo-700 bg-indigo-100 hover:bg-indigo-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500'
+        > - </button> : null}
       </div>
 
       <div className='space-y-2 col-span-6'>
@@ -286,60 +241,6 @@ export default function ContractEditor({
           );
         })}
 
-        {/* <div>
-          <div className="mt-6 grid grid-cols-1 gap-y-6 gap-x-2 sm:grid-cols-6">
-
-          <div className="sm:col-span-6">
-              <div className="mt-1">
-                <select
-                  id='resType'
-                  name='resType'
-                  className='shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md'
-                >
-                  <option value='object'>Object</option>
-                  <option value='array'>Array</option>
-                  <option value='boolean'>Boolean</option>
-                  <option value='number'>Number</option>
-                  <option value='string'>String</option>
-                </select>
-              </div>
-            </div>
-
-            <div className='sm:col-span-3'>
-              <div className='mt-1'>
-                <input
-                  type='text'
-                  name='resKey'
-                  id='resKey'
-                  onChange={(e) => {
-                    handleBodyInput(e);
-                  }}
-                  className='shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md'
-                />
-              </div>
-            </div>
-
-            <div className='sm:col-span-3'>
-              <div className='mt-1'>
-                <select
-                  id='resValType'
-                  name='resValType'
-                  onChange={(e) => {
-                    handleBodyInput(e);
-                  }}
-                  className='shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md'
-                >
-                  <option value='boolean'>Boolean</option>
-                  <option value='number'>Number</option>
-                  <option value='string'>String</option>
-                  <option value='array'>Array</option>
-                  <option value='object'>Object</option>
-                </select>
-              </div>
-            </div>
-          </div>
-        </div> */}
-        {/* ///dynamic */}
         <button
           type='button'
           onClick={addResField}
@@ -360,6 +261,11 @@ export default function ContractEditor({
             />
           </svg>
         </button>
+        {resInputs.length > 1 ?  <button
+        onClick={subtractResField}
+        className='inline-flex w-full items-center px-2.5 py-1.5 border border-transparent text-xs font-medium rounded text-indigo-700 bg-indigo-100 hover:bg-indigo-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500'
+        > - </button> : null} 
+        
       </div>
     </form>
   );

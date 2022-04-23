@@ -13,8 +13,6 @@ const DocumentCreator = () => {
       }
     }
     return reqs
-    // return reqKeys;
-    // console.log(getReqKeys(currentContract));
   };
   const reqKeys = getReqKeys(currentContract);
   // console.log(reqKeys);
