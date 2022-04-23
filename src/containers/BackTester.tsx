@@ -32,6 +32,8 @@ export default function BackTester() {
     { reqKey: "", reqValType: "boolean", reqVal: "true" },
   ]);
   const { currentContract } = useSelector((state: RootState) => state.contract);
+
+  /** CREATE ENDPOINTS OBJECT ARRAY FOR ENUM IN BACKENDPOINT COMPONENT */
   const getEndpoints = (contract: CurrentContract ):EnumEndpointItem[] => {
     const endpoints = [];
     let id = 1;
@@ -48,21 +50,25 @@ export default function BackTester() {
     // console.log(getReqKeys(currentContract));
   };
   const reqEndpoints: EnumEndpointItem[] = getEndpoints(currentContract);
-  ///// RECORD CHANGES TO REQ TYPE DROPDOWN IN BACKENDPOINT COMPONENT
+
+  /** RECORD CHANGES TO REQ TYPE DROPDOWN IN BACKENDPOINT COMPONENT 
+   *  NOTE: DROPDOWN CURRENTLY CHANGED TO DISPLAY ONLY FOR TESTING.
+   *        DEVELOPER DECISION TO REMOVE
+  */
   const handleSetReqMethod = (e: string): void => {
     // const method: string = e.target.value;
     // console.log("method changed: ", method);
     setReqMethod(e);
   };
 
-  //// RECORD CHANGES IN ENDPOINT INPUT FIELD IN BACKENDPOINT COMPONENET
+  /**  RECORD STATE CHANGES IN DOMAIN INPUT FIELD IN BACKENDPOINT COMPONENT */
   const handleSetURL = (e: any): void => {
     const URLString: string = e.target.value;
     console.log("current URL string: ", e.target.value);
     setURLString(URLString);
   };
 
-  // REQUIRES MODIFICATION
+  /** RECORD INPUTS OF KEY/TYPE/VALUE TRIOS IN THE REQUEST BODY SECTION IN COMPONENT LEVEL STATE */
   const handleSetReqInputs = (index, e) => {
     let data = [...reqInputs];
     data[index][e.target.name] = e.target.value;
@@ -70,8 +76,7 @@ export default function BackTester() {
     setReqInputs(data);
   };
 
-  // NEW FUNCTION TEST: WORKING
-  // [ { reqKey: "", reqValType: "boolean", reqVal: "true" },]
+  /**  UPDATE CURRENT INPUT FIELDS STATE VARIABLES BASED ON COMBOBOX DROPDOWN ENUM SELECTION */
   const updateReqFields = (reqEndpointKey: string):void => {
     const endpointKeys: Contracts = currentContract[reqEndpointKey]
     let keys = [];

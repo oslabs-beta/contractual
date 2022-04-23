@@ -61,14 +61,14 @@ const ContractEndpoint: React.FC<ContractEndpointProps> = ({
   const { currentContract, currentContractToken } = useSelector((store: RootState) => store.contract);
   const dispatch = useDispatch()
 
-
+    /** SAVE OR UPDATE THE CURRENTLY SELECTED ENDPOINT AND FIELDS TO THE DATABASE */
   const saveContract = (
     reqMethod: string,
     endpoint: string,
     reqInputs: BodyInputs,
     resInputs: BodyInputs
   ): void => {
-    // name of contract could be argument
+    
     const reqBody = {};
     const resBody = {};
     const newContract = {};
@@ -80,24 +80,23 @@ const ContractEndpoint: React.FC<ContractEndpointProps> = ({
       resBody[input.resKey] = input.resValType;
     });
 
+    /**  BUILD CONTRACT STRINGS FOR REQUEST AND RESPONSE */
     newContract[`Req@${reqMethod}@${endpoint}`] = reqBody; // should pass in request object here
     newContract[`Res@${reqMethod}@${endpoint}`] = resBody; // should pass in response object here
     console.log(newContract);
 
     
     const contractCopy = {...currentContract, ...newContract}
-    // post new req/res to database
+    
     axios
         .patch('http://localhost:4321/contract', {
           content: contractCopy,
           token: currentContractToken
-          // token: 'A1B2'
         })
         .then((response) => {
           console.log(response);
           if (response.status === 200) {
             dispatch(updateContract(contractCopy))
-            //Reset form fields
             resetFields()
           }
         })
@@ -108,12 +107,13 @@ const ContractEndpoint: React.FC<ContractEndpointProps> = ({
   
   }
 
-
+  /** ADJUST CURRENT SELECTED ENUM INDEX  */
   const endpointChange = (event) => {
     setQuery(event.target.value);
     setEndpoint(event);
   };
 
+  /** SEARCH FILTER FOR ENDPOINT INPUT FIELD */
   const filteredEndpoints =
     query === ''
       ? endpoints
@@ -225,24 +225,6 @@ const ContractEndpoint: React.FC<ContractEndpointProps> = ({
           </button>
         </div>
       </div>
-      {/* <div className='wrapper-endpoint'>
-        <form className='form-endpoint'>
-            <div className='wrapper-selector'>
-                <select id='reqType' name='reqType' className='request-type-selector'>
-                    <option value='get'>GET</option>
-                    <option value='post'>POST</option>
-                    <option value='patch'>PATCH</option>
-                    <option value='delete'>DELETE</option>
-                </select>
-            </div>
-            <div className='wrapper-input'>
-                <input type='text' id='endpoint-text' name='endpoint' placeholder='Enter request URL'></input>
-            </div>
-            <div className='wrapper-save'>
-                <button className='btn-save'>Save</button>
-            </div>
-        </form>
-      </div> */}
     </div>
   );
 };

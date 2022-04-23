@@ -53,6 +53,7 @@ export default function BackEndpoint({
   const [query, setQuery] = useState("");
   const [selectedEndpoint, setSelectedEndpoint] = useState<EnumEndpointItem>();
 
+  /** SEARCH FILTER FOR ENDPOINT INPUT FIELD */
   const filteredEndpoints =
     query === ""
       ? endpoints
@@ -60,10 +61,6 @@ export default function BackEndpoint({
           return endpoint.name.toLowerCase().includes(query.toLowerCase());
         });
   
-  // CREATE FUNCTION COMBINING SET SELECTED ENDPOINT, SETREQMETHOD, AND SETREQINPUTS
-  const changeEndpoint = () => {
-
-  }
   const sendRequest = (
     URLString: string,
     reqMethod: string,
