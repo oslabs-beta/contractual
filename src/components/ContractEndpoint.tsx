@@ -131,6 +131,7 @@ const ContractEndpoint: React.FC<ContractEndpointProps> = ({
             onChange={(e) => {
               handleSetReqMethod(e);
             }}
+            value={reqMethod}
             className='mt-1 block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm'
           >
             <option value='GET'>GET</option>
@@ -143,21 +144,11 @@ const ContractEndpoint: React.FC<ContractEndpointProps> = ({
         <button onClick={() => {console.log(store)}}>check current state of store</button>
         <button onClick={() => { console.log(reqInputs); console.log(resInputs); console.log(reqMethod); console.log(newEndpoint) }}>check state of inputs</button>
 
-        {/* <div className="col-span-7 sm:col-span-8 md:col-span-8 lg:col-span-9">
-          <input
-            type="endpoint"
-            name="endpoint"
-            id="endpoint"
-            value={endpoint}
-            onChange={(e) => {setEndpoint(e)}}
-            className="h-[2.4rem] mt-1 block w-full shadow-sm sm:text-md border-gray-300 rounded-md px-3 py-2"
-          />
-        </div> */}
         <div className='col-span-8 sm:col-span-8 md:col-span-8 lg:col-span-9'>
           <Combobox
             as='div'
             value={selectedEndpoint}
-            onChange={(endpoint: EnumEndpointItem) => {setSelectedEndpoint(endpoint); updateFieldsByEndpoint(`Req@${endpoint.method.toUpperCase()}@${endpoint.name}`, `Res@${endpoint.method.toUpperCase()}@${endpoint.name}`); setNewEndpoint(endpoint.name);}}
+            onChange={(endpoint: EnumEndpointItem) => {setSelectedEndpoint(endpoint); updateFieldsByEndpoint(`Req@${endpoint.method.toUpperCase()}@${endpoint.name}`, `Res@${endpoint.method.toUpperCase()}@${endpoint.name}`); setNewEndpoint(endpoint.name); setReqMethod(endpoint.method.toUpperCase())}}
           >
             <div className='relative mt-1'>
               <Combobox.Input
@@ -197,7 +188,7 @@ const ContractEndpoint: React.FC<ContractEndpointProps> = ({
                               selected && 'font-semibold'
                             )}
                           >
-                            {endpoint.name}
+                            {endpoint.method + ' ' + endpoint.name}
                           </span>
 
                           {selected && (

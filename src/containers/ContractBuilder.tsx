@@ -76,8 +76,8 @@ export default function ContractBuilder() {
   };
   const subtractResField = (e) => {
     e.preventDefault()
-    const newResInputs = JSON.parse(JSON.stringify(reqInputs));
-    setResInputs(newResInputs.slice(0,-1));;
+    const newResInputs = JSON.parse(JSON.stringify(resInputs));
+    setResInputs(newResInputs.slice(0,-1));
   };
 
   const resetFields = () => {
@@ -143,15 +143,6 @@ export default function ContractBuilder() {
         subtractReqField={subtractReqField}
         subtractResField={subtractResField}
       />
-      {/* <div className="request-specification-container">
-       <div className="request-method">Request type</div>
-       <div>endpoint</div>
-       <div>save as</div>
-     </div>
-     <div className="contract-container">
-       <div className="request-box">request box</div>
-       <div className="response-box">response box</div>
-     </div> */}
     </div>
   );
 }
