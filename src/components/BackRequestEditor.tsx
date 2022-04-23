@@ -14,19 +14,21 @@ type BodyInputs = KeyTypeValue[]
 interface ContractEndpointProps {
   reqInputs: BodyInputs;
   setReqInputs: (index: string, e: Event) => void;
-  addReqField: () => void;
+  // addReqField: () => void;
+  reqMethod: string
 }
 
 
 export default function BackRequestEditor({
   reqInputs,
   setReqInputs,
-  addReqField,
+  // addReqField,
+  reqMethod
 }) {
 
   return (
     <>
-      <button onClick={() => { console.log(reqInputs) }}>check state of inputs</button>
+      <button onClick={() => { console.log(reqInputs); console.log(reqMethod) }}>check state of inputs</button>
       <form className='divide-gray-200 px-3 grid grid-cols-12 gap-3'>
 
         <div className='space-y-2 col-span-12'>
@@ -243,7 +245,7 @@ export default function BackRequestEditor({
           </div>
         </div> */}
           {/* ////////// */}
-          <button
+          {/* <button
             type='button'
             onClick={addReqField}
             className='inline-flex w-full mt-2 items-center px-2.5 py-1.5 border border-transparent text-xs font-medium rounded text-indigo-700 bg-indigo-100 hover:bg-indigo-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500'
@@ -262,7 +264,7 @@ export default function BackRequestEditor({
                 d='M12 6v6m0 0v6m0-6h6m-6 0H6'
               />
             </svg>
-          </button>
+          </button> */}
         </div>
       </form>
     </>

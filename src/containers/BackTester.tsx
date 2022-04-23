@@ -6,11 +6,17 @@ import { useSelector } from 'react-redux';
 import { RootState } from '../state/store';
 import { checkInput } from "../express/testing_server/controllers/contractOp";
 
-// type KeyAndType = {
-//   [key: string]: string;
-// };
-// type BodyInputs = KeyAndType[];
-
+interface EnumEndpointItem {
+  id: number;
+  method: string;
+  name: string;
+}
+type CurrentContract = {
+  [key: string]: Contracts
+}
+type Contracts = {
+  [key: string]: string
+}
 type KeyTypeValue = {
   reqKey: string;
   reqValType: string;
@@ -26,26 +32,27 @@ export default function BackTester() {
     { reqKey: "", reqValType: "boolean", reqVal: "true" },
   ]);
   const { currentContract } = useSelector((state: RootState) => state.contract);
-  const getEndpoints = (contract) => {
+  const getEndpoints = (contract: CurrentContract ):EnumEndpointItem[] => {
     const endpoints = [];
     let id = 1;
     for (let key in contract) {
       if (key.slice(0,3) === 'Req') {
         const endpoint = key.split('@')[2];
-        endpoints.push({ id, name: endpoint });
-        id++
+        const method = key.split('@')[1];
+        endpoints.push({ id, method, name: endpoint });
+        id++;
       }
     }
     return endpoints
     // return reqKeys;
     // console.log(getReqKeys(currentContract));
   };
-  const reqEndpoints = getEndpoints(currentContract);
+  const reqEndpoints: EnumEndpointItem[] = getEndpoints(currentContract);
   ///// RECORD CHANGES TO REQ TYPE DROPDOWN IN BACKENDPOINT COMPONENT
-  const handleSetReqMethod = (e: any): void => {
-    const method: string = e.target.value;
-    console.log("method changed: ", method);
-    setReqMethod(method);
+  const handleSetReqMethod = (e: string): void => {
+    // const method: string = e.target.value;
+    // console.log("method changed: ", method);
+    setReqMethod(e);
   };
 
   //// RECORD CHANGES IN ENDPOINT INPUT FIELD IN BACKENDPOINT COMPONENET
@@ -54,12 +61,8 @@ export default function BackTester() {
     console.log("current URL string: ", e.target.value);
     setURLString(URLString);
   };
-  const handleSetEndpoint = (e: any): void => {
-    const endpoint: string = e.target.value;
-    console.log("current endpoint string: ", e.target.value);
-    setEndpoint(endpoint);
-  };
 
+  // REQUIRES MODIFICATION
   const handleSetReqInputs = (index, e) => {
     let data = [...reqInputs];
     data[index][e.target.name] = e.target.value;
@@ -67,15 +70,20 @@ export default function BackTester() {
     setReqInputs(data);
   };
 
-  const addReqField = () => {
-    let additional = { reqKey: "", reqValType: "boolean", reqVal: "true" };
-    console.log("new Request field added");
-    setReqInputs([...reqInputs, additional]);
+  // NEW FUNCTION TEST: WORKING
+  // [ { reqKey: "", reqValType: "boolean", reqVal: "true" },]
+  const updateReqFields = (reqEndpointKey: string):void => {
+    const endpointKeys: Contracts = currentContract[reqEndpointKey]
+    let keys = [];
+    for (let key in endpointKeys) {
+      const k = {reqKey: key, reqValType: endpointKeys[key], reqVal: ''};
+      if (k.reqValType === 'boolean') k.reqVal = 'true';
+      keys.push(k)
+    }
+    console.log('ENDPOINT KEYS ARE: ', keys)
+    setReqInputs(keys);
   };
 
-  const resetReqFields = () => {
-    setReqInputs([{ reqKey: "", reqValType: "boolean", reqVal: "true" }]);
-  };
 
   return (
     <div className="bg-gray-900 h-screen">
@@ -84,16 +92,18 @@ export default function BackTester() {
         setReqMethod={handleSetReqMethod}
         URLString={URLString}
         setURLString={handleSetURL}
-        endpoint={endpoint}
-        setEndpoint={handleSetEndpoint}
         reqInputs={reqInputs}
-        resetFields={resetReqFields}
+        setReqInputs={handleSetReqInputs}
+        updateReqFields={updateReqFields}
+        // resetFields={resetReqFields}
         endpoints={reqEndpoints}
+        currentContract={currentContract}
       />
       <BackRequestEditor
         reqInputs={reqInputs}
         setReqInputs={handleSetReqInputs}
-        addReqField={addReqField}
+        reqMethod={reqMethod}
+        // addReqField={addReqField}
       />
       <BackLog />
     </div>

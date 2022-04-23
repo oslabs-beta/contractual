@@ -9,20 +9,12 @@ import axios from 'axios';
 
 interface EnumEndpointItem {
   id: number;
+  method: string
   name: string;
 }
-
-const endpoints: EnumEndpointItem[] = [
-  { id: 1, name: '/login' },
-  { id: 2, name: '/register' },
-  { id: 3, name: '/contract' },
-  { id: 4, name: '/test' },
-  { id: 5, name: '/documentation' },
-  { id: 6, name: '/logout' },
-  { id: 7, name: '/frontend' },
-  { id: 8, name: '/backend' },
-  // More endpoints...
-];
+type Contracts = {
+  [key: string]: string;
+};
 
 function classNames(...classes) {
   return classes.filter(Boolean).join(' ');
@@ -36,25 +28,39 @@ type BodyInputs = KeyAndType[];
 
 interface ContractEndpointProps {
   reqMethod: string,
-  setReqMethod: (e: any) => void,
-  endpoint: string,
+  setReqMethod;
+  handleSetReqMethod: (e: any) => void,
+  newEndpoint: string,
+  endpoints: EnumEndpointItem[],
   setEndpoint: (e: any) => void,
+  setNewEndpoint: (input: string) => void
   reqInputs: BodyInputs,
   resInputs: BodyInputs,
   resetFields: () => void,
+  updateFieldsByEndpoint: (requestString: string, responseString:string) => void
 }
 
 
 
-const ContractEndpoint: React.FC<ContractEndpointProps> = ({ reqMethod, setReqMethod, endpoint, setEndpoint, reqInputs, resInputs, resetFields }): JSX.Element => {
+const ContractEndpoint: React.FC<ContractEndpointProps> = ({ 
+    reqMethod, 
+    setReqMethod,
+    handleSetReqMethod, 
+    newEndpoint,
+    endpoints, 
+    setNewEndpoint,
+    setEndpoint, 
+    reqInputs, 
+    resInputs, 
+    resetFields,
+    updateFieldsByEndpoint, 
+  }): JSX.Element => {
+  const [query, setQuery] = useState('');
+  const [selectedEndpoint, setSelectedEndpoint] = useState<EnumEndpointItem>();
   const store = useSelector((store: RootState) => store.contract)
   const { currentContract, currentContractToken } = useSelector((store: RootState) => store.contract);
   const dispatch = useDispatch()
 
-  // save contract needs to be a reducer function adding to our store object
-  // would also pass in req body and res body
-  // concat our 'newContract' object to the store state?
-  // one pair each implementation
 
   const saveContract = (
     reqMethod: string,
@@ -102,8 +108,6 @@ const ContractEndpoint: React.FC<ContractEndpointProps> = ({ reqMethod, setReqMe
   
   }
 
-  const [query, setQuery] = useState('');
-  const [selectedEndpoint, setSelectedEndpoint] = useState();
 
   const endpointChange = (event) => {
     setQuery(event.target.value);
@@ -125,7 +129,7 @@ const ContractEndpoint: React.FC<ContractEndpointProps> = ({ reqMethod, setReqMe
             id='reqMethod'
             name='reqMethod'
             onChange={(e) => {
-              setReqMethod(e);
+              handleSetReqMethod(e);
             }}
             className='mt-1 block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm'
           >
@@ -137,6 +141,8 @@ const ContractEndpoint: React.FC<ContractEndpointProps> = ({ reqMethod, setReqMe
           </select>
         </div>
         <button onClick={() => {console.log(store)}}>check current state of store</button>
+        <button onClick={() => { console.log(reqInputs); console.log(resInputs); console.log(reqMethod); console.log(newEndpoint) }}>check state of inputs</button>
+
         {/* <div className="col-span-7 sm:col-span-8 md:col-span-8 lg:col-span-9">
           <input
             type="endpoint"
@@ -151,14 +157,14 @@ const ContractEndpoint: React.FC<ContractEndpointProps> = ({ reqMethod, setReqMe
           <Combobox
             as='div'
             value={selectedEndpoint}
-            onChange={setSelectedEndpoint}
+            onChange={(endpoint: EnumEndpointItem) => {setSelectedEndpoint(endpoint); updateFieldsByEndpoint(`Req@${endpoint.method.toUpperCase()}@${endpoint.name}`, `Res@${endpoint.method.toUpperCase()}@${endpoint.name}`); setNewEndpoint(endpoint.name);}}
           >
             <div className='relative mt-1'>
               <Combobox.Input
                 type='endpoint'
                 name='endpoint'
                 id='endpoint'
-                value={endpoint}
+                value={newEndpoint}
                 className='w-full rounded-md border border-gray-300 bg-white py-2 pl-3 pr-10 shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-1 focus:ring-indigo-500 sm:text-sm'
                 onChange={(event) => endpointChange(event)}
                 displayValue={(endpoint: EnumEndpointItem) => endpoint.name}
@@ -221,7 +227,7 @@ const ContractEndpoint: React.FC<ContractEndpointProps> = ({ reqMethod, setReqMe
           <button
             className='inline-flex w-full justify-center mt-1 py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500'
             onClick={() => {
-              saveContract(reqMethod, endpoint, reqInputs, resInputs);
+              saveContract(reqMethod, newEndpoint, reqInputs, resInputs);
             }}
           >
             Save

@@ -6,22 +6,18 @@ import { checkInput } from "../express/testing_server/controllers/contractOp";
 
 interface EnumEndpointItem {
   id: number;
+  method: string;
   name: string;
 }
 
-// const endpoints: EnumEndpointItem[] = [
-//   { id: 1, name: "/login" },
-//   // More endpoints...
-// ];
+type Contracts = {
+  [key: string]: string;
+};
 
 function classNames(...classes) {
   return classes.filter(Boolean).join(" ");
 }
 
-// type KeyAndType = {
-//   [key: string]: string;
-// };
-// type BodyInputs = KeyAndType[];
 type KeyTypeValue = {
   reqKey: string;
   reqValType: string;
@@ -34,34 +30,40 @@ interface ContractEndpointProps {
   setReqMethod: (e: any) => void;
   URLString: string;
   setURLString: (e: any) => void;
-  endpoint: string;
-  setEndpoint: (e: any) => void;
   reqInputs: BodyInputs;
-  resetFields: () => void;
-  endpoints: EnumEndpointItem;
+  setReqInputs: (index: string, e: Event) => void;
+  updateReqFields: (index: string, e: Event) => void;
+  // resetFields: () => void;
+  endpoints: EnumEndpointItem[];
+  currentContract: Contracts;
 }
 
 export default function BackEndpoint({
   reqMethod,
   setReqMethod,
-  endpoint,
-  setEndpoint,
   reqInputs,
-  resetFields,
+  setReqInputs,
+  updateReqFields,
+  // resetFields,
   URLString,
   setURLString,
   endpoints,
+  currentContract,
 }) {
   const [query, setQuery] = useState("");
-  const [selectedEndpoint, setSelectedEndpoint] = useState();
+  const [selectedEndpoint, setSelectedEndpoint] = useState<EnumEndpointItem>();
 
   const filteredEndpoints =
     query === ""
       ? endpoints
-      : endpoints.filter((endpoint) => {
+      : endpoints.filter((endpoint: EnumEndpointItem) => {
           return endpoint.name.toLowerCase().includes(query.toLowerCase());
         });
+  
+  // CREATE FUNCTION COMBINING SET SELECTED ENDPOINT, SETREQMETHOD, AND SETREQINPUTS
+  const changeEndpoint = () => {
 
+  }
   const sendRequest = (
     URLString: string,
     reqMethod: string,
@@ -80,35 +82,74 @@ export default function BackEndpoint({
     // perform ajax request passing in built request body from above
     // use template literals to send to right endpoints
     // need to perform data contract check
-
+    function checkResponse(response, contract, condition) {
+      const report = checkInput(response, contract, condition);
+      return report;
+    }
 
     if (reqMethod === "GET") {
-            console.log("sending a get req");
-
-      axios.get(URLString + endpoint.name);
+      axios
+        .get(URLString + endpoint.name)
+        .then((response) => {
+          const report = checkResponse(
+            response.data,
+            currentContract,
+            condition
+          );
+          console.log(report);
+        })
+        .catch((error) => console.log(error));
     } else if (reqMethod === "POST") {
-      console.log("sending a post req")
       axios
         .post(URLString + endpoint.name, reqBody)
         .then((response) => {
-          // TEST CONDITION HERE
-          console.log(response);
+          console.log("response is :  ", response);
+          const report = checkResponse(
+            response.data,
+            currentContract,
+            condition
+          );
+          console.log(report);
         })
         .catch((error) => console.log(error));
     } else if (reqMethod === "PUT") {
       axios
         .put(URLString + endpoint.name, reqBody)
-        .then((response) => console.log(response))
+        .then((response) => {
+          console.log(response);
+          const report = checkResponse(
+            response.data,
+            currentContract,
+            condition
+          );
+          console.log(report);
+        })
         .catch((error) => console.log(error));
     } else if (reqMethod === "PATCH") {
       axios
         .patch(URLString + endpoint.name, reqBody)
-        .then((response) => console.log(response))
+        .then((response) => {
+          console.log(response);
+          const report = checkResponse(
+            response.data,
+            currentContract,
+            condition
+          );
+          console.log(report);
+        })
         .catch((error) => console.log(error));
     } else if (reqMethod === "DELETE") {
       axios
         .delete(URLString + endpoint.name, reqBody)
-        .then((response) => console.log(response))
+        .then((response) => {
+          console.log("response is :  ", response);
+          const report = checkResponse(
+            response.data,
+            currentContract,
+            condition
+          );
+          console.log(report);
+        })
         .catch((error) => console.log(error));
     }
 
@@ -116,13 +157,19 @@ export default function BackEndpoint({
   };
   // add new button to reset fields
   // resetFields()
-
+ 
   return (
     <div className="sticky top-16 z-50 bg-gray-900 shadow-lg">
       <div className="grid grid-cols-12 gap-1 px-3 py-3">
         <div className="col-span-4 sm:col-span-2">
           <div>
-            <select
+            <div
+              id="reqMethod"
+              className='bg-white text-black px-3 py-2 rounded-md text-sm font-medium'
+            >
+              {reqMethod}
+            </div>
+            {/* <select
               id="reqMethod"
               name="reqMethod"
               onChange={(e) => {
@@ -136,7 +183,7 @@ export default function BackEndpoint({
               <option value="PUT">PUT</option>
               <option value="PATCH">PATCH</option>
               <option value="DELETE">DELETE</option>
-            </select>
+            </select> */}
           </div>
         </div>
         <div className="col-span-4 sm:col-span-3">
@@ -159,7 +206,7 @@ export default function BackEndpoint({
           <Combobox
             as="div"
             value={selectedEndpoint}
-            onChange={setSelectedEndpoint}
+            onChange={(endpoint) => {setSelectedEndpoint(endpoint); setReqMethod(endpoint.method.toUpperCase()); updateReqFields(`Req@${endpoint.method.toUpperCase()}@${endpoint.name}`) }}
           >
             <div className="relative mt-1">
               <Combobox.Input

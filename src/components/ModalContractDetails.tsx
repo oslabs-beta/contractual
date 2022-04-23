@@ -4,12 +4,25 @@ import { CheckIcon } from '@heroicons/react/outline'
 
 interface ModalProps {
   visibility: boolean,
-  closeModal: () => void
+  closeModal: () => void,
+  tokens: Tokens,
+  currentContractToken: string
 }
-
-const ModalContractDetails: React.FC<ModalProps> = ({ visibility, closeModal }) => {
+type Tokens = {
+  [key: string]: string
+}
+const ModalContractDetails: React.FC<ModalProps> = ({ 
+  visibility, 
+  closeModal,
+  tokens,
+  currentContractToken
+}) => {
   const [open, setOpen] = useState(true)
 
+  let activeContract = '';
+  for (let token in tokens) {
+    if (tokens[token] === currentContractToken) activeContract = token
+  }
   return (
     <Transition.Root show={visibility} as={Fragment}>
       <Dialog as="div" className="fixed z-10 inset-0 overflow-y-auto" onClose={closeModal}>
@@ -46,11 +59,11 @@ const ModalContractDetails: React.FC<ModalProps> = ({ visibility, closeModal }) 
                 </div>
                 <div className="mt-3 text-center sm:mt-5">
                   <Dialog.Title as="h3" className="text-lg leading-6 font-medium text-gray-900">
-                    Contract:
+                    Contract: {activeContract}
                   </Dialog.Title>
                   <div className="mt-2">
                     <p className="text-sm text-gray-500">
-                      Token:
+                      Token: {currentContractToken}
                     </p>
                   </div>
                 </div>

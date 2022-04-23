@@ -1,12 +1,14 @@
 import { PaperClipIcon } from '@heroicons/react/solid';
 import { validateYupSchema } from 'formik';
-
+type CurrentContract = {
+  [key: string]: Contracts
+}
 type Contracts = {
   [key: string]: string
 }
 interface PreviewProps {
   reqKeys: string[];
-  currentContract: Contracts
+  currentContract: CurrentContract
 }
 
 const DocumentPreview: React.FC<PreviewProps> = ({ currentContract, reqKeys }): JSX.Element => {
