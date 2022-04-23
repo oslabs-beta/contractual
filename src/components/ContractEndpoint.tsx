@@ -112,8 +112,6 @@ const ContractEndpoint: React.FC<ContractEndpointProps> = ({
   const endpointChange = (event) => {
     setQuery(event.target.value);
     setEndpoint(event);
-    //TESTING
-    // setNewEndpoint(query)
   };
 
   const filteredEndpoints =

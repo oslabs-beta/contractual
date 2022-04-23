@@ -17,18 +17,7 @@ interface EnumContractItem {
   name: string;
 }
 
-// const contracts: EnumContractItem[] = [
-//   { id: 1, name: 'Habitual' },
-//   { id: 2, name: 'Escape Date' },
-//   { id: 3, name: 'Svelcro' },
-//   { id: 4, name: 'Spearmint' },
-//   { id: 5, name: 'ReSvelte' },
-//   { id: 6, name: 'Recoilize' },
-//   { id: 7, name: 'SeeQR' },
-//   { id: 8, name: 'LitForms' },
-//   { id: 9, name: 'Chromogen' },
-// More contracts...
-//];
+
 
 function classNames(...classes) {
   return classes.filter(Boolean).join(' ');
@@ -36,7 +25,7 @@ function classNames(...classes) {
 
 export default function Navbar() {
   const dispatch = useDispatch();
-  const { tokens } = useSelector((store: RootState) => store.contract);
+  const { tokens, currentContractToken } = useSelector((store: RootState) => store.contract);
   const contracts: EnumContractItem[] = [];
   for (let key in tokens) {
     contracts.push({
@@ -113,7 +102,7 @@ export default function Navbar() {
     <>
       <ModalNewContract visibility={newOpen} closeModal={handleCloseNewModal} setSelectedContract={setSelectedContract} sendToken={sendToken} />
       <ModalJoinContract visibility={joinOpen} closeModal={handleCloseJoinModal} setSelectedContract={setSelectedContract} sendToken={sendToken} />
-      <ModalContractDetails visibility={detailsOpen} closeModal={handleCloseDetailsModal} />
+      <ModalContractDetails visibility={detailsOpen} closeModal={handleCloseDetailsModal} tokens={tokens} currentContractToken={currentContractToken} />
       <Notification className=''></Notification>
       <Disclosure
         as='nav'

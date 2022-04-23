@@ -63,12 +63,10 @@ export default function ContractBuilder() {
     setReqInputs([...reqInputs, additional]);
   };
   //BUG: RANDOMLY CAUSES APP REFRESH AFTER TWO ADDITIONS THEN A SUBTRACTION
-  async function subtractReqField ()  {
-    console.log('pressed')
-    // const copy = reqInputs.slice(0, -1)
-    // copy.pop()
+  const subtractReqField = (e) => {
+    e.preventDefault()
     const newReqInputs = JSON.parse(JSON.stringify(reqInputs));
-    await setReqInputs(newReqInputs.slice(0,-1));
+    setReqInputs(newReqInputs.slice(0,-1));
   };
 
   const addResField = () => {
@@ -76,10 +74,10 @@ export default function ContractBuilder() {
     console.log('new Response field added');
     setResInputs([...resInputs, additional]);
   };
-  const subtractResField = () => {
-    const copy = [...resInputs]
-    copy.pop()
-    setResInputs(copy);
+  const subtractResField = (e) => {
+    e.preventDefault()
+    const newResInputs = JSON.parse(JSON.stringify(reqInputs));
+    setResInputs(newResInputs.slice(0,-1));;
   };
 
   const resetFields = () => {
