@@ -84,11 +84,10 @@ export default function BackTester() {
         setReqMethod={handleSetReqMethod}
         URLString={URLString}
         setURLString={handleSetURL}
-        endpoint={endpoint}
-        setEndpoint={handleSetEndpoint}
         reqInputs={reqInputs}
         resetFields={resetReqFields}
         endpoints={reqEndpoints}
+        currentContract={currentContract}
       />
       <BackRequestEditor
         reqInputs={reqInputs}
