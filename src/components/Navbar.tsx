@@ -6,6 +6,7 @@ import { Link, Outlet, useLocation, useNavigate } from 'react-router-dom';
 import ModalNewContract from './ModalNewContract';
 import ModalJoinContract from './ModalJoinContract';
 import ModalContractDetails from './ModalContractDetails';
+import Notification from './Notification';
 import { RootState } from '../state/store';
 import { useDispatch, useSelector } from 'react-redux';
 import { loadContract } from '../state/features/contractSlice';
@@ -26,7 +27,7 @@ interface EnumContractItem {
 //   { id: 7, name: 'SeeQR' },
 //   { id: 8, name: 'LitForms' },
 //   { id: 9, name: 'Chromogen' },
-  // More contracts...
+// More contracts...
 //];
 
 function classNames(...classes) {
@@ -62,22 +63,22 @@ export default function Navbar() {
   }
   const changeContract = (input: EnumContractItem): void => {
     axios
-        .post('http://localhost:4321/contract/details', {
-          token: input.token,
-          import: false
-        })
-        .then((response) => {
-          console.log(response);
-          if (response.status === 200) {
-            dispatch(loadContract({
-              contract: response.data.content,
-              token: input.token
-            }))
-          }
-        })
-        .catch((error) => {
-          console.log(error);
-        });
+      .post('http://localhost:4321/contract/details', {
+        token: input.token,
+        import: false
+      })
+      .then((response) => {
+        console.log(response);
+        if (response.status === 200) {
+          dispatch(loadContract({
+            contract: response.data.content,
+            token: input.token
+          }))
+        }
+      })
+      .catch((error) => {
+        console.log(error);
+      });
   }
   const sendToken = (token) => {
     axios
@@ -110,9 +111,10 @@ export default function Navbar() {
 
   return (
     <>
-      <ModalNewContract visibility={newOpen} closeModal={handleCloseNewModal} setSelectedContract={setSelectedContract} sendToken={sendToken}/>
-      <ModalJoinContract visibility={joinOpen} closeModal={handleCloseJoinModal} setSelectedContract={setSelectedContract} sendToken={sendToken}/>
-      <ModalContractDetails visibility={detailsOpen} closeModal={handleCloseDetailsModal}/>
+      <ModalNewContract visibility={newOpen} closeModal={handleCloseNewModal} setSelectedContract={setSelectedContract} sendToken={sendToken} />
+      <ModalJoinContract visibility={joinOpen} closeModal={handleCloseJoinModal} setSelectedContract={setSelectedContract} sendToken={sendToken} />
+      <ModalContractDetails visibility={detailsOpen} closeModal={handleCloseDetailsModal} />
+      <Notification className=''></Notification>
       <Disclosure
         as='nav'
         className='bg-gray-800 sticky top-0 z-[60] shadow-lg'
@@ -139,13 +141,13 @@ export default function Navbar() {
                       <Combobox
                         as='div'
                         value={selectedContract}
-                        onChange={(contract) => {setSelectedContract(contract); changeContract(contract); sendToken(contract.token)}}
+                        onChange={(contract) => { setSelectedContract(contract); changeContract(contract); sendToken(contract.token) }}
                       >
                         <div className='relative mt-1'>
                           <Combobox.Input
                             className='w-full rounded-md border border-gray-300 bg-white py-1 pl-3 pr-10 shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-1 focus:ring-indigo-500 sm:text-sm'
-                            onChange={(event) => {setQuery(event.target.value) }}
-                            displayValue={(contract: EnumContractItem) => 
+                            onChange={(event) => { setQuery(event.target.value) }}
+                            displayValue={(contract: EnumContractItem) =>
                               contract.name
                             }
                           />
@@ -344,15 +346,15 @@ export default function Navbar() {
                           </Menu.Item>
                           <Menu.Item>
                             {({ active }) => (
-                              <a
-                                href='#'
+                              <div
+                                onClick={() => { window.location.reload(); }}
                                 className={classNames(
                                   active ? 'bg-gray-100' : '',
-                                  'block px-4 py-2 text-sm text-gray-700'
+                                  'block px-4 py-2 text-sm text-gray-700 cursor-pointer'
                                 )}
                               >
                                 Sign out
-                              </a>
+                              </div>
                             )}
                           </Menu.Item>
                         </Menu.Items>
