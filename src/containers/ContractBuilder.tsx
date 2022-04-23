@@ -62,12 +62,13 @@ export default function ContractBuilder() {
     console.log('new Request field added');
     setReqInputs([...reqInputs, additional]);
   };
-  //BUG: RANDOMLY CAUSES APP REFRESH
-  const subtractReqField = () => {
+  //BUG: RANDOMLY CAUSES APP REFRESH AFTER TWO ADDITIONS THEN A SUBTRACTION
+  async function subtractReqField ()  {
     console.log('pressed')
-    const copy = [...reqInputs]
-    copy.pop()
-    setReqInputs(copy);
+    // const copy = reqInputs.slice(0, -1)
+    // copy.pop()
+    const newReqInputs = JSON.parse(JSON.stringify(reqInputs));
+    await setReqInputs(newReqInputs.slice(0,-1));
   };
 
   const addResField = () => {
@@ -114,7 +115,7 @@ export default function ContractBuilder() {
       resKeys.push(k)
     }
     console.log('REQENDPOINT KEYS ARE: ', reqKeys)
-    console.log('REQENDPOINT KEYS ARE: ', resKeys)
+    console.log('RESENDPOINT KEYS ARE: ', resKeys)
     setReqInputs(reqKeys);
     setResInputs(resKeys);
   };
@@ -123,8 +124,10 @@ export default function ContractBuilder() {
     <div className='bg-gray-900 h-screen'>
       <ContractEndpoint
         reqMethod={reqMethod}
-        setReqMethod={handleSetReqMethod}
+        setReqMethod={setReqMethod}
+        handleSetReqMethod={handleSetReqMethod}
         newEndpoint={newEndpoint}
+        setNewEndpoint={setNewEndpoint}
         endpoints={reqEndpoints}
         setEndpoint={handleSetEndpoint}
         reqInputs={reqInputs}

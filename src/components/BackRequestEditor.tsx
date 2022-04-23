@@ -15,6 +15,7 @@ interface ContractEndpointProps {
   reqInputs: BodyInputs;
   setReqInputs: (index: string, e: Event) => void;
   // addReqField: () => void;
+  reqMethod: string
 }
 
 
@@ -22,11 +23,12 @@ export default function BackRequestEditor({
   reqInputs,
   setReqInputs,
   // addReqField,
+  reqMethod
 }) {
 
   return (
     <>
-      <button onClick={() => { console.log(reqInputs) }}>check state of inputs</button>
+      <button onClick={() => { console.log(reqInputs); console.log(reqMethod) }}>check state of inputs</button>
       <form className='divide-gray-200 px-3 grid grid-cols-12 gap-3'>
 
         <div className='space-y-2 col-span-12'>

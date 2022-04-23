@@ -141,10 +141,10 @@ export default function ContractEditor({
             />
           </svg>
         </button>
-        {reqInputs.length > 1 ?  <button
+        {Array.isArray(reqInputs)&&reqInputs.length > 1 ?  <button
         onClick={subtractReqField}
         className='inline-flex w-full items-center px-2.5 py-1.5 border border-transparent text-xs font-medium rounded text-indigo-700 bg-indigo-100 hover:bg-indigo-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500'
-        > - </button> : null}
+        > - </button> : <button>xxxxxx</button>}
       </div>
 
       <div className='space-y-2 col-span-6'>

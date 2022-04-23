@@ -102,6 +102,7 @@ export default function BackTester() {
       <BackRequestEditor
         reqInputs={reqInputs}
         setReqInputs={handleSetReqInputs}
+        reqMethod={reqMethod}
         // addReqField={addReqField}
       />
       <BackLog />
