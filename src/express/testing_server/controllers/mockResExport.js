@@ -1,4 +1,4 @@
-const chance = require('chance').Chance();
+const chance = require("chance").Chance();
 
 const randomize = {
   // Primitive
@@ -17,7 +17,7 @@ const randomize = {
   fN: () => chance.first(), // gender
   lN: () => chance.last(),
   fullName: () => chance.name(),
-  email: () => chance.email({ domain: 'email.com' }),
+  email: () => chance.email({ domain: "email.com" }),
   address: () => chance.address(),
   city: () => chance.city(),
   country: () => chance.country({ full: true }),
@@ -47,10 +47,10 @@ const randomize = {
 
 function genMockResponse(contracts, condition) {
   // Check if condition exists in contracts
-  if (!(condition in contracts)) return 'Condition not found!';
+  if (!(condition in contracts)) return "Condition not found!";
 
   // Set the corresponding condition O(n), req@... => res@...
-  let reqOrRes = condition[2] === 'q' ? 's' : 'q';
+  let reqOrRes = condition[2] === "q" ? "s" : "q";
   const resCondition = condition.replace(condition[2], reqOrRes);
   // Retreive the expected data contract from user
   const mockResponseTemplate = contracts[resCondition];
@@ -58,9 +58,8 @@ function genMockResponse(contracts, condition) {
   const mockRes = {};
   for (let key in mockResponseTemplate) {
     const dataType = mockResponseTemplate[key];
-    if (dataType.includes('array')) {
+    if (dataType.includes("array")) {
       // Handle mock array here!
-
       const parsedArrType = handleArray(dataType);
       mockRes[key] = randomize.array(parsedArrType[0], parsedArrType[1]);
     } else {
@@ -72,14 +71,14 @@ function genMockResponse(contracts, condition) {
 
 // Extract array-type-length format
 function handleArray(dataTypeStr) {
-  // const 
-  const mockArrContent = dataTypeStr.split('-')[1];
-  const mockArrLength = dataTypeStr.split('-')[2];
-  if (mockArrLength === 'any') {
+  // const mockArr = [];
+  const mockArrContent = dataTypeStr.split("-")[1];
+  const mockArrLength = dataTypeStr.split("-")[2];
+  if (mockArrLength === "any") {
     return [mockArrContent, randomize.number()];
-  } 
+  }
   // else if (mockArrLength === 'any') {
-  //   return 
+  //   return
   // }
   return [mockArrContent, Number(mockArrLength)];
 }
