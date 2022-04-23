@@ -17,14 +17,19 @@ interface EnumContractItem {
   name: string;
 }
 
-
-
+/** */
 function classNames(...classes) {
   return classes.filter(Boolean).join(' ');
 }
 
 export default function Navbar() {
   const dispatch = useDispatch();
+  const navigate = useNavigate()
+  const [query, setQuery] = useState('')
+  const [selectedContract, setSelectedContract] = useState<EnumContractItem>()
+  const [newOpen, setNewOpen] = useState<boolean>(false)
+  const [joinOpen, setJoinOpen] = useState<boolean>(false)
+  const [detailsOpen, setDetailsOpen] = useState<boolean>(false)
   const { tokens, currentContractToken } = useSelector((store: RootState) => store.contract);
   const contracts: EnumContractItem[] = [];
   for (let key in tokens) {
@@ -34,12 +39,6 @@ export default function Navbar() {
     })
   }
   console.log(contracts);
-  const navigate = useNavigate()
-  const [query, setQuery] = useState('')
-  const [selectedContract, setSelectedContract] = useState<EnumContractItem>()
-  const [newOpen, setNewOpen] = useState<boolean>(false)
-  const [joinOpen, setJoinOpen] = useState<boolean>(false)
-  const [detailsOpen, setDetailsOpen] = useState<boolean>(false)
 
   const handleCloseNewModal = (): void => {
     setNewOpen(false);
@@ -50,6 +49,8 @@ export default function Navbar() {
   const handleCloseDetailsModal = (): void => {
     setDetailsOpen(false);
   }
+
+  /** CHANGE CURRENT ACTIVE CONTRACT VIA NAVBAR COMBOBOX DROPDOWN SELECTION */
   const changeContract = (input: EnumContractItem): void => {
     axios
       .post('http://localhost:4321/contract/details', {
@@ -69,6 +70,8 @@ export default function Navbar() {
         console.log(error);
       });
   }
+
+  /** SEND CURRENT ACTIVE CONTRACT TOKEN TO WEBHOOK TESTING SERVER TO UPDATE EXPECTED EXPECTED REQUEST ENDPOINTS */
   const sendToken = (token) => {
     axios
       .get(`http://localhost:1234/contract/${token}`)

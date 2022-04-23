@@ -22,7 +22,7 @@ const Register = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
-  //formik.handleSubmit: prevents default and invokes the onSubmit function in formik object
+  // formik.handleSubmit: prevents default and invokes the onSubmit function in formik object
 
   // formik.handleChange: updates the state of our values in formik object based on the value attribute of the html element
 
