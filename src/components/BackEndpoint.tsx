@@ -169,21 +169,6 @@ export default function BackEndpoint({
             >
               {reqMethod}
             </div>
-            {/* <select
-              id="reqMethod"
-              name="reqMethod"
-              onChange={(e) => {
-                setReqMethod(e);
-              }}
-              className="mt-1 block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md"
-              defaultValue="GET"
-            >
-              <option value="GET">GET</option>
-              <option value="POST">POST</option>
-              <option value="PUT">PUT</option>
-              <option value="PATCH">PATCH</option>
-              <option value="DELETE">DELETE</option>
-            </select> */}
           </div>
         </div>
         <div className="col-span-4 sm:col-span-3">
@@ -242,7 +227,7 @@ export default function BackEndpoint({
                               selected && "font-semibold"
                             )}
                           >
-                            {endpoint.name}
+                            {endpoint.method + ' ' + endpoint.name}
                           </span>
 
                           {selected && (
