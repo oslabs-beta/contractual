@@ -83,6 +83,7 @@ export default function BackTester() {
     for (let key in endpointKeys) {
       const k = {reqKey: key, reqValType: endpointKeys[key], reqVal: ''};
       if (k.reqValType === 'boolean') k.reqVal = 'true';
+      else if (k.reqValType === 'array-any-any') k.reqVal = '[]'
       keys.push(k)
     }
     console.log('ENDPOINT KEYS ARE: ', keys)
@@ -112,17 +113,5 @@ export default function BackTester() {
       />
       <BackLog />
     </div>
-    // <div className="back-tester-container">
-    //   <div className="request-container">
-    //     <div className="endpoint-container">
-    //       <input type="text" className="endpoint" placeholder="Project name"/>
-    //       <button className="send-request-button">Send Request</button>
-    //     </div>
-    //     <div>
-    //       <button className="method-dropdown">Method-dropdown</button>
-    //     </div>
-    //   </div>
-    //   <div className="api-dropdown"></div>
-    // </div>
   );
 }

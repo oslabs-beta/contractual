@@ -440,10 +440,10 @@ export default function Navbar() {
                   </div>
                   <div className='ml-3'>
                     <div className='text-base font-medium text-white'>
-                      Yankun Song
+                      John Smith
                     </div>
                     <div className='text-sm font-medium text-gray-400'>
-                      yankun@gmail.com
+                      email@gmail.com
                     </div>
                   </div>
                   {/* <button

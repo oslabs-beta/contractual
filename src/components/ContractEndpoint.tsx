@@ -141,8 +141,10 @@ const ContractEndpoint: React.FC<ContractEndpointProps> = ({
             <option value='DELETE'>DELETE</option>
           </select>
         </div>
-        <button onClick={() => {console.log(store)}}>check current state of store</button>
-        <button onClick={() => { console.log(reqInputs); console.log(resInputs); console.log(reqMethod); console.log(newEndpoint) }}>check state of inputs</button>
+        
+        {/* TEST BUTTONS */}
+        {/* <button onClick={() => {console.log(store)}}>check current state of store</button>
+        <button onClick={() => { console.log(reqInputs); console.log(resInputs); console.log(reqMethod); console.log(newEndpoint) }}>check state of inputs</button> */}
 
         <div className='col-span-8 sm:col-span-8 md:col-span-8 lg:col-span-9'>
           <Combobox

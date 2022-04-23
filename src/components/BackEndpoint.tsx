@@ -21,7 +21,8 @@ function classNames(...classes) {
 type KeyTypeValue = {
   reqKey: string;
   reqValType: string;
-  reqVal: string | number | boolean | any[];
+  // reqVal: string | number | boolean | any[];
+  reqVal: string
 };
 type BodyInputs = KeyTypeValue[];
 
@@ -67,13 +68,27 @@ export default function BackEndpoint({
     endpoint: EnumEndpointItem,
     reqInputs: BodyInputs
   ): void => {
-    // DO A CHECK AGAINS THE DATA CONTRACT HERE
-    // name of contract could be argument
+  
     const reqBody = {};
     const condition = `Res@${reqMethod}@${endpoint.name}`; //endpoint is entire url string
 
     reqInputs.forEach((input) => {
-      reqBody[input.reqKey] = input.reqVal;
+      //PARSE NON STRINGS?
+      let nonString;
+      if (input.reqValType !== 'string') {
+        if (input.reqValType === 'boolean') {
+          if (input.reqVal === 'true'){
+            nonString = true;
+          } 
+          else nonString = false;
+        }   
+        else if (input.reqValType === 'number') nonString = Number(input.reqVal);
+        else if (input.reqValType === 'array-any-any') nonString = JSON.parse(input.reqVal)
+         
+        reqBody[input.reqKey] = nonString;
+      }
+      else reqBody[input.reqKey] = input.reqVal;
+      // reqBody[input.reqKey] = input.reqVal
     });
 
     // perform ajax request passing in built request body from above
