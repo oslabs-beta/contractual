@@ -2,24 +2,8 @@ import { createSlice, createAsyncThunk, PayloadAction } from "@reduxjs/toolkit";
 import axios from "axios";
 import { string } from "yup";
 
-///// FUNCTIONS
-// const retrieve  = async (id) => {
-//   const response = await axios.post(`https://localhost:3000/contract/userid=${id}`)
-//   return response.data;
-// }
+///// THUNK FUNCTIONS
 
-// export const getUserData = createAsyncThunk(
-//   // action type string
-//   'contract/getUserData',
-//   async (id, thunkAPI) => {
-//     try {
-//       return await retrieve(id)
-//     } catch (error) {
-//       const message = (error.response && error.response.data && error.response.data.message || error.message || error.toString()
-//       return thunkAPI.rejectWithValue(message)
-//     }
-//   }
-// )
 
 ////// SHOULD MOVE TYPES TO ANOTHER FILE
 type Contracts = {

@@ -1,4 +1,4 @@
-const chance = require("chance").Chance();
+const chance = require('chance').Chance();
 
 const randomize = {
   // Primitive
@@ -17,7 +17,7 @@ const randomize = {
   fN: () => chance.first(), // gender
   lN: () => chance.last(),
   fullName: () => chance.name(),
-  email: () => chance.email({ domain: "email.com" }),
+  email: () => chance.email({ domain: 'email.com' }),
   address: () => chance.address(),
   city: () => chance.city(),
   country: () => chance.country({ full: true }),
@@ -47,10 +47,10 @@ const randomize = {
 
 function genMockResponse(contracts, condition) {
   // Check if condition exists in contracts
-  if (!(condition in contracts)) return "Condition not found!";
+  if (!(condition in contracts)) return 'Condition not found!';
 
   // Set the corresponding condition O(n), req@... => res@...
-  let reqOrRes = condition[2] === "q" ? "s" : "q";
+  let reqOrRes = condition[2] === 'q' ? 's' : 'q';
   const resCondition = condition.replace(condition[2], reqOrRes);
   // Retreive the expected data contract from user
   const mockResponseTemplate = contracts[resCondition];
@@ -58,10 +58,10 @@ function genMockResponse(contracts, condition) {
   const mockRes = {};
   for (let key in mockResponseTemplate) {
     const dataType = mockResponseTemplate[key];
-    if (dataType.includes("array")) {
+    if (dataType.includes('array')) {
       // Handle mock array here!
-      const parsedArrType = handleArray(dataType);
-      mockRes[key] = randomize.array(parsedArrType[0], parsedArrType[1]);
+      const mockArray = handleArray(dataType);
+      mockRes[key] = mockArray;
     } else {
       mockRes[key] = randomize[dataType]();
     }
@@ -71,28 +71,50 @@ function genMockResponse(contracts, condition) {
 
 // Extract array-type-length format
 function handleArray(dataTypeStr) {
-  // const mockArr = [];
-  const mockArrContent = dataTypeStr.split("-")[1];
-  const mockArrLength = dataTypeStr.split("-")[2];
-  if (mockArrLength === "any") {
-    return [mockArrContent, randomize.number()];
+  const chancePrimitives = [
+    'fN',
+    'country',
+    'word',
+    'animal',
+    'number',
+    'boolean',
+    'date',
+  ];
+  const mockArray = [];
+  const mockArrContent = dataTypeStr.split('-')[1];
+  const mockArrLength = dataTypeStr.split('-')[2];
+  const randomLength = randomize.number();
+
+  // const randomNum = Math.floor(Math.random() * chancePrimitives.length);
+  // randomNum;
+  // const dataType = chancePrimitives[randomNum];
+  // dataType;
+  // const randomContent = randomize[dataType]();
+  // randomContent;
+
+  if (mockArrContent === 'any') {
+    const length = mockArrLength === 'any' ? randomLength : mockArrLength;
+    for (let i = 0; i < length; i += 1) {
+      const randomNum = Math.floor(Math.random() * chancePrimitives.length);
+      const dataType = chancePrimitives[randomNum];
+      const randomContent = randomize[dataType]();
+      mockArray.push(randomContent);
+    }
+    return mockArray;
+  } else if (mockArrLength === 'any') {
+    return randomize.array(mockArrContent, randomLength);
   }
-  // else if (mockArrLength === 'any') {
-  //   return
-  // }
-  return [mockArrContent, Number(mockArrLength)];
 }
 
-// const dataContract = {
-//   'Req@POST@/login': { username: 'string', age: 'number' },
-//   'Res@POST@/login': { success: 'boolean' },
-//   'Req@POST@/habits': { habitname: 'string', target: 'number' },
-//   'Res@POST@/habits': { currentHabits: 'array-boolean-7' },
-// };
+const dataContract = {
+  'Req@POST@/login': { username: 'string', age: 'number' },
+  'Res@POST@/login': { success: 'boolean' },
+  'Req@POST@/habits': { habitname: 'string', target: 'number' },
+  'Res@POST@/habits': { currentHabits: 'array-any-any' },
+};
 
-// console.log(genMockResponse(dataContract, 'Req@POST@/habits'));
+console.log(genMockResponse(dataContract, 'Req@POST@/habits'));
+// genMockResponse(dataContract, 'Req@POST@/habits');
 
 exports.mock = randomize;
 exports.mockResponse = genMockResponse;
-
-// string 5
