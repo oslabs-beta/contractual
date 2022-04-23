@@ -6,13 +6,16 @@ import { string } from "yup";
 
 
 ////// SHOULD MOVE TYPES TO ANOTHER FILE
+type CurrentContract = {
+  [key: string]: Contracts
+}
 type Contracts = {
   [key: string]: string
 }
 
 type LoadContract = {
   token: string,
-  contract: Contracts
+  contract: CurrentContract
 }
 type AddContract = {
   name: string,
@@ -22,7 +25,7 @@ type AddContract = {
 type JoinContract = {
   name: string,
   token: string,
-  contract: Contracts
+  contract: CurrentContract
 }
 type ContractState = {
   userName: string,
@@ -30,7 +33,7 @@ type ContractState = {
   tokens: Contracts,
   owns: string[],
   currentContractToken: string,
-  currentContract: Contracts,
+  currentContract: CurrentContract,
   // frontEndPort: string
   // backEndPort: string
   // status: string
@@ -58,7 +61,7 @@ export const contractSlice = createSlice({
       // state.contract = response data?
       // this may need to be in extra reducers after building asyncThunk function
     },
-    updateContract: (state, action: PayloadAction<Contracts>) => {
+    updateContract: (state, action: PayloadAction<CurrentContract>) => {
       state.currentContract = action.payload
     },
     // invoke on successful login

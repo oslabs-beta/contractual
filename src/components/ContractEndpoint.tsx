@@ -9,20 +9,23 @@ import axios from 'axios';
 
 interface EnumEndpointItem {
   id: number;
+  method: string
   name: string;
 }
-
-const endpoints: EnumEndpointItem[] = [
-  { id: 1, name: '/login' },
-  { id: 2, name: '/register' },
-  { id: 3, name: '/contract' },
-  { id: 4, name: '/test' },
-  { id: 5, name: '/documentation' },
-  { id: 6, name: '/logout' },
-  { id: 7, name: '/frontend' },
-  { id: 8, name: '/backend' },
-  // More endpoints...
-];
+type Contracts = {
+  [key: string]: string;
+};
+// const endpoints: EnumEndpointItem[] = [
+//   { id: 1, name: '/login' },
+//   { id: 2, name: '/register' },
+//   { id: 3, name: '/contract' },
+//   { id: 4, name: '/test' },
+//   { id: 5, name: '/documentation' },
+//   { id: 6, name: '/logout' },
+//   { id: 7, name: '/frontend' },
+//   { id: 8, name: '/backend' },
+//   // More endpoints...
+// ];
 
 function classNames(...classes) {
   return classes.filter(Boolean).join(' ');
@@ -37,16 +40,28 @@ type BodyInputs = KeyAndType[];
 interface ContractEndpointProps {
   reqMethod: string,
   setReqMethod: (e: any) => void,
-  endpoint: string,
+  newEndpoint: string,
+  endpoints: EnumEndpointItem[],
   setEndpoint: (e: any) => void,
   reqInputs: BodyInputs,
   resInputs: BodyInputs,
   resetFields: () => void,
+  updateFieldsByEndpoint: (requestString: string, responseString:string) => void
 }
 
 
 
-const ContractEndpoint: React.FC<ContractEndpointProps> = ({ reqMethod, setReqMethod, endpoint, setEndpoint, reqInputs, resInputs, resetFields }): JSX.Element => {
+const ContractEndpoint: React.FC<ContractEndpointProps> = ({ 
+    reqMethod, 
+    setReqMethod, 
+    newEndpoint,
+    endpoints, 
+    setEndpoint, 
+    reqInputs, 
+    resInputs, 
+    resetFields,
+    updateFieldsByEndpoint, 
+  }): JSX.Element => {
   const store = useSelector((store: RootState) => store.contract)
   const { currentContract, currentContractToken } = useSelector((store: RootState) => store.contract);
   const dispatch = useDispatch()
@@ -103,7 +118,7 @@ const ContractEndpoint: React.FC<ContractEndpointProps> = ({ reqMethod, setReqMe
   }
 
   const [query, setQuery] = useState('');
-  const [selectedEndpoint, setSelectedEndpoint] = useState();
+  const [selectedEndpoint, setSelectedEndpoint] = useState<EnumEndpointItem>();
 
   const endpointChange = (event) => {
     setQuery(event.target.value);
@@ -151,14 +166,14 @@ const ContractEndpoint: React.FC<ContractEndpointProps> = ({ reqMethod, setReqMe
           <Combobox
             as='div'
             value={selectedEndpoint}
-            onChange={setSelectedEndpoint}
+            onChange={(endpoint: EnumEndpointItem) => {setSelectedEndpoint(endpoint); updateFieldsByEndpoint(`Req@${endpoint.method.toUpperCase()}@${endpoint.name}`, `Res@${endpoint.method.toUpperCase()}@${endpoint.name}`)}}
           >
             <div className='relative mt-1'>
               <Combobox.Input
                 type='endpoint'
                 name='endpoint'
                 id='endpoint'
-                value={endpoint}
+                value={newEndpoint}
                 className='w-full rounded-md border border-gray-300 bg-white py-2 pl-3 pr-10 shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-1 focus:ring-indigo-500 sm:text-sm'
                 onChange={(event) => endpointChange(event)}
                 displayValue={(endpoint: EnumEndpointItem) => endpoint.name}
@@ -221,7 +236,7 @@ const ContractEndpoint: React.FC<ContractEndpointProps> = ({ reqMethod, setReqMe
           <button
             className='inline-flex w-full justify-center mt-1 py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500'
             onClick={() => {
-              saveContract(reqMethod, endpoint, reqInputs, resInputs);
+              saveContract(reqMethod, newEndpoint, reqInputs, resInputs);
             }}
           >
             Save

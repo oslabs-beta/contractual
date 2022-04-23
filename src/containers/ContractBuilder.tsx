@@ -1,8 +1,21 @@
 import { useState } from 'react';
 import ContractEndpoint from '../components/ContractEndpoint';
 import ContractEditor from '../components/ContractEditor';
-
+import { useSelector } from 'react-redux';
+import { RootState } from '../state/store';
 /////TESTING DYNAMIC INPUTS
+interface EnumEndpointItem {
+  id: number;
+  method: string;
+  name: string;
+}
+type CurrentContract = {
+  [key: string]: Contracts
+}
+type Contracts = {
+  [key: string]: string
+}
+
 type KeyAndType = {
   [key: string]: string;
 };
@@ -11,9 +24,10 @@ type BodyInputs = KeyAndType[];
 
 export default function ContractBuilder() {
   const [reqMethod, setReqMethod] = useState('GET');
-  const [endpoint, setEndpoint] = useState('');
+  const [newEndpoint, setNewEndpoint] = useState('');
   const [reqInputs, setReqInputs] = useState<BodyInputs>([{ reqKey: '', reqValType: 'boolean' }])
   const [resInputs, setResInputs] = useState<BodyInputs>([{ resKey: '', resValType: 'boolean' }])
+  const { currentContract } = useSelector((state: RootState) => state.contract);
 
   ///// RECORD CHANGES TO REQ TYPE DROPDOWN IN CONTRACTENDPOINT COMPONENT
   const handleSetReqMethod = (e: any): void => {
@@ -26,7 +40,7 @@ export default function ContractBuilder() {
   const handleSetEndpoint = (e: any): void => {
     const endpoint: string = e.target.value;
     console.log('current endpoint string: ', e.target.value);
-    setEndpoint(endpoint);
+    setNewEndpoint(endpoint);
   };
 
 
@@ -48,10 +62,23 @@ export default function ContractBuilder() {
     console.log('new Request field added');
     setReqInputs([...reqInputs, additional]);
   };
+  //BUG: RANDOMLY CAUSES APP REFRESH
+  const subtractReqField = () => {
+    console.log('pressed')
+    const copy = [...reqInputs]
+    copy.pop()
+    setReqInputs(copy);
+  };
+
   const addResField = () => {
     let additional = { resKey: '', resValType: 'boolean' };
     console.log('new Response field added');
     setResInputs([...resInputs, additional]);
+  };
+  const subtractResField = () => {
+    const copy = [...resInputs]
+    copy.pop()
+    setResInputs(copy);
   };
 
   const resetFields = () => {
@@ -59,16 +86,51 @@ export default function ContractBuilder() {
     setResInputs([{ resKey: '', resValType: 'boolean' }])
   }
 
+  const getEndpoints = (contract: CurrentContract ):EnumEndpointItem[] => {
+    const endpoints = [];
+    let id = 1;
+    for (let key in contract) {
+      if (key.slice(0,3) === 'Req') {
+        const endpoint = key.split('@')[2];
+        const method = key.split('@')[1];
+        endpoints.push({ id, method, name: endpoint });
+        id++;
+      }
+    }
+    return endpoints
+  };
+
+  const updateFieldsByEndpoint = (reqEndpointKey: string, resEndpointKey: string):void => {
+    const reqEndpointKeys: Contracts = currentContract[reqEndpointKey]
+    const resEndpointKeys: Contracts = currentContract[resEndpointKey]
+    let reqKeys = [];
+    let resKeys = [];
+    for (let key in reqEndpointKeys) {
+      const k = {reqKey: key, reqValType: reqEndpointKeys[key]};
+      reqKeys.push(k)
+    }
+    for (let key in resEndpointKeys) {
+      const k = {resKey: key, resValType: resEndpointKeys[key]};
+      resKeys.push(k)
+    }
+    console.log('REQENDPOINT KEYS ARE: ', reqKeys)
+    console.log('REQENDPOINT KEYS ARE: ', resKeys)
+    setReqInputs(reqKeys);
+    setResInputs(resKeys);
+  };
+  const reqEndpoints: EnumEndpointItem[] = getEndpoints(currentContract);
   return (
     <div className='bg-gray-900 h-screen'>
       <ContractEndpoint
         reqMethod={reqMethod}
         setReqMethod={handleSetReqMethod}
-        endpoint={endpoint}
+        newEndpoint={newEndpoint}
+        endpoints={reqEndpoints}
         setEndpoint={handleSetEndpoint}
         reqInputs={reqInputs}
         resInputs={resInputs}
         resetFields={resetFields}
+        updateFieldsByEndpoint={updateFieldsByEndpoint}
       />
       <ContractEditor
         reqInputs={reqInputs}
@@ -77,6 +139,8 @@ export default function ContractBuilder() {
         setResInputs={handleSetResInputs}
         addReqField={addReqField}
         addResField={addResField}
+        subtractReqField={subtractReqField}
+        subtractResField={subtractResField}
       />
       {/* <div className="request-specification-container">
        <div className="request-method">Request type</div>
