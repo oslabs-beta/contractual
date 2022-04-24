@@ -76,8 +76,8 @@ export default function ContractBuilder() {
   };
   const subtractResField = (e) => {
     e.preventDefault()
-    const newResInputs = JSON.parse(JSON.stringify(reqInputs));
-    setResInputs(newResInputs.slice(0,-1));;
+    const newResInputs = JSON.parse(JSON.stringify(resInputs));
+    setResInputs(newResInputs.slice(0,-1));
   };
 
   const resetFields = () => {

@@ -38,6 +38,9 @@ interface ContractEndpointProps {
   currentContract: Contracts;
 }
 
+const responseLog = [];
+
+
 export default function BackEndpoint({
   reqMethod,
   setReqMethod,
@@ -52,6 +55,7 @@ export default function BackEndpoint({
 }) {
   const [query, setQuery] = useState("");
   const [selectedEndpoint, setSelectedEndpoint] = useState<EnumEndpointItem>();
+  const [responses, updateResponses] = useState([]);
 
   const filteredEndpoints =
     query === ""
@@ -96,7 +100,8 @@ export default function BackEndpoint({
             currentContract,
             condition
           );
-          console.log(report);
+          responseLog.unshift(report);
+          console.log('BACK REPORT', report);
         })
         .catch((error) => console.log(error));
     } else if (reqMethod === "POST") {
@@ -109,7 +114,10 @@ export default function BackEndpoint({
             currentContract,
             condition
           );
-          console.log(report);
+          // updateResponses([report, ...responses]);
+          responseLog.unshift(report)
+          console.log('BACK REPORT', report);
+          
         })
         .catch((error) => console.log(error));
     } else if (reqMethod === "PUT") {
@@ -122,7 +130,8 @@ export default function BackEndpoint({
             currentContract,
             condition
           );
-          console.log(report);
+          updateResponses([report, ...responses]);
+          console.log('BACK REPORT', report);
         })
         .catch((error) => console.log(error));
     } else if (reqMethod === "PATCH") {
@@ -135,7 +144,8 @@ export default function BackEndpoint({
             currentContract,
             condition
           );
-          console.log(report);
+          updateResponses([report, ...responses]);
+          console.log('BACK REPORT', report);
         })
         .catch((error) => console.log(error));
     } else if (reqMethod === "DELETE") {
@@ -148,11 +158,13 @@ export default function BackEndpoint({
             currentContract,
             condition
           );
-          console.log(report);
+          updateResponses([report, ...responses]);
+          console.log('BACK REPORT', report);
+          
         })
         .catch((error) => console.log(error));
     }
-
+    console.log('RESPONSE STATE', responseLog);
     //Reset form fields
   };
   // add new button to reset fields
@@ -165,7 +177,7 @@ export default function BackEndpoint({
           <div>
             <div
               id="reqMethod"
-              className='bg-white text-black px-3 py-2 rounded-md text-sm font-medium'
+              className='bg-white text-black mt-1 h-[38px] px-3 py-2 rounded-md text-sm font-medium'
             >
               {reqMethod}
             </div>
