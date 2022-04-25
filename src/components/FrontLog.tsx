@@ -3,37 +3,17 @@ import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '../state/store';
 import { updateLog } from '../state/features/frontLogSlice';
 
-
 const socket = new WebSocket('ws://localhost:1234');
 
 socket.addEventListener('open', (event) => {
   console.log('CONNECTED TO WEB SOCKET FROM CLIENT Side');
 });
 
-// const requestsOld = [
-//   {
-//     endpoint: '/login',
-//     method: 'POST',
-//     status: success,
-//     time: '11:18:21 Feb 05',
-//     error: '',
-//   },
-//   {
-//     endpoint: '/register',
-//     method: 'POST',
-//     status: error,
-//     time: '11:18:21 Feb 05',
-//     error: 'Wrong key',
-//   },
-// ]
-
 export default function FrontLog() {
   const [requests, updateRequests] = useState([]);
-
   const currentLog = useSelector((store: RootState) => store.frontLog);
   const dispatch = useDispatch();
-
-  
+  // useEffect(() => { }, []);
 
   socket.onmessage = (event) => {
     // logic to display received data here
@@ -43,10 +23,9 @@ export default function FrontLog() {
     updateRequests([...requests, JSON.parse(event.data)]);
   };
 
-  const sendMessage = () => {
-    socket.send('1. CLIENT 1 JUST SEND THIS MESSAGE TO SERVER!!!!');
-  };
-  useEffect(() => {}, []);
+  // const sendMessage = () => {
+  //   socket.send('1. CLIENT 1 JUST SEND THIS MESSAGE TO SERVER!!!!');
+  // };
   return (
     <div className='col-span-6 px-3'>
       <div className='sm:flex sm:items-center'>
@@ -76,9 +55,6 @@ export default function FrontLog() {
                     >
                       Endpoint
                     </th>
-                    {/* <th scope="col" className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">
-                      Title
-                    </th> */}
                     <th
                       scope='col'
                       className='px-3 py-3.5 text-left text-sm font-semibold text-gray-900'
@@ -97,12 +73,12 @@ export default function FrontLog() {
                     >
                       Error
                     </th>
-                    <th
+                    {/* <th
                       scope='col'
                       className='relative py-3.5 pl-3 pr-4 sm:pr-6'
                     >
                       <span className='sr-only'>Edit</span>
-                    </th>
+                    </th> */}
                   </tr>
                 </thead>
                 <tbody className='divide-y divide-gray-200 bg-white'>
@@ -126,9 +102,6 @@ export default function FrontLog() {
                       <tr key={index}>
                         <td className='whitespace-nowrap py-4 pl-4 pr-3 text-sm sm:pl-6'>
                           <div className='flex items-center'>
-                            {/* <div className="h-10 w-10 flex-shrink-0">
-                            <img className="h-10 w-10 rounded-full" src={person.image} alt="" />
-                          </div> */}
                             <div>
                               <div className='font-medium text-gray-900'>
                                 {request.endpoint}
@@ -139,23 +112,16 @@ export default function FrontLog() {
                             </div>
                           </div>
                         </td>
-                        {/* <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
-                        <div className="text-gray-900">{person.title}</div>
-                        <div className="text-gray-500">{person.department}</div>
-                      </td> */}
                         <td className='whitespace-nowrap px-3 py-4 text-sm text-gray-500'>
                           {reqStatus}
-                          {/* <span className="inline-flex rounded-full bg-green-100 px-2 text-xs font-semibold leading-5 text-green-800">
-                          Active
-                        </span> */}
                         </td>
                         <td className='whitespace-nowrap px-3 py-4 text-sm text-gray-500'>
                           {request.time}
                         </td>
-                        <td className='whitespace-nowrap px-3 py-4 text-sm text-gray-500'>
+                        <td className='break-normal px-3 py-4 text-sm text-gray-500'>
                           {request.error}
                         </td>
-                        <td className='relative whitespace-nowrap py-4 pl-3 pr-4 text-right text-sm font-medium sm:pr-6'>
+                        {/* <td className='relative whitespace-nowrap py-4 pl-3 pr-4 text-right text-sm font-medium sm:pr-6'>
                           <a
                             href='#'
                             className='text-indigo-600 hover:text-indigo-900'
@@ -165,7 +131,7 @@ export default function FrontLog() {
                               , {request.endpoint}
                             </span>
                           </a>
-                        </td>
+                        </td> */}
                       </tr>
                     );
                   })}
