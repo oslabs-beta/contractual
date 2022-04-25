@@ -1,5 +1,3 @@
-import React, { useState } from 'react';
-
 /////TESTING DYNAMIC INPUTS
 type KeyAndType = {
   [key: string]: string;
@@ -141,10 +139,14 @@ export default function ContractEditor({
             />
           </svg>
         </button>
-        {Array.isArray(reqInputs)&&reqInputs.length > 1 ?  <button
-        onClick={subtractReqField}
-        className='inline-flex w-full items-center px-2.5 py-1.5 border border-transparent text-xs font-medium rounded text-indigo-700 bg-indigo-100 hover:bg-indigo-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500'
-        > - </button> : null}
+        {Array.isArray(reqInputs) && reqInputs.length > 1 ? <button
+          onClick={subtractReqField}
+          className='inline-flex w-full items-center px-2.5 py-1.5 border border-transparent text-xs font-medium rounded text-red-700 bg-red-100 hover:bg-red-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500'
+        >
+          <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 mx-auto" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
+            <path stroke-linecap="round" strokeLinejoin="round" d="M20 12H4" />
+          </svg>
+        </button> : null}
       </div>
 
       <div className='space-y-2 col-span-6'>
@@ -261,11 +263,15 @@ export default function ContractEditor({
             />
           </svg>
         </button>
-        {resInputs.length > 1 ?  <button
-        onClick={subtractResField}
-        className='inline-flex w-full items-center px-2.5 py-1.5 border border-transparent text-xs font-medium rounded text-indigo-700 bg-indigo-100 hover:bg-indigo-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500'
-        > - </button> : null} 
-        
+        {resInputs.length > 1 ? <button
+          onClick={subtractResField}
+          className='inline-flex w-full items-center px-2.5 py-1.5 border border-transparent text-xs font-medium rounded text-red-700 bg-red-100 hover:bg-red-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500'
+        >
+          <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 mx-auto" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
+            <path stroke-linecap="round" strokeLinejoin="round" d="M20 12H4" />
+          </svg>
+        </button> : null}
+
       </div>
     </form>
   );

@@ -1,4 +1,8 @@
 import { useState, useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { RootState } from '../state/store';
+import { updateLog } from '../state/features/frontLogSlice';
+
 
 const socket = new WebSocket('ws://localhost:1234');
 
@@ -26,17 +30,22 @@ socket.addEventListener('open', (event) => {
 export default function FrontLog() {
   const [requests, updateRequests] = useState([]);
 
+  const currentLog = useSelector((store: RootState) => store.frontLog);
+  const dispatch = useDispatch();
+
+  
+
   socket.onmessage = (event) => {
     // logic to display received data here
     // likely use state components
     console.log('MESSAGE RECEIVED FROM 1234: ', event.data);
-    updateRequests([JSON.parse(event.data), ...requests]);
+    dispatch(updateLog(JSON.parse(event.data)));
+    updateRequests([...requests, JSON.parse(event.data)]);
   };
 
   const sendMessage = () => {
     socket.send('1. CLIENT 1 JUST SEND THIS MESSAGE TO SERVER!!!!');
   };
-
   useEffect(() => {}, []);
   return (
     <div className='col-span-6 px-3'>
@@ -97,7 +106,7 @@ export default function FrontLog() {
                   </tr>
                 </thead>
                 <tbody className='divide-y divide-gray-200 bg-white'>
-                  {requests.map((request, index) => {
+                  {currentLog.map((request, index) => {
                     let reqStatus;
                     if (request.pass === true) {
                       reqStatus = (
