@@ -155,6 +155,7 @@ export default function BackRequestEditor({
                         id='reqValType'
                         name='reqValType'
                         value={input.reqValType}
+                        // ADD FUNCTIONALITY TO CHANGE DEFAULT REQVAL IMMEDIATELY BELOW
                         onChange={(e) => setReqInputs(index, e)}
                         className='shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md'
                       >

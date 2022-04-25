@@ -73,9 +73,33 @@ export default function BackTester() {
     let data = [...reqInputs];
     data[index][e.target.name] = e.target.value;
     console.log("Request Box changed: ", data);
+
+
+    /// TESTING
+
+    console.log('Target is : ', e.target.name)
+    console.log('Value is : ', e.target.value)
+    if (data[index][e.target.name] === 'boolean') {
+      data[index].reqVal = true
+    }
+    else if (data[index][e.target.name] === 'string') {
+      data[index].reqVal = ''
+    }
+    else if (data[index][e.target.name] === 'number') {
+      data[index].reqVal = ''
+    }
+    else if (data[index][e.target.name] === 'array-any-any') {
+      data[index].reqVal = ''
+    }
+
+    /// END OF TEST
     setReqInputs(data);
   };
-
+  
+  /** CHANGE THE DEFAULT VALUE OF VALUE FIELD WHEN MODIFYING THE DATATYPE DROPDOWN */
+  const updateDefaultValue = (index, e) => {
+    let data = [...reqInputs]
+  }
   /**  UPDATE CURRENT INPUT FIELDS STATE VARIABLES BASED ON COMBOBOX DROPDOWN ENUM SELECTION */
   const updateReqFields = (reqEndpointKey: string):void => {
     const endpointKeys: Contracts = currentContract[reqEndpointKey]
