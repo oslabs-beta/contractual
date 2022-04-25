@@ -65,10 +65,10 @@ const Login = () => {
             Login
           </h2>
           <div className='mt-2 text-center text-sm text-gray-600'>
-            Or{' '}
+            or{' '}
             <Link to='register'>
               <p className='font-medium text-indigo-600 hover:text-indigo-500'>
-                register for an account
+                Register for an account
               </p>
             </Link>
           </div>

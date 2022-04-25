@@ -1,7 +1,7 @@
+import axios from "axios";
 import { useState } from "react";
 import { CheckIcon, SelectorIcon } from "@heroicons/react/solid";
 import { Combobox } from "@headlessui/react";
-import axios from "axios";
 import { checkInput } from "../express/testing_server/controllers/contractOp";
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '../state/store';
@@ -12,15 +12,9 @@ interface EnumEndpointItem {
   method: string;
   name: string;
 }
-
-type Contracts = {
-  [key: string]: string;
-};
-
-function classNames(...classes) {
-  return classes.filter(Boolean).join(" ");
-}
-
+// type Contracts = {
+//   [key: string]: string;
+// };
 type KeyTypeValue = {
   reqKey: string;
   reqValType: string;
@@ -28,18 +22,21 @@ type KeyTypeValue = {
   reqVal: string
 };
 type BodyInputs = KeyTypeValue[];
+// interface ContractEndpointProps {
+//   reqMethod: string;
+//   setReqMethod: (e: any) => void;
+//   URLString: string;
+//   setURLString: (e: any) => void;
+//   reqInputs: BodyInputs;
+//   setReqInputs: (index: string, e: Event) => void;
+//   updateReqFields: (index: string, e: Event) => void;
+//   // resetFields: () => void;
+//   endpoints: EnumEndpointItem[];
+//   currentContract: Contracts;
+// }
 
-interface ContractEndpointProps {
-  reqMethod: string;
-  setReqMethod: (e: any) => void;
-  URLString: string;
-  setURLString: (e: any) => void;
-  reqInputs: BodyInputs;
-  setReqInputs: (index: string, e: Event) => void;
-  updateReqFields: (index: string, e: Event) => void;
-  // resetFields: () => void;
-  endpoints: EnumEndpointItem[];
-  currentContract: Contracts;
+function classNames(...classes) {
+  return classes.filter(Boolean).join(" ");
 }
 
 export default function BackEndpoint({
@@ -56,8 +53,7 @@ export default function BackEndpoint({
 }) {
   const [query, setQuery] = useState("");
   const [selectedEndpoint, setSelectedEndpoint] = useState<EnumEndpointItem>();
-  const [responses, updateResponses] = useState([]);
-
+  // const [responses, updateResponses] = useState([]);
   const currentLog = useSelector((store: RootState) => store.backLog);
   const dispatch = useDispatch();
 
@@ -66,16 +62,16 @@ export default function BackEndpoint({
     query === ""
       ? endpoints
       : endpoints.filter((endpoint: EnumEndpointItem) => {
-          return endpoint.name.toLowerCase().includes(query.toLowerCase());
-        });
-  
+        return endpoint.name.toLowerCase().includes(query.toLowerCase());
+      });
+
   const sendRequest = (
     URLString: string,
     reqMethod: string,
     endpoint: EnumEndpointItem,
     reqInputs: BodyInputs
   ): void => {
-  
+
     const reqBody = {};
     const condition = `Res@${reqMethod}@${endpoint.name}`; //endpoint is entire url string
 
@@ -84,20 +80,19 @@ export default function BackEndpoint({
       let nonString;
       if (input.reqValType !== 'string') {
         if (input.reqValType === 'boolean') {
-          if (input.reqVal === 'true'){
+          if (input.reqVal === 'true') {
             nonString = true;
-          } 
+          }
           else nonString = false;
-        }   
+        }
         else if (input.reqValType === 'number') nonString = Number(input.reqVal);
         else if (input.reqValType === 'array-any-any') nonString = JSON.parse(input.reqVal)
-         
+
         reqBody[input.reqKey] = nonString;
       }
       else reqBody[input.reqKey] = input.reqVal;
       // reqBody[input.reqKey] = input.reqVal
     });
-
     // perform ajax request passing in built request body from above
     // use template literals to send to right endpoints
     // need to perform data contract check
@@ -116,7 +111,7 @@ export default function BackEndpoint({
         today.getMinutes() +
         ":" +
         String(today.getSeconds()).padStart(2, "0");
-      return time + " " + date;
+      return time + " [" + date + "]";
     }
 
     if (reqMethod === "GET") {
@@ -132,16 +127,12 @@ export default function BackEndpoint({
           report.method = reqMethod;
           report.time = getTime()
           dispatch(updateLog(report));
-          console.log('BACK REPORT', report);
-          console.log('CURRENT LOG', currentLog);
-          console.log('ADDTL DATA', endpoint.name, reqMethod, getTime());
         })
         .catch((error) => console.log(error));
     } else if (reqMethod === "POST") {
       axios
         .post(URLString + endpoint.name, reqBody)
         .then((response) => {
-          console.log("response is :  ", response);
           const report = checkResponse(
             response.data,
             currentContract,
@@ -152,16 +143,12 @@ export default function BackEndpoint({
           report.method = reqMethod;
           report.time = getTime()
           dispatch(updateLog(report));
-          console.log('BACK REPORT', report);
-          console.log('CURRENT LOG', currentLog);
-          console.log('ADDTL DATA', endpoint.name, reqMethod, getTime());
         })
         .catch((error) => console.log(error));
     } else if (reqMethod === "PUT") {
       axios
         .put(URLString + endpoint.name, reqBody)
         .then((response) => {
-          console.log(response);
           const report = checkResponse(
             response.data,
             currentContract,
@@ -171,16 +158,12 @@ export default function BackEndpoint({
           report.method = reqMethod;
           report.time = getTime()
           dispatch(updateLog(report));
-          console.log('BACK REPORT', report);
-          console.log('CURRENT LOG', currentLog);
-          console.log('ADDTL DATA', endpoint.name, reqMethod, getTime());
         })
         .catch((error) => console.log(error));
     } else if (reqMethod === "PATCH") {
       axios
         .patch(URLString + endpoint.name, reqBody)
         .then((response) => {
-          console.log(response);
           const report = checkResponse(
             response.data,
             currentContract,
@@ -190,16 +173,12 @@ export default function BackEndpoint({
           report.method = reqMethod;
           report.time = getTime()
           dispatch(updateLog(report));
-          console.log('BACK REPORT', report);
-          console.log('CURRENT LOG', currentLog);
-          console.log('ADDTL DATA', endpoint.name, reqMethod, getTime());
         })
         .catch((error) => console.log(error));
     } else if (reqMethod === "DELETE") {
       axios
         .delete(URLString + endpoint.name, reqBody)
         .then((response) => {
-          console.log("response is :  ", response);
           const report = checkResponse(
             response.data,
             currentContract,
@@ -209,9 +188,6 @@ export default function BackEndpoint({
           report.method = reqMethod;
           report.time = getTime()
           dispatch(updateLog(report));
-          console.log('BACK REPORT', report);
-          console.log('CURRENT LOG', currentLog);
-          console.log('ADDTL DATA', endpoint.name, reqMethod, getTime());
         })
         .catch((error) => console.log(error));
     }
@@ -219,21 +195,20 @@ export default function BackEndpoint({
   };
   // add new button to reset fields
   // resetFields()
- 
   return (
     <div className="sticky top-16 z-50 bg-gray-900 shadow-lg">
       <div className="grid grid-cols-12 gap-1 px-3 py-3">
-        <div className="col-span-4 sm:col-span-2">
+        <div className="col-span-3 sm:col-span-2">
           <div>
             <div
               id="reqMethod"
-              className='bg-white text-black mt-1 h-[38px] px-3 py-2 rounded-md text-sm font-medium'
+              className='bg-transparent text-indigo-500 border border-indigo-500 block mt-1 h-[42px] sm:h-[38px] px-3 py-[0.6rem] sm:py-[0.5rem] rounded-md text-center text-sm font-medium'
             >
               {reqMethod}
             </div>
           </div>
         </div>
-        <div className="col-span-4 sm:col-span-3">
+        <div className="col-span-5 sm:col-span-3">
           <div>
             <div className="mt-1">
               <input
@@ -253,12 +228,13 @@ export default function BackEndpoint({
           <Combobox
             as="div"
             value={selectedEndpoint}
-            onChange={(endpoint) => {setSelectedEndpoint(endpoint); setReqMethod(endpoint.method.toUpperCase()); updateReqFields(`Req@${endpoint.method.toUpperCase()}@${endpoint.name}`) }}
+            onChange={(endpoint) => { setSelectedEndpoint(endpoint); setReqMethod(endpoint.method.toUpperCase()); updateReqFields(`Req@${endpoint.method.toUpperCase()}@${endpoint.name}`) }}
           >
             <div className="relative mt-1">
               <Combobox.Input
                 className="w-full rounded-md border border-gray-300 bg-white py-2 pl-3 pr-10 shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-1 focus:ring-indigo-500 sm:text-sm"
                 onChange={(event) => setQuery(event.target.value)}
+                placeholder="Endpoint"
                 displayValue={(endpoint: EnumEndpointItem) => endpoint.name}
               />
               <Combobox.Button className="absolute inset-y-0 right-0 flex items-center rounded-r-md px-2 focus:outline-none">
@@ -317,7 +293,7 @@ export default function BackEndpoint({
         <div className="col-span-12 sm:col-span-3">
           <button
             type="button"
-            className="items-center text-center h-[38px] w-full mt-1 px-2.5 py-1.5 border border-transparent text-sm font-medium rounded shadow-sm text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+            className="items-center text-center h-[38px] w-full mt-1 px-2.5 py-1.5 border border-transparent text-sm font-medium rounded shadow-sm text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 focus:ring-offset-gray-900"
             onClick={() => {
               sendRequest(URLString, reqMethod, selectedEndpoint, reqInputs);
             }}

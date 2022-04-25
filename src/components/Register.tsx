@@ -70,10 +70,10 @@ const Register = () => {
             Register
           </h2>
           <div className='mt-2 text-center text-sm text-gray-600'>
-            Or{' '}
+            or{' '}
             <Link to='/'>
               <p className='font-medium text-indigo-600 hover:text-indigo-500'>
-                login to your account
+                Login to your account
               </p>
             </Link>
           </div>
