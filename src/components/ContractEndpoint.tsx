@@ -80,10 +80,12 @@ const ContractEndpoint: React.FC<ContractEndpointProps> = ({
     if (!currentContractToken) {
       setNotificationString('NO CURRENT CONTRACT SELECTED')
       setVisibility(true)
+      return
     }
     else if (!endpoint) {
       setNotificationString('ENDPOINT REQUIRED')
       setVisibility(true)
+      return
     }
 
     //// NOTIFICATION TEST END
@@ -121,14 +123,24 @@ const ContractEndpoint: React.FC<ContractEndpointProps> = ({
         .catch((error) => {
           console.log(error);
         });
-
-  
+    
+      setNotificationString('ENDPOINT SAVED')
+      setVisibility(true)
   }
 
   const deleteEndpoint = (reqMethod: string, endpoint: string) => {
-    if (!currentContractToken) return console.log('NO CURRENT CONTRACT SELECTED')
-    if (!endpoint) return console.log('ENDPOINT REQUIRED')
-
+    // if (!currentContractToken) return console.log('NO CURRENT CONTRACT SELECTED')
+    // if (!endpoint) return console.log('ENDPOINT REQUIRED')
+    if (!currentContractToken) {
+      setNotificationString('NO CURRENT CONTRACT SELECTED')
+      setVisibility(true)
+      return
+    }
+    else if (!endpoint) {
+      setNotificationString('ENDPOINT REQUIRED')
+      setVisibility(true)
+      return
+    }
     const contractCopy = {...currentContract}
 
     console.log('COPY BEFORE DELETION: ', contractCopy)
@@ -154,6 +166,8 @@ const ContractEndpoint: React.FC<ContractEndpointProps> = ({
       console.log(error);
     });
 
+    setNotificationString('ENDPOINT DELETED')
+    setVisibility(true)
   }
 
   /** ADJUST CURRENT SELECTED ENUM INDEX  */
