@@ -6,7 +6,7 @@ import { Link, Outlet, useLocation, useNavigate } from 'react-router-dom';
 import ModalNewContract from './ModalNewContract';
 import ModalJoinContract from './ModalJoinContract';
 import ModalContractDetails from './ModalContractDetails';
-import Notification from './Notification';
+// import Notification from './Notification';
 import { RootState } from '../state/store';
 import { useDispatch, useSelector } from 'react-redux';
 import { loadContract } from '../state/features/contractSlice';
@@ -103,10 +103,22 @@ export default function Navbar() {
 
   return (
     <>
-      <ModalNewContract visibility={newOpen} closeModal={handleCloseNewModal} setSelectedContract={setSelectedContract} sendToken={sendToken} />
-      <ModalJoinContract visibility={joinOpen} closeModal={handleCloseJoinModal} setSelectedContract={setSelectedContract} sendToken={sendToken} />
-      <ModalContractDetails visibility={detailsOpen} closeModal={handleCloseDetailsModal} tokens={tokens} currentContractToken={currentContractToken} />
-      <Notification className=''></Notification>
+      <ModalNewContract 
+        visibility={newOpen} 
+        closeModal={handleCloseNewModal} 
+        setSelectedContract={setSelectedContract} 
+        sendToken={sendToken} />
+      <ModalJoinContract 
+        visibility={joinOpen} 
+        closeModal={handleCloseJoinModal} 
+        setSelectedContract={setSelectedContract} 
+        sendToken={sendToken} />
+      <ModalContractDetails 
+        visibility={detailsOpen} 
+        closeModal={handleCloseDetailsModal} 
+        tokens={tokens} 
+        currentContractToken={currentContractToken} />
+      {/* <Notification className=''></Notification> */}
       <Disclosure
         as='nav'
         className='bg-gray-800 sticky top-0 z-[60] shadow-lg'

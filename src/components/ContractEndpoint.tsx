@@ -37,7 +37,9 @@ interface ContractEndpointProps {
   reqInputs: BodyInputs,
   resInputs: BodyInputs,
   resetFields: () => void,
-  updateFieldsByEndpoint: (requestString: string, responseString:string) => void
+  updateFieldsByEndpoint: (requestString: string, responseString:string) => void,
+  setNotificationString: (input: string) => void,
+  setVisibility: (input: boolean) => void,
 }
 
 
@@ -53,7 +55,9 @@ const ContractEndpoint: React.FC<ContractEndpointProps> = ({
     reqInputs, 
     resInputs, 
     resetFields,
-    updateFieldsByEndpoint, 
+    updateFieldsByEndpoint,
+    setNotificationString,
+    setVisibility,
   }): JSX.Element => {
   const [query, setQuery] = useState('');
   const [selectedEndpoint, setSelectedEndpoint] = useState<EnumEndpointItem>();
@@ -68,9 +72,23 @@ const ContractEndpoint: React.FC<ContractEndpointProps> = ({
     reqInputs: BodyInputs,
     resInputs: BodyInputs
   ): void => {
-    if (!currentContractToken) return console.log('NO CURRENT CONTRACT SELECTED')
-    if (!endpoint) return console.log('ENDPOINT REQUIRED')
+    // if (!currentContractToken) return console.log('NO CURRENT CONTRACT SELECTED')
+    // if (!endpoint) return console.log('ENDPOINT REQUIRED')
 
+    /// NOTIFICATION TEST
+
+    if (!currentContractToken) {
+      setNotificationString('NO CURRENT CONTRACT SELECTED')
+      setVisibility(true)
+      return
+    }
+    else if (!endpoint) {
+      setNotificationString('ENDPOINT REQUIRED')
+      setVisibility(true)
+      return
+    }
+
+    //// NOTIFICATION TEST END
     const reqBody = {};
     const resBody = {};
     const newContract = {};
@@ -105,14 +123,24 @@ const ContractEndpoint: React.FC<ContractEndpointProps> = ({
         .catch((error) => {
           console.log(error);
         });
-
-  
+    
+      setNotificationString('ENDPOINT SAVED')
+      setVisibility(true)
   }
 
   const deleteEndpoint = (reqMethod: string, endpoint: string) => {
-    if (!currentContractToken) return console.log('NO CURRENT CONTRACT SELECTED')
-    if (!endpoint) return console.log('ENDPOINT REQUIRED')
-    
+    // if (!currentContractToken) return console.log('NO CURRENT CONTRACT SELECTED')
+    // if (!endpoint) return console.log('ENDPOINT REQUIRED')
+    if (!currentContractToken) {
+      setNotificationString('NO CURRENT CONTRACT SELECTED')
+      setVisibility(true)
+      return
+    }
+    else if (!endpoint) {
+      setNotificationString('ENDPOINT REQUIRED')
+      setVisibility(true)
+      return
+    }
     const contractCopy = {...currentContract}
 
     console.log('COPY BEFORE DELETION: ', contractCopy)
@@ -138,6 +166,8 @@ const ContractEndpoint: React.FC<ContractEndpointProps> = ({
       console.log(error);
     });
 
+    setNotificationString('ENDPOINT DELETED')
+    setVisibility(true)
   }
 
   /** ADJUST CURRENT SELECTED ENUM INDEX  */

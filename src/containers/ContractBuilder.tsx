@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import ContractEndpoint from '../components/ContractEndpoint';
 import ContractEditor from '../components/ContractEditor';
+import Notification from '../components/Notification';
 import { useSelector } from 'react-redux';
 import { RootState } from '../state/store';
 
@@ -26,6 +27,8 @@ export default function ContractBuilder() {
   const [newEndpoint, setNewEndpoint] = useState('');
   const [reqInputs, setReqInputs] = useState<BodyInputs>([{ reqKey: '', reqValType: 'boolean' }])
   const [resInputs, setResInputs] = useState<BodyInputs>([{ resKey: '', resValType: 'boolean' }])
+  const [notificationString, setNotificationString] = useState('')
+  const [notificationOpen, setNotificationOpen] = useState<boolean>(false)
   const { currentContract } = useSelector((state: RootState) => state.contract);
 
   /** RECORD CHANGES TO REQ TYPE DROPDOWN IN CONTRACTENDPOINT COMPONENT */
@@ -133,6 +136,11 @@ export default function ContractBuilder() {
   const reqEndpoints: EnumEndpointItem[] = getEndpoints(currentContract);
   return (
     <div className='bg-gray-900 h-screen'>
+      <Notification 
+        notificationString={notificationString} 
+        visibility={notificationOpen}
+        setVisibility={setNotificationOpen}
+      />
       <ContractEndpoint
         reqMethod={reqMethod}
         setReqMethod={setReqMethod}
@@ -145,6 +153,8 @@ export default function ContractBuilder() {
         resInputs={resInputs}
         resetFields={resetFields}
         updateFieldsByEndpoint={updateFieldsByEndpoint}
+        setNotificationString={setNotificationString}
+        setVisibility={setNotificationOpen}
       />
       <ContractEditor
         reqInputs={reqInputs}
