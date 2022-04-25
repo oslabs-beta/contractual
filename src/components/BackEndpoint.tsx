@@ -24,7 +24,8 @@ function classNames(...classes) {
 type KeyTypeValue = {
   reqKey: string;
   reqValType: string;
-  reqVal: string | number | boolean | any[];
+  // reqVal: string | number | boolean | any[];
+  reqVal: string
 };
 type BodyInputs = KeyTypeValue[];
 
@@ -60,6 +61,7 @@ export default function BackEndpoint({
   const currentLog = useSelector((store: RootState) => store.backLog);
   const dispatch = useDispatch();
 
+  /** SEARCH FILTER FOR ENDPOINT INPUT FIELD */
   const filteredEndpoints =
     query === ""
       ? endpoints
@@ -67,23 +69,33 @@ export default function BackEndpoint({
           return endpoint.name.toLowerCase().includes(query.toLowerCase());
         });
   
-  // CREATE FUNCTION COMBINING SET SELECTED ENDPOINT, SETREQMETHOD, AND SETREQINPUTS
-  const changeEndpoint = () => {
-
-  }
   const sendRequest = (
     URLString: string,
     reqMethod: string,
     endpoint: EnumEndpointItem,
     reqInputs: BodyInputs
   ): void => {
-    // DO A CHECK AGAINS THE DATA CONTRACT HERE
-    // name of contract could be argument
+  
     const reqBody = {};
     const condition = `Res@${reqMethod}@${endpoint.name}`; //endpoint is entire url string
 
     reqInputs.forEach((input) => {
-      reqBody[input.reqKey] = input.reqVal;
+      //PARSE NON STRINGS?
+      let nonString;
+      if (input.reqValType !== 'string') {
+        if (input.reqValType === 'boolean') {
+          if (input.reqVal === 'true'){
+            nonString = true;
+          } 
+          else nonString = false;
+        }   
+        else if (input.reqValType === 'number') nonString = Number(input.reqVal);
+        else if (input.reqValType === 'array-any-any') nonString = JSON.parse(input.reqVal)
+         
+        reqBody[input.reqKey] = nonString;
+      }
+      else reqBody[input.reqKey] = input.reqVal;
+      // reqBody[input.reqKey] = input.reqVal
     });
 
     // perform ajax request passing in built request body from above
@@ -219,21 +231,6 @@ export default function BackEndpoint({
             >
               {reqMethod}
             </div>
-            {/* <select
-              id="reqMethod"
-              name="reqMethod"
-              onChange={(e) => {
-                setReqMethod(e);
-              }}
-              className="mt-1 block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md"
-              defaultValue="GET"
-            >
-              <option value="GET">GET</option>
-              <option value="POST">POST</option>
-              <option value="PUT">PUT</option>
-              <option value="PATCH">PATCH</option>
-              <option value="DELETE">DELETE</option>
-            </select> */}
           </div>
         </div>
         <div className="col-span-4 sm:col-span-3">
@@ -292,7 +289,7 @@ export default function BackEndpoint({
                               selected && "font-semibold"
                             )}
                           >
-                            {endpoint.name}
+                            {endpoint.method + ' ' + endpoint.name}
                           </span>
 
                           {selected && (

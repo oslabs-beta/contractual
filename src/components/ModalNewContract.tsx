@@ -15,12 +15,18 @@ interface EnumContractItem {
   token: string;
   name: string;
 }
-const ModalNewContract: React.FC<ModalProps> = ({ visibility, closeModal, setSelectedContract, sendToken }): JSX.Element => {
+const ModalNewContract: React.FC<ModalProps> = ({ 
+  visibility, 
+  closeModal, 
+  setSelectedContract, 
+  sendToken 
+}): JSX.Element => {
   const dispatch = useDispatch()
   const [contractName, setContractName] = useState('')
   const cancelButtonRef = useRef(null);
   const { userId } = useSelector((store: RootState) => store.contract);
 
+  /** CREATE A NEW CONTRACT AND RECEIVE UNIQUE TOKEN */
   const createContract = (): void => {
     axios
         .post('http://localhost:4321/contract/add', {

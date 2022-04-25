@@ -3,7 +3,7 @@ import ContractEndpoint from '../components/ContractEndpoint';
 import ContractEditor from '../components/ContractEditor';
 import { useSelector } from 'react-redux';
 import { RootState } from '../state/store';
-/////TESTING DYNAMIC INPUTS
+
 interface EnumEndpointItem {
   id: number;
   method: string;
@@ -20,7 +20,6 @@ type KeyAndType = {
   [key: string]: string;
 };
 type BodyInputs = KeyAndType[];
-/// TEST END///////
 
 export default function ContractBuilder() {
   const [reqMethod, setReqMethod] = useState('GET');
@@ -29,27 +28,29 @@ export default function ContractBuilder() {
   const [resInputs, setResInputs] = useState<BodyInputs>([{ resKey: '', resValType: 'boolean' }])
   const { currentContract } = useSelector((state: RootState) => state.contract);
 
-  ///// RECORD CHANGES TO REQ TYPE DROPDOWN IN CONTRACTENDPOINT COMPONENT
+  /** RECORD CHANGES TO REQ TYPE DROPDOWN IN CONTRACTENDPOINT COMPONENT */
   const handleSetReqMethod = (e: any): void => {
     const method: string = e.target.value;
     console.log('method changed: ', method);
     setReqMethod(method);
   };
 
-  //// RECORD CHANGES IN ENDPOINT INPUT FIELD IN CONTRACTENDPOINT COMPONENET
+  /** RECORD CHANGES IN ENDPOINT INPUT FIELD IN CONTRACTENDPOINT COMPONENT */
   const handleSetEndpoint = (e: any): void => {
     const endpoint: string = e.target.value;
     console.log('current endpoint string: ', e.target.value);
     setNewEndpoint(endpoint);
   };
 
-
+  /** RECORD INPUTS OF KEY/TYPE PAIRS IN THE REQUEST BODY SECTION IN COMPONENT LEVEL STATE */
   const handleSetReqInputs = (index, e) => {
     let data = [...reqInputs];
     data[index][e.target.name] = e.target.value;
     console.log('Request Box changed: ', data);
     setReqInputs(data);
   };
+
+  /** RECORD INPUTS OF KEY/TYPE PAIRS IN THE RESPONSE BODY SECTION IN COMPONENT LEVEL STATE */
   const handleSetResInputs = (index, e) => {
     let data = [...resInputs];
     data[index][e.target.name] = e.target.value;
@@ -57,34 +58,44 @@ export default function ContractBuilder() {
     setResInputs(data);
   };
 
+  /** ADD AN ADDITIONAL KEY/TYPE PAIR FIELD IN THE REQUEST BODY SECTION */
   const addReqField = () => {
     let additional = { reqKey: '', reqValType: 'boolean' };
     console.log('new Request field added');
     setReqInputs([...reqInputs, additional]);
   };
-  //BUG: RANDOMLY CAUSES APP REFRESH AFTER TWO ADDITIONS THEN A SUBTRACTION
+
+  /** REMOVE LAST KEY/TYPE PAIR FIELD IN THE REQUEST BODY SECTION */
   const subtractReqField = (e) => {
     e.preventDefault()
     const newReqInputs = JSON.parse(JSON.stringify(reqInputs));
     setReqInputs(newReqInputs.slice(0,-1));
   };
 
+  /** ADD AN ADDITIONAL KEY/TYPE PAIR FIELD IN THE RESPONSE BODY SECTION */
   const addResField = () => {
     let additional = { resKey: '', resValType: 'boolean' };
     console.log('new Response field added');
     setResInputs([...resInputs, additional]);
   };
+
+  /** REMOVE LAST KEY/TYPE PAIR FIELD IN THE REQUEST BODY SECTION */
   const subtractResField = (e) => {
     e.preventDefault()
     const newResInputs = JSON.parse(JSON.stringify(resInputs));
     setResInputs(newResInputs.slice(0,-1));
   };
 
+  /** RESET ALL CURRENT REQUEST AND RESPONSE KEY/TYPE PAIRS TO INITIAL STATE 
+      NOTE: may want to add resetting the dropdown and enpoint input fiels as well
+  */
   const resetFields = () => {
+    // setNewEndpoint('');
     setReqInputs([{ reqKey: '', reqValType: 'boolean' }])
     setResInputs([{ resKey: '', resValType: 'boolean' }])
   }
 
+  /** CREATE ENDPOINTS OBJECT ARRAY FOR ENUM IN CONTRACTENDPOINT COMPONENT */
   const getEndpoints = (contract: CurrentContract ):EnumEndpointItem[] => {
     const endpoints = [];
     let id = 1;
@@ -98,7 +109,8 @@ export default function ContractBuilder() {
     }
     return endpoints
   };
-
+ 
+  /**  UPDATE CURRENT CONTRACT INPUT FIELD STATE VARIABLES BASED ON COMBOBOX DROPDOWN ENUM SELECTION */
   const updateFieldsByEndpoint = (reqEndpointKey: string, resEndpointKey: string):void => {
     const reqEndpointKeys: Contracts = currentContract[reqEndpointKey]
     const resEndpointKeys: Contracts = currentContract[resEndpointKey]
@@ -117,6 +129,7 @@ export default function ContractBuilder() {
     setReqInputs(reqKeys);
     setResInputs(resKeys);
   };
+  /** BUILD ENUM ARRAY */
   const reqEndpoints: EnumEndpointItem[] = getEndpoints(currentContract);
   return (
     <div className='bg-gray-900 h-screen'>
@@ -143,15 +156,6 @@ export default function ContractBuilder() {
         subtractReqField={subtractReqField}
         subtractResField={subtractResField}
       />
-      {/* <div className="request-specification-container">
-       <div className="request-method">Request type</div>
-       <div>endpoint</div>
-       <div>save as</div>
-     </div>
-     <div className="contract-container">
-       <div className="request-box">request box</div>
-       <div className="response-box">response box</div>
-     </div> */}
     </div>
   );
 }

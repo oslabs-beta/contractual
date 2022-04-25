@@ -16,13 +16,20 @@ interface EnumContractItem {
   token: string;
   name: string;
 }
-const ModalJoinContract: React.FC<ModalProps> = ({ visibility, closeModal, setSelectedContract, sendToken }): JSX.Element => {
+const ModalJoinContract: React.FC<ModalProps> = ({ 
+  visibility, 
+  closeModal, 
+  setSelectedContract, 
+  sendToken 
+}): JSX.Element => {
   const dispatch = useDispatch()
   const [contractName, setContractName] = useState('')
   const [contractToken, setContractToken] = useState('')
   const { userId } = useSelector((store: RootState) => store.contract);
 
   const cancelButtonRef = useRef(null)
+
+  /** ADD CONTRACT THAT WAS PREVIOUSLY BUILT BY SEPARATE USER VIA CONTRACT NAME AND TOKEN INPUT */
   const handleJoinContract = (): void => {
     axios
         .post('http://localhost:4321/contract/details', {
@@ -40,6 +47,7 @@ const ModalJoinContract: React.FC<ModalProps> = ({ visibility, closeModal, setSe
               contract: response.data.content
             }));
             setSelectedContract({name: contractName, token: contractToken});
+            /** UPDATE WEBHOOK SERVER HERE */
             sendToken(contractToken)
           }
         })

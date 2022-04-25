@@ -32,6 +32,8 @@ export default function BackTester() {
     { reqKey: "", reqValType: "boolean", reqVal: "true" },
   ]);
   const { currentContract } = useSelector((state: RootState) => state.contract);
+
+  /** CREATE ENDPOINTS OBJECT ARRAY FOR ENUM IN BACKENDPOINT COMPONENT */
   const getEndpoints = (contract: CurrentContract ):EnumEndpointItem[] => {
     const endpoints = [];
     let id = 1;
@@ -48,36 +50,64 @@ export default function BackTester() {
     // console.log(getReqKeys(currentContract));
   };
   const reqEndpoints: EnumEndpointItem[] = getEndpoints(currentContract);
-  ///// RECORD CHANGES TO REQ TYPE DROPDOWN IN BACKENDPOINT COMPONENT
+
+  /** RECORD CHANGES TO REQ TYPE DROPDOWN IN BACKENDPOINT COMPONENT 
+   *  NOTE: DROPDOWN CURRENTLY CHANGED TO DISPLAY ONLY FOR TESTING.
+   *        DEVELOPER DECISION TO REMOVE
+  */
   const handleSetReqMethod = (e: string): void => {
     // const method: string = e.target.value;
     // console.log("method changed: ", method);
     setReqMethod(e);
   };
 
-  //// RECORD CHANGES IN ENDPOINT INPUT FIELD IN BACKENDPOINT COMPONENET
+  /**  RECORD STATE CHANGES IN DOMAIN INPUT FIELD IN BACKENDPOINT COMPONENT */
   const handleSetURL = (e: any): void => {
     const URLString: string = e.target.value;
     console.log("current URL string: ", e.target.value);
     setURLString(URLString);
   };
 
-  // REQUIRES MODIFICATION
+  /** RECORD INPUTS OF KEY/TYPE/VALUE TRIOS IN THE REQUEST BODY SECTION IN COMPONENT LEVEL STATE */
   const handleSetReqInputs = (index, e) => {
     let data = [...reqInputs];
     data[index][e.target.name] = e.target.value;
     console.log("Request Box changed: ", data);
+
+
+    /// TESTING
+
+    console.log('Target is : ', e.target.name)
+    console.log('Value is : ', e.target.value)
+    if (data[index][e.target.name] === 'boolean') {
+      data[index].reqVal = true
+    }
+    else if (data[index][e.target.name] === 'string') {
+      data[index].reqVal = ''
+    }
+    else if (data[index][e.target.name] === 'number') {
+      data[index].reqVal = ''
+    }
+    else if (data[index][e.target.name] === 'array-any-any') {
+      data[index].reqVal = ''
+    }
+
+    /// END OF TEST
     setReqInputs(data);
   };
-
-  // NEW FUNCTION TEST: WORKING
-  // [ { reqKey: "", reqValType: "boolean", reqVal: "true" },]
+  
+  /** CHANGE THE DEFAULT VALUE OF VALUE FIELD WHEN MODIFYING THE DATATYPE DROPDOWN */
+  const updateDefaultValue = (index, e) => {
+    let data = [...reqInputs]
+  }
+  /**  UPDATE CURRENT INPUT FIELDS STATE VARIABLES BASED ON COMBOBOX DROPDOWN ENUM SELECTION */
   const updateReqFields = (reqEndpointKey: string):void => {
     const endpointKeys: Contracts = currentContract[reqEndpointKey]
     let keys = [];
     for (let key in endpointKeys) {
       const k = {reqKey: key, reqValType: endpointKeys[key], reqVal: ''};
       if (k.reqValType === 'boolean') k.reqVal = 'true';
+      else if (k.reqValType === 'array-any-any') k.reqVal = '[]'
       keys.push(k)
     }
     console.log('ENDPOINT KEYS ARE: ', keys)
@@ -107,17 +137,5 @@ export default function BackTester() {
       />
       <BackLog />
     </div>
-    // <div className="back-tester-container">
-    //   <div className="request-container">
-    //     <div className="endpoint-container">
-    //       <input type="text" className="endpoint" placeholder="Project name"/>
-    //       <button className="send-request-button">Send Request</button>
-    //     </div>
-    //     <div>
-    //       <button className="method-dropdown">Method-dropdown</button>
-    //     </div>
-    //   </div>
-    //   <div className="api-dropdown"></div>
-    // </div>
   );
 }

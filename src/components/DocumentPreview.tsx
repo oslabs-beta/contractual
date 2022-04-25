@@ -11,9 +11,16 @@ interface PreviewProps {
   currentContract: CurrentContract
 }
 
-const DocumentPreview: React.FC<PreviewProps> = ({ currentContract, reqKeys }): JSX.Element => {
+const DocumentPreview: React.FC<PreviewProps> = ({ 
+  currentContract, 
+  reqKeys 
+}): JSX.Element => {
   // console.log('CURRENT CONTRACT', currentContract);
   // console.log('CURRENT KEYS', reqKeys);
+
+  /** BUILD STRUCTURE OF DOCUMENT PREVIEW
+   * { endpoint1: [[{key: value}, {key: value}], [{key: value}]], endpoint2:...}
+  */
   const buildPreview = (contract, reqs) => {
     const endpoints = {};
     // Loop through reqKeys of one endpoint
@@ -38,21 +45,19 @@ const DocumentPreview: React.FC<PreviewProps> = ({ currentContract, reqKeys }): 
         // we are looping through the keys in the object ah right
       }
       endpoint.push(resPairs)
-      endpoints[req.slice(4)] = endpoint // i chopped off the beginning again
+      endpoints[req.slice(4)] = endpoint
     }
-    // console.log('ENDPOINTS');
-    // console.log(endpoints);
     return endpoints;
   }
 
   const docObj = buildPreview(currentContract, reqKeys);
   console.log('DOCUMENTATION');
   console.log(docObj);
-  // {
-  //   endpoint1: [[{key: value}, {key: value}], [{key: value}]],
-  //   endpoint2: 
-  // }
+  // 
   const documentation = []
+  /** BUILD DOCUMENTATION ARRAY ITERATING THROUGH PREVIEW STRUCTURE
+   *  NOTE: VERY POSSIBLE TO COMBINE THIS WITH BUILD PREVIEW FUNCTION FOR LESS CODE
+   */
   for (let key in docObj) {
     let splitKey = key.split('@');
     const requests = [];

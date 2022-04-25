@@ -10,17 +10,6 @@ socket.addEventListener('open', (event) => {
   console.log('CONNECTED TO WEB SOCKET FROM CLIENT Side');
 });
 
-// const success = (
-//   <span className='inline-flex rounded-full bg-green-100 px-2 text-xs font-semibold leading-5 text-green-800'>
-//     Success
-//   </span>
-// );
-// const error = (
-//   <span className='inline-flex rounded-full bg-red-100 px-2 text-xs font-semibold leading-5 text-red-800'>
-//     Error
-//   </span>
-// );
-
 // const requestsOld = [
 //   {
 //     endpoint: '/login',
@@ -36,29 +25,7 @@ socket.addEventListener('open', (event) => {
 //     time: '11:18:21 Feb 05',
 //     error: 'Wrong key',
 //   },
-//   {
-//     endpoint: '/login',
-//     method: 'POST',
-//     status: success,
-//     time: '23:10:01 Feb 03',
-//     error: '',
-//   },
-//   {
-//     endpoint: '/feed',
-//     method: 'GET',
-//     status: success,
-//     time: '07:23:22 Feb 02',
-//     error: '',
-//   },
-//   {
-//     endpoint: '/feed',
-//     method: 'GET',
-//     status: error,
-//     time: '19:00:56 Feb 01',
-//     error: 'Wrong type',
-//   },
-//   // More requests...
-// ];
+// ]
 
 export default function FrontLog() {
   const [requests, updateRequests] = useState([]);

@@ -61,14 +61,16 @@ const ContractEndpoint: React.FC<ContractEndpointProps> = ({
   const { currentContract, currentContractToken } = useSelector((store: RootState) => store.contract);
   const dispatch = useDispatch()
 
-
+    /** SAVE OR UPDATE THE CURRENTLY SELECTED ENDPOINT AND FIELDS TO THE DATABASE */
   const saveContract = (
     reqMethod: string,
     endpoint: string,
     reqInputs: BodyInputs,
     resInputs: BodyInputs
   ): void => {
-    // name of contract could be argument
+    if (!currentContractToken) return console.log('NO CURRENT CONTRACT SELECTED')
+    if (!endpoint) return console.log('ENDPOINT REQUIRED')
+
     const reqBody = {};
     const resBody = {};
     const newContract = {};
@@ -80,24 +82,23 @@ const ContractEndpoint: React.FC<ContractEndpointProps> = ({
       resBody[input.resKey] = input.resValType;
     });
 
+    /**  BUILD CONTRACT STRINGS FOR REQUEST AND RESPONSE */
     newContract[`Req@${reqMethod}@${endpoint}`] = reqBody; // should pass in request object here
     newContract[`Res@${reqMethod}@${endpoint}`] = resBody; // should pass in response object here
     console.log(newContract);
 
     
     const contractCopy = {...currentContract, ...newContract}
-    // post new req/res to database
+    
     axios
         .patch('http://localhost:4321/contract', {
           content: contractCopy,
           token: currentContractToken
-          // token: 'A1B2'
         })
         .then((response) => {
           console.log(response);
           if (response.status === 200) {
             dispatch(updateContract(contractCopy))
-            //Reset form fields
             resetFields()
           }
         })
@@ -108,12 +109,44 @@ const ContractEndpoint: React.FC<ContractEndpointProps> = ({
   
   }
 
+  const deleteEndpoint = (reqMethod: string, endpoint: string) => {
+    if (!currentContractToken) return console.log('NO CURRENT CONTRACT SELECTED')
+    if (!endpoint) return console.log('ENDPOINT REQUIRED')
+    
+    const contractCopy = {...currentContract}
 
+    console.log('COPY BEFORE DELETION: ', contractCopy)
+
+    delete contractCopy[`Req@${reqMethod}@${endpoint}`]
+    delete contractCopy[`Res@${reqMethod}@${endpoint}`]
+
+    console.log('COPY AFTER DELETION: ', contractCopy)
+
+    axios
+    .patch('http://localhost:4321/contract', {
+      content: contractCopy,
+      token: currentContractToken
+    })
+    .then((response) => {
+      console.log(response);
+      if (response.status === 200) {
+        dispatch(updateContract(contractCopy))
+        resetFields()
+      }
+    })
+    .catch((error) => {
+      console.log(error);
+    });
+
+  }
+
+  /** ADJUST CURRENT SELECTED ENUM INDEX  */
   const endpointChange = (event) => {
     setQuery(event.target.value);
     setEndpoint(event);
   };
 
+  /** SEARCH FILTER FOR ENDPOINT INPUT FIELD */
   const filteredEndpoints =
     query === ''
       ? endpoints
@@ -131,6 +164,7 @@ const ContractEndpoint: React.FC<ContractEndpointProps> = ({
             onChange={(e) => {
               handleSetReqMethod(e);
             }}
+            value={reqMethod}
             className='mt-1 block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm'
           >
             <option value='GET'>GET</option>
@@ -140,24 +174,16 @@ const ContractEndpoint: React.FC<ContractEndpointProps> = ({
             <option value='DELETE'>DELETE</option>
           </select>
         </div>
+        
+        {/* TEST BUTTONS */}
         <button onClick={() => {console.log(store)}}>check current state of store</button>
         <button onClick={() => { console.log(reqInputs); console.log(resInputs); console.log(reqMethod); console.log(newEndpoint) }}>check state of inputs</button>
 
-        {/* <div className="col-span-7 sm:col-span-8 md:col-span-8 lg:col-span-9">
-          <input
-            type="endpoint"
-            name="endpoint"
-            id="endpoint"
-            value={endpoint}
-            onChange={(e) => {setEndpoint(e)}}
-            className="h-[2.4rem] mt-1 block w-full shadow-sm sm:text-md border-gray-300 rounded-md px-3 py-2"
-          />
-        </div> */}
         <div className='col-span-8 sm:col-span-8 md:col-span-8 lg:col-span-9'>
           <Combobox
             as='div'
             value={selectedEndpoint}
-            onChange={(endpoint: EnumEndpointItem) => {setSelectedEndpoint(endpoint); updateFieldsByEndpoint(`Req@${endpoint.method.toUpperCase()}@${endpoint.name}`, `Res@${endpoint.method.toUpperCase()}@${endpoint.name}`); setNewEndpoint(endpoint.name);}}
+            onChange={(endpoint: EnumEndpointItem) => {setSelectedEndpoint(endpoint); updateFieldsByEndpoint(`Req@${endpoint.method.toUpperCase()}@${endpoint.name}`, `Res@${endpoint.method.toUpperCase()}@${endpoint.name}`); setNewEndpoint(endpoint.name); setReqMethod(endpoint.method.toUpperCase())}}
           >
             <div className='relative mt-1'>
               <Combobox.Input
@@ -197,7 +223,7 @@ const ContractEndpoint: React.FC<ContractEndpointProps> = ({
                               selected && 'font-semibold'
                             )}
                           >
-                            {endpoint.name}
+                            {endpoint.method + ' ' + endpoint.name}
                           </span>
 
                           {selected && (
@@ -232,26 +258,16 @@ const ContractEndpoint: React.FC<ContractEndpointProps> = ({
           >
             Save
           </button>
+          <button
+            className='inline-flex w-full justify-center mt-1 py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500'
+            onClick={() => {
+              deleteEndpoint(reqMethod, newEndpoint);
+            }}
+          >
+            Delete Endpoint
+          </button>
         </div>
       </div>
-      {/* <div className='wrapper-endpoint'>
-        <form className='form-endpoint'>
-            <div className='wrapper-selector'>
-                <select id='reqType' name='reqType' className='request-type-selector'>
-                    <option value='get'>GET</option>
-                    <option value='post'>POST</option>
-                    <option value='patch'>PATCH</option>
-                    <option value='delete'>DELETE</option>
-                </select>
-            </div>
-            <div className='wrapper-input'>
-                <input type='text' id='endpoint-text' name='endpoint' placeholder='Enter request URL'></input>
-            </div>
-            <div className='wrapper-save'>
-                <button className='btn-save'>Save</button>
-            </div>
-        </form>
-      </div> */}
     </div>
   );
 };

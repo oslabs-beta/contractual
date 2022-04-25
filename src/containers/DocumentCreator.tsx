@@ -5,6 +5,8 @@ import { RootState } from '../state/store';
 
 const DocumentCreator = () => {
   const { currentContract } = useSelector((state: RootState) => state.contract);
+  
+  /** BUILD ARRAY OF REQUESTMETHOD AND ENPOINTS FOR CURRENT SELECTED CONTRACT */
   const getReqKeys = (contract) => {
     const reqs = [];
     for (let key in contract) {
