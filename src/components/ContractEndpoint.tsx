@@ -270,7 +270,7 @@ const ContractEndpoint: React.FC<ContractEndpointProps> = ({
 
         <div className='col-span-6 sm:col-span-2 md:col-span-2 lg:col-span-1 text-right'>
           <button
-            className='inline-flex w-full justify-center mt-1 py-2 px-4 border shadow-sm text-sm font-medium rounded-md text-red-700 bg-transparent border-red-700 hover:bg-red-700 hover:border-red-700 hover:text-white focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500'
+            className='inline-flex w-full justify-center mt-1 py-2 px-4 border shadow-sm text-sm font-medium rounded-md text-red-700 bg-transparent border-red-700 hover:bg-red-700 hover:border-red-700 hover:text-white focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-900 focus:ring-red-500'
             onClick={() => {
               deleteEndpoint(reqMethod, newEndpoint);
             }}
@@ -280,7 +280,7 @@ const ContractEndpoint: React.FC<ContractEndpointProps> = ({
         </div>
         <div className='col-span-6 sm:col-span-2 md:col-span-2 lg:col-span-2 text-right'>
           <button
-            className='inline-flex w-full justify-center mt-1 py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500'
+            className='inline-flex w-full justify-center mt-1 py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 focus:ring-offset-gray-900'
             onClick={() => {
               saveContract(reqMethod, newEndpoint, reqInputs, resInputs);
             }}

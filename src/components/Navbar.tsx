@@ -103,20 +103,20 @@ export default function Navbar() {
 
   return (
     <>
-      <ModalNewContract 
-        visibility={newOpen} 
-        closeModal={handleCloseNewModal} 
-        setSelectedContract={setSelectedContract} 
+      <ModalNewContract
+        visibility={newOpen}
+        closeModal={handleCloseNewModal}
+        setSelectedContract={setSelectedContract}
         sendToken={sendToken} />
-      <ModalJoinContract 
-        visibility={joinOpen} 
-        closeModal={handleCloseJoinModal} 
-        setSelectedContract={setSelectedContract} 
+      <ModalJoinContract
+        visibility={joinOpen}
+        closeModal={handleCloseJoinModal}
+        setSelectedContract={setSelectedContract}
         sendToken={sendToken} />
-      <ModalContractDetails 
-        visibility={detailsOpen} 
-        closeModal={handleCloseDetailsModal} 
-        tokens={tokens} 
+      <ModalContractDetails
+        visibility={detailsOpen}
+        closeModal={handleCloseDetailsModal}
+        tokens={tokens}
         currentContractToken={currentContractToken} />
       {/* <Notification className=''></Notification> */}
       <Disclosure
@@ -151,6 +151,7 @@ export default function Navbar() {
                           <Combobox.Input
                             className='w-full rounded-md border border-gray-300 bg-white py-1 pl-3 pr-10 shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-1 focus:ring-indigo-500 sm:text-sm'
                             onChange={(event) => { setQuery(event.target.value) }}
+                            placeholder='Set contract'
                             displayValue={(contract: EnumContractItem) =>
                               contract.name
                             }
@@ -383,6 +384,77 @@ export default function Navbar() {
             <Disclosure.Panel className='sm:hidden'>
               <div className='px-2 pt-2 pb-3 space-y-1'>
                 {/* Current: "bg-gray-900 text-white", Default: "text-gray-300 hover:bg-gray-700 hover:text-white" */}
+                <Combobox
+                  as='div'
+                  value={selectedContract}
+                  onChange={(contract) => { setSelectedContract(contract); changeContract(contract); sendToken(contract.token) }}
+                >
+                  <div className='relative mb-2'>
+                    <Combobox.Input
+                      className='w-full rounded-md border border-gray-300 bg-white py-1 pl-3 pr-10 shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-1 focus:ring-indigo-500 sm:text-sm'
+                      onChange={(event) => { setQuery(event.target.value) }}
+                      placeholder="Set contract"
+                      displayValue={(contract: EnumContractItem) =>
+                        contract.name
+                      }
+                    />
+                    <Combobox.Button className='absolute inset-y-0 right-0 flex items-center rounded-r-md px-2 focus:outline-none'>
+                      <SelectorIcon
+                        className='h-5 w-5 text-gray-400'
+                        aria-hidden='true'
+                      />
+                    </Combobox.Button>
+
+                    {filteredContracts.length > 0 && (
+                      <Combobox.Options className='absolute z-10 mt-1 max-h-60 w-full overflow-auto rounded-md bg-white py-1 text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm'>
+                        {filteredContracts.map((contract) => (
+                          <Combobox.Option
+                            key={contract.token}
+                            value={contract}
+                            className={({ active }) =>
+                              classNames(
+                                'relative cursor-default select-none py-2 pl-3 pr-9',
+                                active
+                                  ? 'bg-indigo-600 text-white'
+                                  : 'text-gray-900'
+                              )
+                            }
+                          >
+                            {({ active, selected }) => (
+                              <>
+                                <span
+                                  className={classNames(
+                                    'block truncate',
+                                    selected && 'font-semibold'
+                                  )}
+                                >
+                                  {contract.name}
+                                </span>
+
+                                {selected && (
+                                  <span
+                                    className={classNames(
+                                      'absolute inset-y-0 right-0 flex items-center pr-4',
+                                      active
+                                        ? 'text-white'
+                                        : 'text-indigo-600'
+                                    )}
+                                  >
+                                    <CheckIcon
+                                      className='h-5 w-5'
+                                      aria-hidden='true'
+                                    />
+                                  </span>
+                                )}
+                              </>
+                            )}
+                          </Combobox.Option>
+                        ))}
+                      </Combobox.Options>
+                    )}
+                  </div>
+                </Combobox>
+
                 <Link to='contract'>
                   <Disclosure.Button
                     as='a'
@@ -443,21 +515,21 @@ export default function Navbar() {
               </div>
               <div className='pt-4 pb-3 border-t border-gray-700'>
                 <div className='flex items-center px-5'>
-                  <div className='flex-shrink-0'>
+                  {/* <div className='flex-shrink-0'>
                     <img
                       className='h-10 w-10 rounded-full'
                       src='../assets/img/icon-user.png'
                       alt=''
                     />
-                  </div>
-                  <div className='ml-3'>
+                  </div> */}
+                  {/* <div className='ml-3'>
                     <div className='text-base font-medium text-white'>
                       John Smith
                     </div>
                     <div className='text-sm font-medium text-gray-400'>
                       email@gmail.com
                     </div>
-                  </div>
+                  </div> */}
                   {/* <button
                   type="button"
                   className="ml-auto flex-shrink-0 bg-gray-800 p-1 rounded-full text-gray-400 hover:text-white focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-800 focus:ring-white"

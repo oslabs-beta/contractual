@@ -24,7 +24,7 @@ describe("checkInput function except array functionality test", () => {
     const input = { username: "Yankun", age: 26 };
     expect(checkInput(input, contracts, "Res@GET@/habits").pass).toBe(false);
     expect(checkInput(input, contracts, "Res@GET@/habits").error[0]).toBe(
-      "The endpoint or the fetch method do not exist!"
+      "Endpoint or FETCH method does not exist!"
     );
   });
 
@@ -32,7 +32,7 @@ describe("checkInput function except array functionality test", () => {
     const input = { username: "Yankun", age: "26" };
     expect(checkInput(input, contracts, "Req@POST@/login").pass).toBe(false);
     expect(checkInput(input, contracts, "Req@POST@/login").error[0]).toBe(
-      `type of "age" do not match! It should be number!`
+      `Type of "age" should be a number!`
     );
   });
 

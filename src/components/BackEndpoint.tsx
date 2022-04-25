@@ -202,7 +202,7 @@ export default function BackEndpoint({
           <div>
             <div
               id="reqMethod"
-              className='bg-white text-black block mt-1 h-[42px] sm:h-[38px] px-3 py-[0.7rem] sm:py-[0.6rem] rounded-md text-sm font-medium'
+              className='bg-transparent text-indigo-500 border border-indigo-500 block mt-1 h-[42px] sm:h-[38px] px-3 py-[0.6rem] sm:py-[0.5rem] rounded-md text-center text-sm font-medium'
             >
               {reqMethod}
             </div>
@@ -293,7 +293,7 @@ export default function BackEndpoint({
         <div className="col-span-12 sm:col-span-3">
           <button
             type="button"
-            className="items-center text-center h-[38px] w-full mt-1 px-2.5 py-1.5 border border-transparent text-sm font-medium rounded shadow-sm text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+            className="items-center text-center h-[38px] w-full mt-1 px-2.5 py-1.5 border border-transparent text-sm font-medium rounded shadow-sm text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 focus:ring-offset-gray-900"
             onClick={() => {
               sendRequest(URLString, reqMethod, selectedEndpoint, reqInputs);
             }}

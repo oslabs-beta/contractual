@@ -123,7 +123,7 @@ export default function ContractEditor({
         <button
           type='button'
           onClick={addReqField}
-          className='inline-flex w-full items-center px-2.5 py-1.5 border border-transparent text-xs font-medium rounded text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500'
+          className='inline-flex w-full items-center px-2.5 py-1.5 border border-transparent text-xs font-medium rounded text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 focus:ring-offset-gray-900'
         >
           <svg
             xmlns='http://www.w3.org/2000/svg'
@@ -142,7 +142,7 @@ export default function ContractEditor({
         </button>
         {Array.isArray(reqInputs) && reqInputs.length > 1 ? <button
           onClick={subtractReqField}
-          className='inline-flex w-full items-center px-2.5 py-1.5 border border-red-700 text-xs font-medium rounded text-red-700 bg-transparent hover:bg-red-700 hover:text-white focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500 focus:bg-red-700 focus:text-white'
+          className='inline-flex w-full items-center px-2.5 py-1.5 border border-red-700 text-xs font-medium rounded text-red-700 bg-transparent hover:bg-red-700 hover:text-white focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500 focus:bg-red-700 focus:text-white focus:ring-offset-gray-900'
         >
           <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 mx-auto" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
             <path stroke-linecap="round" strokeLinejoin="round" d="M20 12H4" />
@@ -247,7 +247,7 @@ export default function ContractEditor({
         <button
           type='button'
           onClick={addResField}
-          className='inline-flex w-full items-center px-2.5 py-1.5 border border-transparent text-xs font-medium rounded text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500'
+          className='inline-flex w-full items-center px-2.5 py-1.5 border border-transparent text-xs font-medium rounded text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 focus:ring-offset-gray-900'
         >
           <svg
             xmlns='http://www.w3.org/2000/svg'
@@ -266,7 +266,7 @@ export default function ContractEditor({
         </button>
         {resInputs.length > 1 ? <button
           onClick={subtractResField}
-          className='inline-flex w-full items-center px-2.5 py-1.5 border border-red-700 text-xs font-medium rounded text-red-700 bg-transparent hover:bg-red-700 hover:text-white focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500 focus:bg-red-700 focus:text-white'
+          className='inline-flex w-full items-center px-2.5 py-1.5 border border-red-700 text-xs font-medium rounded text-red-700 bg-transparent hover:bg-red-700 hover:text-white focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500 focus:bg-red-700 focus:text-white focus:ring-offset-gray-900'
         >
           <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 mx-auto" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
             <path stroke-linecap="round" strokeLinejoin="round" d="M20 12H4" />
