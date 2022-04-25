@@ -73,9 +73,33 @@ export default function BackTester() {
     let data = [...reqInputs];
     data[index][e.target.name] = e.target.value;
     console.log("Request Box changed: ", data);
+
+
+    /// TESTING
+
+    console.log('Target is : ', e.target.name)
+    console.log('Value is : ', e.target.value)
+    if (data[index][e.target.name] === 'boolean') {
+      data[index].reqVal = true
+    }
+    else if (data[index][e.target.name] === 'string') {
+      data[index].reqVal = ''
+    }
+    else if (data[index][e.target.name] === 'number') {
+      data[index].reqVal = ''
+    }
+    else if (data[index][e.target.name] === 'array-any-any') {
+      data[index].reqVal = ''
+    }
+
+    /// END OF TEST
     setReqInputs(data);
   };
-
+  
+  /** CHANGE THE DEFAULT VALUE OF VALUE FIELD WHEN MODIFYING THE DATATYPE DROPDOWN */
+  const updateDefaultValue = (index, e) => {
+    let data = [...reqInputs]
+  }
   /**  UPDATE CURRENT INPUT FIELDS STATE VARIABLES BASED ON COMBOBOX DROPDOWN ENUM SELECTION */
   const updateReqFields = (reqEndpointKey: string):void => {
     const endpointKeys: Contracts = currentContract[reqEndpointKey]
@@ -83,6 +107,7 @@ export default function BackTester() {
     for (let key in endpointKeys) {
       const k = {reqKey: key, reqValType: endpointKeys[key], reqVal: ''};
       if (k.reqValType === 'boolean') k.reqVal = 'true';
+      else if (k.reqValType === 'array-any-any') k.reqVal = '[]'
       keys.push(k)
     }
     console.log('ENDPOINT KEYS ARE: ', keys)
@@ -112,17 +137,5 @@ export default function BackTester() {
       />
       <BackLog />
     </div>
-    // <div className="back-tester-container">
-    //   <div className="request-container">
-    //     <div className="endpoint-container">
-    //       <input type="text" className="endpoint" placeholder="Project name"/>
-    //       <button className="send-request-button">Send Request</button>
-    //     </div>
-    //     <div>
-    //       <button className="method-dropdown">Method-dropdown</button>
-    //     </div>
-    //   </div>
-    //   <div className="api-dropdown"></div>
-    // </div>
   );
 }

@@ -92,7 +92,19 @@ export default function BackRequestEditor({
                 <option value='false'>False</option>
               </select>
             )
-
+            const arrayInput = (
+              <input
+              required
+              type='text'
+              name='reqVal'
+              id='reqVal'
+              placeholder="please use valid JSON array syntax"
+              // value={input.reqKey}
+              // test
+              onChange={(e) => setReqInputs(index, e)}
+              className='shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md'
+            />
+            )
             return (
               <div key={index}>
                 <div className='mt-6 grid grid-cols-1 gap-y-6 gap-x-2 sm:grid-cols-6'>
@@ -143,28 +155,19 @@ export default function BackRequestEditor({
                         id='reqValType'
                         name='reqValType'
                         value={input.reqValType}
+                        // ADD FUNCTIONALITY TO CHANGE DEFAULT REQVAL IMMEDIATELY BELOW
                         onChange={(e) => setReqInputs(index, e)}
                         className='shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md'
                       >
                         <option value='boolean'>Boolean</option>
                         <option value='number'>Number</option>
                         <option value='string'>String</option>
-                        {/* <option value='object'>Object</option>
-                      <option value='array'>Array</option> */}
+                        <option value='array-any-any'>Array</option>
+                        {/* <option value='object'>Object</option> */}
                       </select>
                     </div>
                   </div>
-                  {/* <>
-                  {if (input[index].reqValType === 'boolean') {
-                    return (booleanInput)
-                  }
-                  else if (input[index].reqValType === 'number') {
-                    return (numberInput)
-                  }
-                  else if (input[index].reqValType === 'string') {
-                    return (stringInput)
-                  }}
-                </> */}
+  
                   <div className='sm:col-span-4'>
                     <label
                       htmlFor='reqVal'
@@ -175,9 +178,10 @@ export default function BackRequestEditor({
                     <div className='mt-1'>
                       {(() => {
                         // console.log("IIIIIFFFFEEEEEE")
-                        if (reqInputs[index].reqValType === 'boolean') return booleanInput
-                        else if (reqInputs[index].reqValType === 'number') return numberInput
-                        else if (reqInputs[index].reqValType === 'string') return stringInput
+                        if (reqInputs[index].reqValType === 'boolean') return booleanInput;
+                        else if (reqInputs[index].reqValType === 'number') return numberInput;
+                        else if (reqInputs[index].reqValType === 'string') return stringInput;
+                        else if (reqInputs[index].reqValType === 'array-any-any') return arrayInput;
                       })()}
                     </div>
                   </div>
