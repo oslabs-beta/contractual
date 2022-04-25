@@ -4,6 +4,7 @@ import counterReducer from './features/counterSlice';
 import contractReducer from './features/contractSlice';
 import modalsReducer from './features/modalsSlice';
 import frontLogReducer from './features/frontLogSlice';
+import backLogReducer from './features/backLogSlice';
 
 export const store = configureStore({
   reducer: {
@@ -12,6 +13,7 @@ export const store = configureStore({
     counter: counterReducer,
     modals: modalsReducer,
     frontLog: frontLogReducer,
+    backLog: backLogReducer,
   }
 })
 

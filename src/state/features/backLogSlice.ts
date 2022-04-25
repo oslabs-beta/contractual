@@ -12,8 +12,8 @@ type InitialState = LogItem[];
 
 const initialState: InitialState = [];
 
-export const frontLogSlice = createSlice({
-  name: "frontLog",
+export const backLogSlice = createSlice({
+  name: "backLog",
   initialState,
   reducers: {
     updateLog: (state, action: PayloadAction<LogItem>) => {
@@ -25,6 +25,6 @@ export const frontLogSlice = createSlice({
   }
 })
 
-export const { updateLog, clearLog } = frontLogSlice.actions;
+export const { updateLog, clearLog } = backLogSlice.actions;
 
-export default frontLogSlice.reducer;
+export default backLogSlice.reducer;

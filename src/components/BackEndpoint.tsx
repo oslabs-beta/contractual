@@ -3,6 +3,9 @@ import { CheckIcon, SelectorIcon } from "@heroicons/react/solid";
 import { Combobox } from "@headlessui/react";
 import axios from "axios";
 import { checkInput } from "../express/testing_server/controllers/contractOp";
+import { useDispatch, useSelector } from 'react-redux';
+import { RootState } from '../state/store';
+import { updateLog } from '../state/features/backLogSlice';
 
 interface EnumEndpointItem {
   id: number;
@@ -38,9 +41,6 @@ interface ContractEndpointProps {
   currentContract: Contracts;
 }
 
-const responseLog = [];
-
-
 export default function BackEndpoint({
   reqMethod,
   setReqMethod,
@@ -56,6 +56,9 @@ export default function BackEndpoint({
   const [query, setQuery] = useState("");
   const [selectedEndpoint, setSelectedEndpoint] = useState<EnumEndpointItem>();
   const [responses, updateResponses] = useState([]);
+
+  const currentLog = useSelector((store: RootState) => store.backLog);
+  const dispatch = useDispatch();
 
   const filteredEndpoints =
     query === ""
@@ -91,6 +94,19 @@ export default function BackEndpoint({
       return report;
     }
 
+    function getTime() {
+      const today = new Date();
+      const date =
+        (today.getMonth() + 1) + "/" + today.getDate();
+      const time =
+        today.getHours() +
+        ":" +
+        today.getMinutes() +
+        ":" +
+        String(today.getSeconds()).padStart(2, "0");
+      return time + " " + date;
+    }
+
     if (reqMethod === "GET") {
       axios
         .get(URLString + endpoint.name)
@@ -100,8 +116,13 @@ export default function BackEndpoint({
             currentContract,
             condition
           );
-          responseLog.unshift(report);
+          report.endpoint = endpoint.name;
+          report.method = reqMethod;
+          report.time = getTime()
+          dispatch(updateLog(report));
           console.log('BACK REPORT', report);
+          console.log('CURRENT LOG', currentLog);
+          console.log('ADDTL DATA', endpoint.name, reqMethod, getTime());
         })
         .catch((error) => console.log(error));
     } else if (reqMethod === "POST") {
@@ -115,9 +136,13 @@ export default function BackEndpoint({
             condition
           );
           // updateResponses([report, ...responses]);
-          responseLog.unshift(report)
+          report.endpoint = endpoint.name;
+          report.method = reqMethod;
+          report.time = getTime()
+          dispatch(updateLog(report));
           console.log('BACK REPORT', report);
-          
+          console.log('CURRENT LOG', currentLog);
+          console.log('ADDTL DATA', endpoint.name, reqMethod, getTime());
         })
         .catch((error) => console.log(error));
     } else if (reqMethod === "PUT") {
@@ -130,8 +155,13 @@ export default function BackEndpoint({
             currentContract,
             condition
           );
-          updateResponses([report, ...responses]);
+          report.endpoint = endpoint.name;
+          report.method = reqMethod;
+          report.time = getTime()
+          dispatch(updateLog(report));
           console.log('BACK REPORT', report);
+          console.log('CURRENT LOG', currentLog);
+          console.log('ADDTL DATA', endpoint.name, reqMethod, getTime());
         })
         .catch((error) => console.log(error));
     } else if (reqMethod === "PATCH") {
@@ -144,8 +174,13 @@ export default function BackEndpoint({
             currentContract,
             condition
           );
-          updateResponses([report, ...responses]);
+          report.endpoint = endpoint.name;
+          report.method = reqMethod;
+          report.time = getTime()
+          dispatch(updateLog(report));
           console.log('BACK REPORT', report);
+          console.log('CURRENT LOG', currentLog);
+          console.log('ADDTL DATA', endpoint.name, reqMethod, getTime());
         })
         .catch((error) => console.log(error));
     } else if (reqMethod === "DELETE") {
@@ -158,13 +193,16 @@ export default function BackEndpoint({
             currentContract,
             condition
           );
-          updateResponses([report, ...responses]);
+          report.endpoint = endpoint.name;
+          report.method = reqMethod;
+          report.time = getTime()
+          dispatch(updateLog(report));
           console.log('BACK REPORT', report);
-          
+          console.log('CURRENT LOG', currentLog);
+          console.log('ADDTL DATA', endpoint.name, reqMethod, getTime());
         })
         .catch((error) => console.log(error));
     }
-    console.log('RESPONSE STATE', responseLog);
     //Reset form fields
   };
   // add new button to reset fields
