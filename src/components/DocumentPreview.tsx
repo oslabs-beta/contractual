@@ -38,9 +38,11 @@ const DocumentPreview: React.FC<PreviewProps> = ({
       let res = 'Res' + req.slice(3);
       let resKeys = contract[res];
       for (let key in resKeys) {
-        resPairs.push({
-          key: resKeys[key] 
-        })
+        let pair = {};
+        pair[key] = resKeys[key]
+        resPairs.push(pair)
+        // isn't it already an object?
+        // we are looping through the keys in the object ah right
       }
       endpoint.push(resPairs)
       endpoints[req.slice(4)] = endpoint
