@@ -4,11 +4,17 @@ import { CheckCircleIcon } from '@heroicons/react/outline'
 import { XIcon } from '@heroicons/react/solid'
 
 interface NotificationProps {
-  className: string
+  notificationString: string;
+  visibility: boolean;
+  setVisibility: (input: boolean) => void
 }
 
-const Notification: React.FC<NotificationProps> = () => {
-  const [show, setShow] = useState(true)
+const Notification: React.FC<NotificationProps> = ({
+  notificationString,
+  visibility,
+  setVisibility
+}) => {
+  // const [show, setShow] = useState(true)
 
   return (
     <>
@@ -20,7 +26,8 @@ const Notification: React.FC<NotificationProps> = () => {
         <div className="w-full flex flex-col items-center space-y-4 sm:items-end">
           {/* Notification panel, dynamically insert this into the live region when it needs to be displayed */}
           <Transition
-            show={show}
+            // show={show}
+            show={visibility}
             as={Fragment}
             enter="transform ease-out duration-300 transition"
             enterFrom="translate-y-2 opacity-0 sm:translate-y-0 sm:translate-x-2"
@@ -36,14 +43,15 @@ const Notification: React.FC<NotificationProps> = () => {
                     <CheckCircleIcon className="h-6 w-6 text-green-400" aria-hidden="true" />
                   </div>
                   <div className="ml-3 w-0 flex-1 pt-0.5">
-                    <p className="text-sm font-medium text-gray-900">Endpoint updated!</p>
+                    <p className="text-sm font-medium text-gray-900">{notificationString}</p>
                     <p className="mt-1 text-sm text-gray-500">Some more details here.</p>
                   </div>
                   <div className="ml-4 flex-shrink-0 flex">
                     <button
                       className="bg-white rounded-md inline-flex text-gray-400 hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
                       onClick={() => {
-                        setShow(false)
+                        // setShow(false)
+                        setVisibility(false)
                       }}
                     >
                       <span className="sr-only">Close</span>
