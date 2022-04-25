@@ -90,6 +90,7 @@ export default function ContractBuilder() {
       NOTE: may want to add resetting the dropdown and enpoint input fiels as well
   */
   const resetFields = () => {
+    // setNewEndpoint('');
     setReqInputs([{ reqKey: '', reqValType: 'boolean' }])
     setResInputs([{ resKey: '', resValType: 'boolean' }])
   }

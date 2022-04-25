@@ -68,7 +68,9 @@ const ContractEndpoint: React.FC<ContractEndpointProps> = ({
     reqInputs: BodyInputs,
     resInputs: BodyInputs
   ): void => {
-    
+    if (!currentContractToken) return console.log('NO CURRENT CONTRACT SELECTED')
+    if (!endpoint) return console.log('ENDPOINT REQUIRED')
+
     const reqBody = {};
     const resBody = {};
     const newContract = {};
@@ -107,6 +109,37 @@ const ContractEndpoint: React.FC<ContractEndpointProps> = ({
   
   }
 
+  const deleteEndpoint = (reqMethod: string, endpoint: string) => {
+    if (!currentContractToken) return console.log('NO CURRENT CONTRACT SELECTED')
+    if (!endpoint) return console.log('ENDPOINT REQUIRED')
+    
+    const contractCopy = {...currentContract}
+
+    console.log('COPY BEFORE DELETION: ', contractCopy)
+
+    delete contractCopy[`Req@${reqMethod}@${endpoint}`]
+    delete contractCopy[`Res@${reqMethod}@${endpoint}`]
+
+    console.log('COPY AFTER DELETION: ', contractCopy)
+
+    axios
+    .patch('http://localhost:4321/contract', {
+      content: contractCopy,
+      token: currentContractToken
+    })
+    .then((response) => {
+      console.log(response);
+      if (response.status === 200) {
+        dispatch(updateContract(contractCopy))
+        resetFields()
+      }
+    })
+    .catch((error) => {
+      console.log(error);
+    });
+
+  }
+
   /** ADJUST CURRENT SELECTED ENUM INDEX  */
   const endpointChange = (event) => {
     setQuery(event.target.value);
@@ -143,8 +176,8 @@ const ContractEndpoint: React.FC<ContractEndpointProps> = ({
         </div>
         
         {/* TEST BUTTONS */}
-        {/* <button onClick={() => {console.log(store)}}>check current state of store</button>
-        <button onClick={() => { console.log(reqInputs); console.log(resInputs); console.log(reqMethod); console.log(newEndpoint) }}>check state of inputs</button> */}
+        <button onClick={() => {console.log(store)}}>check current state of store</button>
+        <button onClick={() => { console.log(reqInputs); console.log(resInputs); console.log(reqMethod); console.log(newEndpoint) }}>check state of inputs</button>
 
         <div className='col-span-8 sm:col-span-8 md:col-span-8 lg:col-span-9'>
           <Combobox
@@ -224,6 +257,14 @@ const ContractEndpoint: React.FC<ContractEndpointProps> = ({
             }}
           >
             Save
+          </button>
+          <button
+            className='inline-flex w-full justify-center mt-1 py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500'
+            onClick={() => {
+              deleteEndpoint(reqMethod, newEndpoint);
+            }}
+          >
+            Delete Endpoint
           </button>
         </div>
       </div>
