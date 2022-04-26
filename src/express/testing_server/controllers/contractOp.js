@@ -38,7 +38,10 @@ function checkInput(input, contracts, condition) {
 
   // input has to be an object
   if (!typeCheck["object"](input))
-    return { pass: false, error: ["Input is not an object!"] };
+    return {
+      pass: false,
+      error: ["The req/res should be an object, but it's not!"],
+    };
 
   // condition must have been in the contracts
   if (contracts[condition] == undefined)
@@ -59,7 +62,7 @@ function checkInput(input, contracts, condition) {
     // key name doesn't match, record this error and continue
     if (input[key] === undefined) {
       res.pass = false;
-      res.error.push(`${key} not found in the input!`);
+      res.error.push(`The key "${key}" not found in the request!`);
       continue;
     }
     // key name matches, then check the value type
@@ -102,13 +105,17 @@ function checkInput(input, contracts, condition) {
       const match = typeCheck[targetType](value);
       if (!match) {
         res.pass = false;
-        res.error.push(
-          `Type of "${key}" should be ${targetType}!`
-        );
+        res.error.push(`Type of "${key}" should be ${targetType}!`);
       }
     }
   }
 
+  if (res.pass) {
+    res.error = [`${JSON.stringify(input)} passed the check!`];
+  }
+  else{
+    res.error.unshift(`${JSON.stringify(input)} failed the check!`);
+  }
   return res;
 }
 

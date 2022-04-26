@@ -2,6 +2,11 @@ const express2 = require("express");
 const app2 = express2();
 const server = require("http").createServer(app2);
 const WebSocket = require("ws");
+
+var cors = require("cors");
+
+app2.use(cors());
+
 // console.log(process.cwd());
 const dbController = require(path.resolve(
   __dirname,
@@ -43,6 +48,10 @@ wss.on("connection", (ws) => {
 
   app2.use(
     "/",
+    (req, res, next) => {
+      console.log("req receiced is    ", req);
+      return next();
+    },
     checkController.checkReq,
     mockController.generateMock,
     (req, res) => {

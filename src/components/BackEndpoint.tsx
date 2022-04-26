@@ -3,9 +3,9 @@ import { useState } from "react";
 import { CheckIcon, SelectorIcon } from "@heroicons/react/solid";
 import { Combobox } from "@headlessui/react";
 import { checkInput } from "../express/testing_server/controllers/contractOp";
-import { useDispatch, useSelector } from 'react-redux';
-import { RootState } from '../state/store';
-import { updateLog } from '../state/features/backLogSlice';
+import { useDispatch, useSelector } from "react-redux";
+import { RootState } from "../state/store";
+import { updateLog } from "../state/features/backLogSlice";
 
 interface EnumEndpointItem {
   id: number;
@@ -19,7 +19,7 @@ type KeyTypeValue = {
   reqKey: string;
   reqValType: string;
   // reqVal: string | number | boolean | any[];
-  reqVal: string
+  reqVal: string;
 };
 type BodyInputs = KeyTypeValue[];
 // interface ContractEndpointProps {
@@ -62,8 +62,8 @@ export default function BackEndpoint({
     query === ""
       ? endpoints
       : endpoints.filter((endpoint: EnumEndpointItem) => {
-        return endpoint.name.toLowerCase().includes(query.toLowerCase());
-      });
+          return endpoint.name.toLowerCase().includes(query.toLowerCase());
+        });
 
   const sendRequest = (
     URLString: string,
@@ -71,26 +71,24 @@ export default function BackEndpoint({
     endpoint: EnumEndpointItem,
     reqInputs: BodyInputs
   ): void => {
-
     const reqBody = {};
     const condition = `Res@${reqMethod}@${endpoint.name}`; //endpoint is entire url string
 
     reqInputs.forEach((input) => {
       //PARSE NON STRINGS?
       let nonString;
-      if (input.reqValType !== 'string') {
-        if (input.reqValType === 'boolean') {
-          if (input.reqVal === 'true') {
+      if (input.reqValType !== "string") {
+        if (input.reqValType === "boolean") {
+          if (input.reqVal === "true") {
             nonString = true;
-          }
-          else nonString = false;
-        }
-        else if (input.reqValType === 'number') nonString = Number(input.reqVal);
-        else if (input.reqValType === 'array-any-any') nonString = JSON.parse(input.reqVal)
+          } else nonString = false;
+        } else if (input.reqValType === "number")
+          nonString = Number(input.reqVal);
+        else if (input.reqValType === "array-any-any")
+          nonString = JSON.parse(input.reqVal);
 
         reqBody[input.reqKey] = nonString;
-      }
-      else reqBody[input.reqKey] = input.reqVal;
+      } else reqBody[input.reqKey] = input.reqVal;
       // reqBody[input.reqKey] = input.reqVal
     });
     // perform ajax request passing in built request body from above
@@ -101,14 +99,24 @@ export default function BackEndpoint({
       return report;
     }
 
+    // function getTime() {
+    //   const today = new Date();
+    //   const date = today.getMonth() + 1 + "/" + today.getDate();
+    //   const time =
+    //     today.getHours() +
+    //     ":" +
+    //     today.getMinutes() +
+    //     ":" +
+    //     String(today.getSeconds()).padStart(2, "0");
+    //   return time + " [" + date + "]";
+    // }
     function getTime() {
       const today = new Date();
-      const date =
-        (today.getMonth() + 1) + "/" + today.getDate();
+      const date = today.getMonth() + 1 + "/" + today.getDate();
       const time =
-        today.getHours() +
+        String(today.getHours()).padStart(2, "0") +
         ":" +
-        today.getMinutes() +
+        String(today.getMinutes()).padStart(2, "0") +
         ":" +
         String(today.getSeconds()).padStart(2, "0");
       return time + " [" + date + "]";
@@ -125,10 +133,20 @@ export default function BackEndpoint({
           );
           report.endpoint = endpoint.name;
           report.method = reqMethod;
-          report.time = getTime()
+          report.time = getTime();
           dispatch(updateLog(report));
         })
-        .catch((error) => console.log(error));
+        .catch((error) => {
+          dispatch(
+            updateLog({
+              endpoint: endpoint.name,
+              error: ["Request failure"],
+              method: reqMethod,
+              pass: false,
+              time: getTime(),
+            })
+          );
+        });
     } else if (reqMethod === "POST") {
       axios
         .post(URLString + endpoint.name, reqBody)
@@ -138,13 +156,22 @@ export default function BackEndpoint({
             currentContract,
             condition
           );
-          // updateResponses([report, ...responses]);
           report.endpoint = endpoint.name;
           report.method = reqMethod;
-          report.time = getTime()
+          report.time = getTime();
           dispatch(updateLog(report));
         })
-        .catch((error) => console.log(error));
+        .catch((error) => {
+          dispatch(
+            updateLog({
+              endpoint: endpoint.name,
+              error: ["Request failure"],
+              method: reqMethod,
+              pass: false,
+              time: getTime(),
+            })
+          );
+        });
     } else if (reqMethod === "PUT") {
       axios
         .put(URLString + endpoint.name, reqBody)
@@ -156,10 +183,20 @@ export default function BackEndpoint({
           );
           report.endpoint = endpoint.name;
           report.method = reqMethod;
-          report.time = getTime()
+          report.time = getTime();
           dispatch(updateLog(report));
         })
-        .catch((error) => console.log(error));
+        .catch((error) => {
+          dispatch(
+            updateLog({
+              endpoint: endpoint.name,
+              error: ["Request failure"],
+              method: reqMethod,
+              pass: false,
+              time: getTime(),
+            })
+          );
+        });
     } else if (reqMethod === "PATCH") {
       axios
         .patch(URLString + endpoint.name, reqBody)
@@ -171,10 +208,20 @@ export default function BackEndpoint({
           );
           report.endpoint = endpoint.name;
           report.method = reqMethod;
-          report.time = getTime()
+          report.time = getTime();
           dispatch(updateLog(report));
         })
-        .catch((error) => console.log(error));
+        .catch((error) => {
+          dispatch(
+            updateLog({
+              endpoint: endpoint.name,
+              error: ["Request failure"],
+              method: reqMethod,
+              pass: false,
+              time: getTime(),
+            })
+          );
+        });
     } else if (reqMethod === "DELETE") {
       axios
         .delete(URLString + endpoint.name, reqBody)
@@ -186,10 +233,20 @@ export default function BackEndpoint({
           );
           report.endpoint = endpoint.name;
           report.method = reqMethod;
-          report.time = getTime()
+          report.time = getTime();
           dispatch(updateLog(report));
         })
-        .catch((error) => console.log(error));
+        .catch((error) => {
+          dispatch(
+            updateLog({
+              endpoint: endpoint.name,
+              error: ["Request failure"],
+              method: reqMethod,
+              pass: false,
+              time: getTime(),
+            })
+          );
+        });
     }
     //Reset form fields
   };
@@ -228,7 +285,13 @@ export default function BackEndpoint({
           <Combobox
             as="div"
             value={selectedEndpoint}
-            onChange={(endpoint) => { setSelectedEndpoint(endpoint); setReqMethod(endpoint.method.toUpperCase()); updateReqFields(`Req@${endpoint.method.toUpperCase()}@${endpoint.name}`) }}
+            onChange={(endpoint) => {
+              setSelectedEndpoint(endpoint);
+              setReqMethod(endpoint.method.toUpperCase());
+              updateReqFields(
+                `Req@${endpoint.method.toUpperCase()}@${endpoint.name}`
+              );
+            }}
           >
             <div className="relative mt-1">
               <Combobox.Input
@@ -265,7 +328,7 @@ export default function BackEndpoint({
                               selected && "font-semibold"
                             )}
                           >
-                            {endpoint.method + ' ' + endpoint.name}
+                            {endpoint.method + " " + endpoint.name}
                           </span>
 
                           {selected && (

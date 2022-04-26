@@ -293,7 +293,7 @@ dbController.saveUser = async (req, res, next) => {
             success: true,
             userId: userId,
             userName: name,
-            token: {},
+            tokens: {},
             owns: [],
           };
           return next();
