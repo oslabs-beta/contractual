@@ -202,7 +202,7 @@ export default function BackEndpoint({
           <div>
             <div
               id="reqMethod"
-              className='bg-transparent text-indigo-500 border border-indigo-500 block mt-1 h-[42px] sm:h-[38px] px-3 py-[0.6rem] sm:py-[0.5rem] rounded-md text-center text-sm font-medium'
+              className='bg-transparent text-blue-500 border border-blue-500 block mt-1 h-[42px] sm:h-[38px] px-3 py-[0.6rem] sm:py-[0.5rem] rounded-md text-center text-sm font-medium'
             >
               {reqMethod}
             </div>
@@ -217,7 +217,7 @@ export default function BackEndpoint({
                 id="domain"
                 value={URLString}
                 onChange={(e) => setURLString(e)}
-                className="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md"
+                className="shadow-sm placeholder-green-500 bg-gray-900 text-gray-50 focus:ring-blue-500 focus:border-blue-500 block w-full sm:text-sm border-gray-300 rounded-md"
                 placeholder="https://domain"
               />
             </div>
@@ -232,7 +232,7 @@ export default function BackEndpoint({
           >
             <div className="relative mt-1">
               <Combobox.Input
-                className="w-full rounded-md border border-gray-300 bg-white py-2 pl-3 pr-10 shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-1 focus:ring-indigo-500 sm:text-sm"
+                className="w-full rounded-md border border-gray-300 placeholder-green-500 bg-gray-900 text-gray-50 py-2 pl-3 pr-10 shadow-sm focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500 sm:text-sm"
                 onChange={(event) => setQuery(event.target.value)}
                 placeholder="Endpoint"
                 displayValue={(endpoint: EnumEndpointItem) => endpoint.name}
@@ -253,7 +253,7 @@ export default function BackEndpoint({
                       className={({ active }) =>
                         classNames(
                           "relative cursor-default select-none py-2 pl-3 pr-9",
-                          active ? "bg-indigo-600 text-white" : "text-gray-900"
+                          active ? "bg-blue-600 text-white" : "text-gray-900"
                         )
                       }
                     >
@@ -272,7 +272,7 @@ export default function BackEndpoint({
                             <span
                               className={classNames(
                                 "absolute inset-y-0 right-0 flex items-center pr-4",
-                                active ? "text-white" : "text-indigo-600"
+                                active ? "text-white" : "text-blue-600"
                               )}
                             >
                               <CheckIcon
@@ -293,7 +293,7 @@ export default function BackEndpoint({
         <div className="col-span-12 sm:col-span-3">
           <button
             type="button"
-            className="items-center text-center h-[38px] w-full mt-1 px-2.5 py-1.5 border border-transparent text-sm font-medium rounded shadow-sm text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 focus:ring-offset-gray-900"
+            className="items-center text-center h-[38px] w-full mt-1 px-2.5 py-1.5 border border-transparent text-sm font-medium rounded shadow-sm text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 focus:ring-offset-gray-900"
             onClick={() => {
               sendRequest(URLString, reqMethod, selectedEndpoint, reqInputs);
             }}
