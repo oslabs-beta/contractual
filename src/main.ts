@@ -20,16 +20,26 @@ function createWindow() {
 
   // Open the DevTools.
   win.webContents.openDevTools();
-
-  //   setTimeout(() => {
-  //     const win2 = new BrowserWindow({
-  //       width: 600,
-  //       height: 400,
-  //     });
-  //     win2.loadURL("http://localhost:3000/");
-  //     //win2.loadURL("https://google.com/");
-  //   }, 8000);
 }
+
+// function createSplashWindow() {
+//   const win = new BrowserWindow({
+//     width: 400,
+//     height: 200,
+//     backgroundColor: '#6e707e',
+//     frame: false,
+//     transparent: true,
+//     webPreferences: {
+//       //preload: path.join(__dirname, "./preload.js"),
+//       nodeIntegration: true,
+//       // worldSafeExecuteJavascript: true,
+//       contextIsolation: false,
+//       devTools: false,
+//     },
+//   });
+
+//   win.loadFile(`${__dirname}/splash.html`);
+// }
 
 app.whenReady().then(() => {
   createWindow();
