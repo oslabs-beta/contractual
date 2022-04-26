@@ -36,13 +36,13 @@ export default function BackRequestEditor({
               </h3>
             </div>
           </div>
-          <hr></hr>
+          {/* <hr className="border-blue-700"></hr> */}
           <div className='sm:col-span-6'>
             <div className='mt-1'>
               <select
                 id='reqLocation'
                 name='reqLocation'
-                className='shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md'
+                className='shadow-sm focus:ring-blue-500 focus:border-blue-500 block w-full sm:text-sm border-blue-500 text-blue-500 bg-gray-900 rounded-md'
               >
                 <option value='body'>Body</option>
                 <option value='query'>Query</option>
@@ -50,7 +50,7 @@ export default function BackRequestEditor({
               </select>
             </div>
           </div>
-          <hr></hr>
+          {/* <hr className="border-blue-700"></hr> */}
           {/* ////////// Render this portion dynamically */}
           {reqInputs.map((input, index) => {
             const stringInput = (
@@ -62,7 +62,7 @@ export default function BackRequestEditor({
                 // value={input.reqKey}
                 // test
                 onChange={(e) => setReqInputs(index, e)}
-                className='shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md'
+                className='shadow-sm focus:ring-blue-500 focus:border-blue-500 block w-full sm:text-sm border-blue-500 bg-gray-800 text-gray-50 rounded-md'
               />
             );
             const numberInput = (
@@ -74,7 +74,7 @@ export default function BackRequestEditor({
                 // value={input.reqKey}
                 // test
                 onChange={(e) => setReqInputs(index, e)}
-                className='shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md'
+                className='shadow-sm focus:ring-blue-500 focus:border-blue-500 block w-full sm:text-sm border-blue-500 bg-gray-800 text-gray-50 rounded-md'
               />
             );
             const booleanInput = (
@@ -84,7 +84,7 @@ export default function BackRequestEditor({
                 name='reqVal'
                 value={input.reqVal}
                 onChange={(e) => setReqInputs(index, e)}
-                className='shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md'
+                className='shadow-sm focus:ring-blue-500 focus:border-blue-500 block w-full sm:text-sm border-blue-500 bg-gray-800 text-gray-50 rounded-md'
               >
                 <option value='true'>True</option>
                 <option value='false'>False</option>
@@ -96,11 +96,11 @@ export default function BackRequestEditor({
                 type='text'
                 name='reqVal'
                 id='reqVal'
-                placeholder="please use valid JSON array syntax"
+                placeholder='Use valid JSON syntax: ["string", 123, true, false]'
                 // value={input.reqKey}
                 // test
                 onChange={(e) => setReqInputs(index, e)}
-                className='shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md'
+                className='shadow-sm placeholder-green-500 focus:ring-blue-500 focus:border-blue-500 block w-full sm:text-sm border-blue-500 bg-gray-800 text-gray-50 rounded-md'
               />
             )
             return (
@@ -111,7 +111,7 @@ export default function BackRequestEditor({
                         <select
                           id="reqLocation"
                           name="reqLocation"
-                          className="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md"
+                          className="shadow-sm focus:ring-blue-500 focus:border-blue-500 block w-full sm:text-sm border-gray-300 rounded-md"
                         >
                           <option value="body">Body</option>
                           <option value="query">Query</option>
@@ -135,7 +135,7 @@ export default function BackRequestEditor({
                         value={input.reqKey}
                         // test
                         onChange={(e) => setReqInputs(index, e)}
-                        className='shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md'
+                        className='shadow-sm focus:ring-blue-500 focus:border-blue-500 block w-full sm:text-sm border-blue-500 bg-gray-800 text-blue-500 rounded-md'
                       />
                     </div>
                   </div>
@@ -154,7 +154,7 @@ export default function BackRequestEditor({
                         value={input.reqValType}
                         // ADD FUNCTIONALITY TO CHANGE DEFAULT REQVAL IMMEDIATELY BELOW
                         onChange={(e) => setReqInputs(index, e)}
-                        className='shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md'
+                        className='shadow-sm focus:ring-blue-500 focus:border-blue-500 block w-full sm:text-sm border-gray-300 text-gray-50 bg-gray-900 rounded-md'
                       >
                         <option value='boolean'>Boolean</option>
                         <option value='number'>Number</option>
@@ -182,7 +182,7 @@ export default function BackRequestEditor({
                     </div>
                   </div>
                 </div>
-                <hr className='mt-3'></hr>
+                <hr className='mt-3 border-gray-800'></hr>
               </div>
             );
           })}
