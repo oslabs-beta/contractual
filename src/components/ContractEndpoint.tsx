@@ -183,7 +183,7 @@ const ContractEndpoint: React.FC<ContractEndpointProps> = ({
               handleSetReqMethod(e);
             }}
             value={reqMethod}
-            className='mt-1 block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm'
+            className='mt-1 block w-full py-2 px-3 border border-gray-300 text-gray-50 bg-gray-900 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm'
           >
             <option value='GET'>GET</option>
             <option value='POST'>POST</option>
@@ -210,7 +210,7 @@ const ContractEndpoint: React.FC<ContractEndpointProps> = ({
                 id='endpoint'
                 placeholder='Endpoint'
                 value={newEndpoint}
-                className='w-full rounded-md border border-gray-300 bg-white py-2 pl-3 pr-10 shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-1 focus:ring-indigo-500 sm:text-sm'
+                className='w-full rounded-md border border-gray-300 bg-gray-900 text-gray-50 placeholder-green-500 py-2 pl-3 pr-10 shadow-sm focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500 sm:text-sm'
                 onChange={(event) => endpointChange(event)}
                 displayValue={(endpoint: EnumEndpointItem) => endpoint.name}
               />
@@ -230,7 +230,7 @@ const ContractEndpoint: React.FC<ContractEndpointProps> = ({
                       className={({ active }) =>
                         classNames(
                           'relative cursor-default select-none py-2 pl-3 pr-9',
-                          active ? 'bg-indigo-600 text-white' : 'text-gray-900'
+                          active ? 'bg-blue-600 text-white' : 'text-gray-900'
                         )
                       }
                     >
@@ -249,7 +249,7 @@ const ContractEndpoint: React.FC<ContractEndpointProps> = ({
                             <span
                               className={classNames(
                                 'absolute inset-y-0 right-0 flex items-center pr-4',
-                                active ? 'text-white' : 'text-indigo-600'
+                                active ? 'text-white' : 'text-blue-600'
                               )}
                             >
                               <CheckIcon
@@ -280,7 +280,7 @@ const ContractEndpoint: React.FC<ContractEndpointProps> = ({
         </div>
         <div className='col-span-6 sm:col-span-2 md:col-span-2 lg:col-span-2 text-right'>
           <button
-            className='inline-flex w-full justify-center mt-1 py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 focus:ring-offset-gray-900'
+            className='inline-flex w-full justify-center mt-1 py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 focus:ring-offset-gray-900'
             onClick={() => {
               saveContract(reqMethod, newEndpoint, reqInputs, resInputs);
             }}

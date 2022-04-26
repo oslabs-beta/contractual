@@ -38,13 +38,13 @@ export default function ContractEditor({
             <p className='mt-1 text-md text-gray-500'>from frontend</p>
           </div>
         </div>
-        <hr></hr>
+        {/* <hr className='border-blue-500'></hr> */}
         <div className='sm:col-span-6'>
           <div className='mt-1'>
             <select
               id='reqLocation'
               name='reqLocation'
-              className='shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md'
+              className='shadow-sm focus:ring-blue-500 focus:border-blue-500 block w-full sm:text-sm border-blue-500 bg-gray-900 text-blue-500 rounded-md'
             >
               <option value='body'>Body</option>
               {/* <option value='query'>Query</option>
@@ -57,13 +57,13 @@ export default function ContractEditor({
         {reqInputs.map((input, index) => {
           return (
             <div key={index}>
-              <div className='mt-6 grid grid-cols-1 gap-y-6 gap-x-2 sm:grid-cols-6'>
+              <div className='mt-6 grid mb-3 grid-cols-1 gap-y-6 gap-x-2 sm:grid-cols-6'>
                 {/* <div className="sm:col-span-6">
                   <div className="mt-1">
                     <select
                       id="reqLocation"
                       name="reqLocation"
-                      className="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md"
+                      className="shadow-sm focus:ring-blue-500 focus:border-blue-500 block w-full sm:text-sm border-gray-300 rounded-md"
                     >
                       <option value="body">Body</option>
                       <option value="query">Query</option>
@@ -87,7 +87,7 @@ export default function ContractEditor({
                       value={input.reqKey}
                       // test
                       onChange={(e) => setReqInputs(index, e)}
-                      className='shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md'
+                      className='shadow-sm focus:ring-blue-500 focus:border-blue-500 block w-full sm:text-sm border-blue-500 bg-gray-800 text-gray-50 rounded-md'
                     />
                   </div>
                 </div>
@@ -105,7 +105,7 @@ export default function ContractEditor({
                       name='reqValType'
                       value={input.reqValType}
                       onChange={(e) => setReqInputs(index, e)}
-                      className='shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md'
+                      className='shadow-sm focus:ring-blue-500 focus:border-blue-500 block w-full sm:text-sm border-gray-300 bg-gray-900 text-gray-50 rounded-md'
                     >
                       <option value='boolean'>Boolean</option>
                       <option value='number'>Number</option>
@@ -123,7 +123,7 @@ export default function ContractEditor({
         <button
           type='button'
           onClick={addReqField}
-          className='inline-flex w-full items-center px-2.5 py-1.5 border border-transparent text-xs font-medium rounded text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 focus:ring-offset-gray-900'
+          className='inline-flex w-full items-center px-2.5 py-1.5 border border-transparent text-xs font-medium rounded text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 focus:ring-offset-gray-900'
         >
           <svg
             xmlns='http://www.w3.org/2000/svg'
@@ -159,13 +159,12 @@ export default function ContractEditor({
             <p className='mt-1 text-md text-gray-500'>from backend</p>
           </div>
         </div>
-        <hr></hr>
         <div className='sm:col-span-6'>
           <div className='mt-1'>
             <select
               id='resType'
               name='resType'
-              className='shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md'
+              className='shadow-sm focus:ring-blue-500 focus:border-blue-500 block w-full sm:text-sm border-blue-500 text-blue-500 bg-gray-900 rounded-md'
             >
               <option value='object'>Object</option>
               <option value='array'>Array</option>
@@ -180,13 +179,13 @@ export default function ContractEditor({
         {resInputs.map((input, index) => {
           return (
             <div key={index}>
-              <div className='mt-6 grid grid-cols-1 gap-y-6 gap-x-2 sm:grid-cols-6'>
+              <div className='mt-6 mb-3 grid grid-cols-1 gap-y-6 gap-x-2 sm:grid-cols-6'>
                 {/* <div className="sm:col-span-6">
                 <div className="mt-1">
                   <select
                     id="resType"
                     name="resType"
-                    className="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md"
+                    className="shadow-sm focus:ring-blue-500 focus:border-blue-500 block w-full sm:text-sm border-gray-300 rounded-md"
                   >
                     <option value="object">Object</option>
                     <option value="array">Array</option>
@@ -211,7 +210,7 @@ export default function ContractEditor({
                       id='resKey'
                       value={input.resKey}
                       onChange={(e) => setResInputs(index, e)}
-                      className='shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md'
+                      className='shadow-sm focus:ring-blue-500 focus:border-blue-500 block w-full sm:text-sm border-blue-500 bg-gray-800 text-gray-50 rounded-md'
                     />
                   </div>
                 </div>
@@ -229,7 +228,7 @@ export default function ContractEditor({
                       name='resValType'
                       value={input.resValType}
                       onChange={(e) => setResInputs(index, e)}
-                      className='shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md'
+                      className='shadow-sm focus:ring-blue-500 focus:border-blue-500 block w-full sm:text-sm border-gray-300 bg-gray-900 text-gray-50 rounded-md'
                     >
                       <option value='boolean'>Boolean</option>
                       <option value='number'>Number</option>
@@ -247,7 +246,7 @@ export default function ContractEditor({
         <button
           type='button'
           onClick={addResField}
-          className='inline-flex w-full items-center px-2.5 py-1.5 border border-transparent text-xs font-medium rounded text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 focus:ring-offset-gray-900'
+          className='inline-flex w-full items-center px-2.5 py-1.5 border border-transparent text-xs font-medium rounded text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 focus:ring-offset-gray-900'
         >
           <svg
             xmlns='http://www.w3.org/2000/svg'
