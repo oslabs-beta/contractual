@@ -1,7 +1,7 @@
 {
   "name": "contractual",
   "version": "1.0.0",
-  "description": "",
+  "description": "A testing and mocking tool for data contract that decouples workflow between front-end and back-end teams",
   "main": "./dist/main.js",
   "moduleFileExtensions": [
     "js",
@@ -15,7 +15,57 @@
     "build": "webpack --config ./webpack.config.js",
     "watch": "webpack --config webpack.config.js --watch",
     "start": "npm run build && electron ./dist/main.js",
-    "dev": "electron ./dist/main.js"
+    "dev": "electron ./dist/main.js",
+    "mac:installer": "electron-builder --mac",
+    "win:installer": "electron-builder --win"
+  },
+  "build": {
+    "productName": "Contractual",
+    "appId": "com.electron.contractual",
+    "directories": {
+      "app": ".",
+      "output": "installer"
+    },
+    "files": [
+      "dist/**/*",
+      "assets/**/*",
+      "package.json",
+      "src/**/*"
+    ],
+    "mac": {
+      "category": "public.app-category.developer-tools",
+      "icon": "assets/img/app-logo.png",
+      "hardenedRuntime": true,
+      "gatekeeperAssess": false
+    },
+    "dmg": {
+      "contents": [
+        {
+          "x": 130,
+          "y": 220
+        },
+        {
+          "x": 330,
+          "y": 220,
+          "type": "link",
+          "path": "/Applications"
+        }
+      ]
+    },
+    "win": {
+      "target": [
+        "nsis"
+      ],
+      "icon": "assets/img/app-logo.ico"
+    },
+    "nsis": {
+      "oneClick": false,
+      "installerIcon": "assets/img/app-logo.ico",
+      "uninstallerIcon": "assets/img/app-logo.ico",
+      "uninstallDisplayName": "Contractual-uninstaller",
+      "license": "license.md",
+      "allowToChangeInstallationDirectory": true
+    }
   },
   "keywords": [],
   "author": "",
@@ -61,6 +111,7 @@
     "concurrently": "^7.1.0",
     "css-loader": "^6.7.1",
     "electron": "^18.0.2",
+    "electron-builder": "^23.0.3",
     "html-webpack-plugin": "^5.5.0",
     "jest": "^27.5.1",
     "postcss": "^8.4.12",
