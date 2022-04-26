@@ -34,7 +34,7 @@
     ],
     "mac": {
       "category": "public.app-category.developer-tools",
-      "icon": "assets/img/app-logo.png",
+      "icon": "assets/img/app-logo-mac.png",
       "hardenedRuntime": true,
       "gatekeeperAssess": false
     },
@@ -56,12 +56,12 @@
       "target": [
         "nsis"
       ],
-      "icon": "assets/img/app-logo.ico"
+      "icon": "assets/img/app-logo-win.ico"
     },
     "nsis": {
       "oneClick": false,
-      "installerIcon": "assets/img/app-logo.ico",
-      "uninstallerIcon": "assets/img/app-logo.ico",
+      "installerIcon": "assets/img/app-logo-win.ico",
+      "uninstallerIcon": "assets/img/app-logo-win.ico",
       "uninstallDisplayName": "Contractual-uninstaller",
       "license": "license.md",
       "allowToChangeInstallationDirectory": true
