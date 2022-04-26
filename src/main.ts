@@ -12,10 +12,11 @@ function createWindow() {
       nodeIntegration: true,
       // worldSafeExecuteJavascript: true,
       contextIsolation: false,
+      devTools: false,
     },
   });
 
-  win.loadFile('index.html');
+  win.loadFile(`${__dirname}/index.html`);
 
   // Open the DevTools.
   win.webContents.openDevTools();
