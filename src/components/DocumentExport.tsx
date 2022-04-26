@@ -3,9 +3,13 @@ function classNames(...classes) {
 }
 interface ExportProps {
   handleDownloadPdf: () => void;
+  fileName: string;
+  setFileName: (input: string) => void
 }
 const DocumentExport: React.FC<ExportProps> = ({
   handleDownloadPdf,
+  fileName,
+  setFileName
 }): JSX.Element => {
   return (
     <div className="sticky top-16 z-50 bg-gray-900 shadow-lg">
@@ -19,6 +23,8 @@ const DocumentExport: React.FC<ExportProps> = ({
               type="text"
               name="filename"
               id="filename"
+              value={fileName}
+              onChange={(e) => setFileName(e.target.value)}
               className="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md"
               placeholder="Filename"
             />

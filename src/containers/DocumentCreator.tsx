@@ -1,5 +1,6 @@
 import DocumentExport from "../components/DocumentExport";
 import DocumentPreview from "../components/DocumentPreview";
+import { useState } from 'react';
 import { useSelector } from "react-redux";
 import { RootState } from "../state/store";
 
@@ -8,6 +9,7 @@ import html2canvas from "html2canvas";
 import { jsPDF } from "jspdf";
 
 const DocumentCreator = () => {
+  const [fileName, setFileName] = useState('')
   const { currentContract } = useSelector((state: RootState) => state.contract);
 
   /** BUILD ARRAY OF REQUESTMETHOD AND ENPOINTS FOR CURRENT SELECTED CONTRACT */
@@ -36,12 +38,16 @@ const DocumentCreator = () => {
     const pdfHeight = (imgProperties.height * pdfWidth) / imgProperties.width;
 
     pdf.addImage(data, "PNG", 0, 0, pdfWidth, pdfHeight);
-    pdf.save("print.pdf");
+    pdf.save(`${fileName}.pdf`);
   };
 
   return (
     <div className="bg-gray-900 h-screen">
-      <DocumentExport handleDownloadPdf={handleDownloadPdf} />
+      <DocumentExport 
+      handleDownloadPdf={handleDownloadPdf}
+      fileName={fileName} 
+      setFileName={setFileName}
+      />
       <div ref={printRef}>
         <DocumentPreview
           currentContract={currentContract}
