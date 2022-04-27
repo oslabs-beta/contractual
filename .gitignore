@@ -2,8 +2,4 @@ node_modules
 .DS_store
 dist
 assets/.DS_Store
-<<<<<<< HEAD
-installer
-=======
 .env
->>>>>>> dev
