@@ -17,7 +17,8 @@
     "start": "npm run build && electron ./dist/main.js",
     "dev": "electron ./dist/main.js",
     "mac:installer": "electron-builder --mac",
-    "win:installer": "electron-builder --win"
+    "win:installer": "electron-builder --win",
+    "linux:installer": "electron-builder --linux"
   },
   "build": {
     "productName": "Contractual",
@@ -65,6 +66,14 @@
       "uninstallDisplayName": "Contractual-uninstaller",
       "license": "license.md",
       "allowToChangeInstallationDirectory": true
+    },
+    "linux": {
+      "target": [
+        "deb",
+        "rpm",
+        "AppImage"
+      ],
+      "category": "Development"
     }
   },
   "keywords": [],
