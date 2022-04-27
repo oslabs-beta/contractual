@@ -109,12 +109,15 @@ function checkInput(input, contracts, condition) {
       }
     }
   }
+  let isReq = condition[2] == "q";
+  const identifier = isReq ? "The request " : "The response ";
 
   if (res.pass) {
-    res.error = [`${JSON.stringify(input)} passed the check!\n`];
-  }
-  else{
-    res.error.unshift(`${JSON.stringify(input)} failed the check!\n`);
+    res.error = [`${identifier}${JSON.stringify(input)} passed the check!\n`];
+  } else {
+    res.error.unshift(
+      `${identifier}${JSON.stringify(input)} failed the check!\n`
+    );
   }
   return res;
 }

@@ -206,11 +206,16 @@ const ContractEndpoint: React.FC<ContractEndpointProps> = ({
         {/* TEST BUTTONS */}
         {/* <button onClick={() => { console.log(store) }}>check current state of store</button>
         <button onClick={() => { console.log(reqInputs); console.log(resInputs); console.log(reqMethod); console.log(newEndpoint) }}>check state of inputs</button> */}
-
+        <button onClick={() => console.log('Selected endpoint is :', selectedEndpoint)}> check seleced endpoint</button>
         <div className='col-span-12 sm:col-span-6 md:col-span-6 lg:col-span-7'>
           <Combobox
             as='div'
-            value={selectedEndpoint}
+            /** BUG
+             *  after selecting endpoint from drop down list, user is required to switch to a new tab before creating a new enpoint
+             * 
+             */
+            value={selectedEndpoint} //working with bug
+            
             onChange={(endpoint: EnumEndpointItem) => { setSelectedEndpoint(endpoint); updateFieldsByEndpoint(`Req@${endpoint.method.toUpperCase()}@${endpoint.name}`, `Res@${endpoint.method.toUpperCase()}@${endpoint.name}`); setNewEndpoint(endpoint.name); setReqMethod(endpoint.method.toUpperCase()) }}
           >
             <div className='relative mt-1'>
