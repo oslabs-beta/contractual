@@ -29,6 +29,7 @@ export default function ContractBuilder() {
   const [resInputs, setResInputs] = useState<BodyInputs>([{ resKey: '', resValType: 'boolean' }])
   const [notificationString, setNotificationString] = useState('')
   const [notificationOpen, setNotificationOpen] = useState<boolean>(false)
+  const [positiveFeedback, setPositiveFeedback] = useState<boolean>(false)
   const { currentContract } = useSelector((state: RootState) => state.contract);
 
   /** RECORD CHANGES TO REQ TYPE DROPDOWN IN CONTRACTENDPOINT COMPONENT */
@@ -140,6 +141,7 @@ export default function ContractBuilder() {
         notificationString={notificationString} 
         visibility={notificationOpen}
         setVisibility={setNotificationOpen}
+        positiveFeedback={positiveFeedback}
       />
       <ContractEndpoint
         reqMethod={reqMethod}
@@ -155,6 +157,7 @@ export default function ContractBuilder() {
         updateFieldsByEndpoint={updateFieldsByEndpoint}
         setNotificationString={setNotificationString}
         setVisibility={setNotificationOpen}
+        setPositiveFeedback={setPositiveFeedback}
       />
       <ContractEditor
         reqInputs={reqInputs}
