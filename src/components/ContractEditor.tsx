@@ -167,10 +167,10 @@ export default function ContractEditor({
               className='shadow-sm focus:ring-blue-500 focus:border-blue-500 block w-full sm:text-sm border-blue-500 text-blue-500 bg-gray-900 rounded-md'
             >
               <option value='object'>Object</option>
-              <option value='array'>Array</option>
+              {/* <option value='array'>Array</option>
               <option value='boolean'>Boolean</option>
               <option value='number'>Number</option>
-              <option value='string'>String</option>
+              <option value='string'>String</option> */}
             </select>
           </div>
         </div>

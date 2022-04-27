@@ -107,7 +107,7 @@ export default function BackTester() {
     for (let key in endpointKeys) {
       const k = {reqKey: key, reqValType: endpointKeys[key], reqVal: ''};
       if (k.reqValType === 'boolean') k.reqVal = 'true';
-      else if (k.reqValType === 'array-any-any') k.reqVal = '[]'
+      else if (k.reqValType === 'array-any-any') k.reqVal = ''
       keys.push(k)
     }
     console.log('ENDPOINT KEYS ARE: ', keys)

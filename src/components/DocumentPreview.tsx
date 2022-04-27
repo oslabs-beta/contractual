@@ -58,13 +58,28 @@ const DocumentPreview: React.FC<PreviewProps> = ({
   /** BUILD DOCUMENTATION ARRAY ITERATING THROUGH PREVIEW STRUCTURE
    *  NOTE: VERY POSSIBLE TO COMBINE THIS WITH BUILD PREVIEW FUNCTION FOR LESS CODE
    */
+  // let keyIndex = 0;
   for (let key in docObj) {
     let splitKey = key.split("@");
     const requests = [];
     const responses = [];
-    for (let request of docObj[key][0]) {
+    // for (let request of docObj[key][0]) {
+    //   requests.push(
+    //     <div key={request}>
+    //       <dt className="text-sm font-medium text-gray-500">
+    //         {Object.keys(request)[0]}
+    //       </dt>
+    //       <dd className="mt-1 text-sm text-gray-900">
+    //         {Object.values(request)[0]}
+    //       </dd>
+    //       <br></br>
+    //     </div>
+    //   );
+    // }
+    for (let i = 0; i < docObj[key][0].length; i++) {
+      let request = docObj[key][0][i];
       requests.push(
-        <>
+        <div key={i}>
           <dt className="text-sm font-medium text-gray-500">
             {Object.keys(request)[0]}
           </dt>
@@ -72,12 +87,13 @@ const DocumentPreview: React.FC<PreviewProps> = ({
             {Object.values(request)[0]}
           </dd>
           <br></br>
-        </>
+        </div>
       );
     }
-    for (let response of docObj[key][1]) {
+    for (let i = 0; i < docObj[key][1].length; i++) {
+      let response = docObj[key][1][i];
       responses.push(
-        <>
+        <div key={i}>
           <dt className="text-sm font-medium text-gray-500">
             {Object.keys(response)[0]}
           </dt>
@@ -85,11 +101,14 @@ const DocumentPreview: React.FC<PreviewProps> = ({
             {Object.values(response)[0]}
           </dd>
           <br></br>
-        </>
+        </div>
       );
     }
     documentation.push(
-      <div className="bg-white shadow overflow-hidden sm:rounded-lg mb-3">
+      <div
+        className="bg-white shadow overflow-hidden sm:rounded-lg mb-3"
+        key={key}
+      >
         <div className="px-4 py-5 sm:px-6">
           <h3 className="text-lg leading-6 font-medium text-gray-900">
             {splitKey[1]}
@@ -130,11 +149,7 @@ const DocumentPreview: React.FC<PreviewProps> = ({
     );
   }
 
-  return (
-    <div className="px-3 py-3 bg-gray-900">
-      {documentation}
-    </div>
-  );
+  return <div className="px-3 py-3 bg-gray-900">{documentation}</div>;
 };
 
 export default DocumentPreview;
