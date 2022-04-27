@@ -55,7 +55,7 @@ const ContractEndpoint: React.FC<ContractEndpointProps> = ({
   const [query, setQuery] = useState('');
   const [selectedEndpoint, setSelectedEndpoint] = useState<EnumEndpointItem>();
   const store = useSelector((store: RootState) => store.contract)
-  const { currentContract, currentContractToken } = useSelector((store: RootState) => store.contract);
+  const { currentContract, currentContractToken, owns } = useSelector((store: RootState) => store.contract);
   const dispatch = useDispatch()
 
   /** SAVE OR UPDATE THE CURRENTLY SELECTED ENDPOINT AND FIELDS TO THE DATABASE */
@@ -76,6 +76,11 @@ const ContractEndpoint: React.FC<ContractEndpointProps> = ({
     }
     else if (!endpoint) {
       setNotificationString('ENDPOINT REQUIRED')
+      setVisibility(true)
+      return
+    }
+    else if (!owns.includes(currentContractToken)) {
+      setNotificationString('ONLY CONTRACT OWNER MAY EDIT THIS CONTRACT')
       setVisibility(true)
       return
     }
@@ -129,6 +134,11 @@ const ContractEndpoint: React.FC<ContractEndpointProps> = ({
     }
     else if (!endpoint) {
       setNotificationString('ENDPOINT REQUIRED')
+      setVisibility(true)
+      return
+    }
+    else if (!owns.includes(currentContractToken)) {
+      setNotificationString('ONLY CONTRACT OWNER MAY EDIT THIS CONTRACT')
       setVisibility(true)
       return
     }

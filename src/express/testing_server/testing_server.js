@@ -3,7 +3,7 @@ const app2 = express2();
 const server = require("http").createServer(app2);
 const WebSocket = require("ws");
 
-var cors = require("cors");
+const cors = require("cors");
 
 app2.use(cors());
 

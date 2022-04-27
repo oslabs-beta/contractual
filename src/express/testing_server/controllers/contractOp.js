@@ -111,10 +111,10 @@ function checkInput(input, contracts, condition) {
   }
 
   if (res.pass) {
-    res.error = [`${JSON.stringify(input)} passed the check!`];
+    res.error = [`${JSON.stringify(input)} passed the check!\n`];
   }
   else{
-    res.error.unshift(`${JSON.stringify(input)} failed the check!`);
+    res.error.unshift(`${JSON.stringify(input)} failed the check!\n`);
   }
   return res;
 }

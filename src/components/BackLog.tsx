@@ -39,6 +39,10 @@ export default function BackLog() {
                 </thead>
                 <tbody className='divide-y divide-gray-200 bg-white'>
                   {currentLog.map((request, index) => {
+                         const details = [];
+                         for (let i = 0; i < request.error.length; i++) {
+                           details.push(<div key={i + request.endpoint}>{request.error[i]}<br></br></div>)
+                         }
                     let reqStatus;
                     if (request.pass === true) {
                       reqStatus = (
@@ -75,19 +79,8 @@ export default function BackLog() {
                           {request.time}
                         </td>
                         <td className='break-normal px-3 py-4 text-sm text-gray-500'>
-                          {request.error}
+                          {details}
                         </td>
-                        {/* <td className='relative whitespace-nowrap py-4 pl-3 pr-4 text-right text-sm font-medium sm:pr-6'>
-                          <a
-                            href='#'
-                            className='text-blue-600 hover:text-blue-900'
-                          >
-                            Edit
-                            <span className='sr-only'>
-                              , {request.endpoint}
-                            </span>
-                          </a>
-                        </td> */}
                       </tr>
                     );
                   })}

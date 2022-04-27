@@ -59,7 +59,8 @@ export default function BackRequestEditor({
                 type='text'
                 name='reqVal'
                 id='reqVal'
-                // value={input.reqKey}
+                // test
+                value={input.reqVal}
                 // test
                 onChange={(e) => setReqInputs(index, e)}
                 className='shadow-sm focus:ring-blue-500 focus:border-blue-500 block w-full sm:text-sm border-blue-500 bg-gray-800 text-gray-50 rounded-md'
@@ -71,7 +72,8 @@ export default function BackRequestEditor({
                 type='number'
                 name='reqVal'
                 id='reqVal'
-                // value={input.reqKey}
+                // test
+                value={input.reqVal}
                 // test
                 onChange={(e) => setReqInputs(index, e)}
                 className='shadow-sm focus:ring-blue-500 focus:border-blue-500 block w-full sm:text-sm border-blue-500 bg-gray-800 text-gray-50 rounded-md'
@@ -97,7 +99,8 @@ export default function BackRequestEditor({
                 name='reqVal'
                 id='reqVal'
                 placeholder='Use valid JSON syntax: ["string", 123, true, false]'
-                // value={input.reqKey}
+                // test
+                value={input.reqVal}
                 // test
                 onChange={(e) => setReqInputs(index, e)}
                 className='shadow-sm placeholder-green-500 focus:ring-blue-500 focus:border-blue-500 block w-full sm:text-sm border-blue-500 bg-gray-800 text-gray-50 rounded-md'
