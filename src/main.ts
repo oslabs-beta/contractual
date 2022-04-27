@@ -13,7 +13,7 @@ function createSplashWindow() {
       nodeIntegration: true,
       // worldSafeExecuteJavascript: true,
       contextIsolation: false,
-      devTools: false,
+      // devTools: false,
     },
   });
 
@@ -35,7 +35,7 @@ function createWindow() {
       nodeIntegration: true,
       // worldSafeExecuteJavascript: true,
       contextIsolation: false,
-      devTools: false,
+      // devTools: false,
     },
   });
 
@@ -48,15 +48,14 @@ function createWindow() {
 }
 
 app.whenReady().then(() => {
-  const mainApp = createWindow();
-
   const splash = createSplashWindow();
+  const mainApp = createWindow();
 
   mainApp.once('ready-to-show', () => {
     setTimeout(() => {
       splash.destroy();
       mainApp.show();
-    }, 2000);
+    }, 1000);
   });
 
   // app.on('activate', () => {

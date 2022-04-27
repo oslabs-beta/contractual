@@ -34,19 +34,27 @@
       "src/**/*"
     ],
     "mac": {
+      "target": {
+        "target": "dmg",
+        "arch": [
+          "x64",
+          "arm64"
+        ]
+      },
       "category": "public.app-category.developer-tools",
       "icon": "assets/img/app-logo-mac.png",
       "hardenedRuntime": true,
       "gatekeeperAssess": false
     },
     "dmg": {
+      "backgroundColor": "#000428",
       "contents": [
         {
           "x": 130,
           "y": 220
         },
         {
-          "x": 330,
+          "x": 430,
           "y": 220,
           "type": "link",
           "path": "/Applications"
