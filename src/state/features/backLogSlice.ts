@@ -1,6 +1,6 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
-type LogItem = {
+type LogSuccessItem = {
   endpoint: string,
   error: string[],
   method: string,
@@ -8,6 +8,15 @@ type LogItem = {
   time: string
 }
 
+type LogErrorItem = {
+  endpoint: string,
+  error: string[],
+  method: string, 
+  pass: boolean,
+  time: string
+}
+
+type LogItem = (LogSuccessItem | LogErrorItem)
 type InitialState = LogItem[];
 
 const initialState: InitialState = [];

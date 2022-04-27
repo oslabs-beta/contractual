@@ -1,4 +1,5 @@
 import FrontLog from '../components/FrontLog';
+import FrontTestBanner from '../components/FrontTestBanner';
 import { useState, useEffect } from 'react';
 import { RootState } from '../state/store';
 import { useSelector } from 'react-redux';
@@ -20,6 +21,7 @@ export default function FrontTester() {
   return (
     <div className='bg-gray-900 h-screen'>
       {/* <button style={{color: 'white'}} onClick={sendToken}>CONNECT CONTRACT</button> */}
+      <FrontTestBanner/>
       <FrontLog />
       {/* <button onClick={sendMessage} style={{ color: 'white' }}>
                 SEND MESSAGE

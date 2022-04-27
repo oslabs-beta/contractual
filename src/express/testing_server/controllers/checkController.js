@@ -4,15 +4,14 @@ const checkController = {};
 
 function getTime() {
   const today = new Date();
-  const date =
-    today.getFullYear() + "-" + (today.getMonth() + 1) + "-" + today.getDate();
+  const date = today.getMonth() + 1 + "/" + today.getDate();
   const time =
-    today.getHours() +
+    String(today.getHours()).padStart(2, "0") +
     ":" +
-    today.getMinutes() +
+    String(today.getMinutes()).padStart(2, "0") +
     ":" +
     String(today.getSeconds()).padStart(2, "0");
-  return date + " " + time;
+  return time + " [" + date + "]";
 }
 
 checkController.checkReq = async (req, res, next) => {

@@ -1,7 +1,7 @@
 const express = require("express");
 const app = express();
 const path = require("path");
-
+require("dotenv").config();
 // Routes Import
 const contractRouter = require(path.resolve(
   __dirname,

@@ -38,13 +38,16 @@ function checkInput(input, contracts, condition) {
 
   // input has to be an object
   if (!typeCheck["object"](input))
-    return { pass: false, error: ["The input is not an object!"] };
+    return {
+      pass: false,
+      error: ["The req/res should be an object, but it's not!"],
+    };
 
   // condition must have been in the contracts
   if (contracts[condition] == undefined)
     return {
       pass: false,
-      error: ["The endpoint or the fetch method do not exist!"],
+      error: ["Endpoint or FETCH method does not exist!"],
     };
 
   const res = {
@@ -59,7 +62,7 @@ function checkInput(input, contracts, condition) {
     // key name doesn't match, record this error and continue
     if (input[key] === undefined) {
       res.pass = false;
-      res.error.push(`${key} not found in the input!`);
+      res.error.push(`The key "${key}" not found in the request!`);
       continue;
     }
     // key name matches, then check the value type
@@ -70,7 +73,7 @@ function checkInput(input, contracts, condition) {
       // make sure it is an array
       if (!Array.isArray(value)) {
         res.pass = false;
-        res.error.push(`type of "${key}" do not match! It should be an array!`);
+        res.error.push(`Type of "${key}" should be an array!`);
         continue;
       }
       [elementType, targetLength] = targetType.split("-").slice(1);
@@ -81,7 +84,7 @@ function checkInput(input, contracts, condition) {
           if (!match) {
             res.pass = false;
             res.error.push(
-              `type of array elements for "${key}" do not match! It should only contain "${elementType}"!`
+              `Array elements for "${key}" should only contain "${elementType}"!`
             );
           }
           break;
@@ -92,7 +95,7 @@ function checkInput(input, contracts, condition) {
         if (value.length != targetLength) {
           res.pass = false;
           res.error.push(
-            `array length for "${key}" do not match! It should be ${targetLength}!`
+            `Array length for "${key}" should be ${targetLength}!`
           );
         }
       }
@@ -102,13 +105,17 @@ function checkInput(input, contracts, condition) {
       const match = typeCheck[targetType](value);
       if (!match) {
         res.pass = false;
-        res.error.push(
-          `type of "${key}" do not match! It should be ${targetType}!`
-        );
+        res.error.push(`Type of "${key}" should be ${targetType}!`);
       }
     }
   }
 
+  if (res.pass) {
+    res.error = [`${JSON.stringify(input)} passed the check!\n`];
+  }
+  else{
+    res.error.unshift(`${JSON.stringify(input)} failed the check!\n`);
+  }
   return res;
 }
 
