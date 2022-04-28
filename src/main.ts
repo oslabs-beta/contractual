@@ -3,9 +3,9 @@ const path = require('path');
 
 function createSplashWindow() {
   const win = new BrowserWindow({
-    width: 400,
-    height: 200,
-    backgroundColor: '#6e707e',
+    width: 500,
+    height: 300,
+    // backgroundColor: '#6e707e',
     frame: false,
     transparent: true,
     webPreferences: {
@@ -35,7 +35,8 @@ function createWindow() {
       nodeIntegration: true,
       // worldSafeExecuteJavascript: true,
       contextIsolation: false,
-      // devTools: false,
+      // Access to chrome dev tool
+      devTools: true,
     },
   });
 
@@ -55,7 +56,7 @@ app.whenReady().then(() => {
     setTimeout(() => {
       splash.destroy();
       mainApp.show();
-    }, 1000);
+    }, 2000);
   });
 
   // app.on('activate', () => {

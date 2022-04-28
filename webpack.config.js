@@ -67,11 +67,11 @@ module.exports = [
         template: './src/index.html',
         chunks: ['main'],
       }),
-      new HtmlWebpackPlugin({
-        filename: 'splash.html',
-        template: './src/splash.html',
-        chunks: ['main'],
-      }),
+      // new HtmlWebpackPlugin({
+      //   filename: 'splash.html',
+      //   template: './src/splash.html',
+      //   chunks: ['main'],
+      // }),
     ],
     resolve: {
       extensions: ['.js', '.jsx', '.json', '.ts', '.tsx'],

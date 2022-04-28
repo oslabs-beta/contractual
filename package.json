@@ -91,7 +91,8 @@
   ],
   "author": {
     "name": "Contractual",
-    "url": "https://www.contractualapp.io/"
+    "url": "https://www.contractualapp.io/",
+    "email": "admin@contractualapp.io"
   },
   "contributors": [
     {
