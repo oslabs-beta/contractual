@@ -89,8 +89,40 @@
     "Test",
     "Endpoints"
   ],
-  "author": "Joe Amos, George Jeng, Ernest Leung, Yankun Song",
+  "author": {
+    "name": "Contractual",
+    "url": "https://www.contractualapp.io/"
+  },
+  "contributors": [
+    {
+      "name": "Ernest Leung",
+      "url": "https://github.com/ErnestLeung52",
+      "email": "ernestleung52@gmail.com"
+    },
+    {
+      "name": "George Jeng",
+      "url": "https://github.com/gdelaselva",
+      "email": "gjenga@icloud.com"
+    },
+    {
+      "name": "Joe Amos",
+      "url": "https://github.com/joeamos",
+      "email": "joeamos17@gmail.com"
+    },
+    {
+      "name": "Yankun Song",
+      "url": "https://github.com/yankun-song",
+      "email": "yankun.l.song@gmail.com"
+    }
+  ],
   "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/oslabs-beta/contractual.git"
+  },
+  "bugs": {
+    "url": "https://github.com/oslabs-beta/contractual/issues"
+  },
   "dependencies": {
     "@headlessui/react": "^1.5.0",
     "@heroicons/react": "^1.0.6",
