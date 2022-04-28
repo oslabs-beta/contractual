@@ -1,27 +1,24 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
 type ModalsState = {
-  newContract: boolean;
+  modalNotification: boolean;
 }
 
 const initialState: ModalsState = {
-  newContract: false
+  modalNotification: false
 }
 
 export const modalsSlice = createSlice({
   name: 'newContract',
   initialState,
   reducers: {
-    show: (state, action: PayloadAction<boolean>) => {
-      state.newContract = true;
-    },
-    hide: (state, action: PayloadAction<boolean>) => {
-      state.newContract = false;
+    showNotification: (state, action: PayloadAction<boolean>) => {
+      state.modalNotification = action.payload;
     },
   }
 });
 
-export const { show, hide } = modalsSlice.actions;
+export const { showNotification } = modalsSlice.actions;
 
 export default modalsSlice.reducer;
 

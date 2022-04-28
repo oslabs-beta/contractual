@@ -6,7 +6,7 @@ import { Link, Outlet, useLocation, useNavigate } from 'react-router-dom';
 import ModalNewContract from './ModalNewContract';
 import ModalJoinContract from './ModalJoinContract';
 import ModalContractDetails from './ModalContractDetails';
-// import Notification from './Notification';
+import ModalNotification from './ModalNotification';
 import { RootState } from '../state/store';
 import { useDispatch, useSelector } from 'react-redux';
 import { loadContract } from '../state/features/contractSlice';
@@ -31,6 +31,9 @@ export default function Navbar() {
   const [joinOpen, setJoinOpen] = useState<boolean>(false)
   const [detailsOpen, setDetailsOpen] = useState<boolean>(false)
   const { tokens, currentContractToken } = useSelector((store: RootState) => store.contract);
+  //TEST
+  const { modalNotification } = useSelector((store: RootState) => store.modals);
+  //TEST
   const contracts: EnumContractItem[] = [];
   for (let key in tokens) {
     contracts.push({
@@ -103,6 +106,8 @@ export default function Navbar() {
 
   return (
     <>
+      <ModalNotification/>
+      <button onClick={() => console.log(modalNotification)}>check modal notification state</button>
       <ModalNewContract
         visibility={newOpen}
         closeModal={handleCloseNewModal}
