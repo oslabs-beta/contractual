@@ -17,8 +17,8 @@
 - [0. Brief](#0-brief)
 - [1. Features](#1-features)
 - [2. Installation](#2-installation)
-  - [- 2.1 Download Installer](#21-download-installer)
-  - [- 2.2 Fork and Clone Repo](#22-fork-and-clone-repo)
+  - [2.1 Download Installer](#21-download-installer)
+  - [2.2 Fork and Clone Repo](#22-fork-and-clone-repo)
 - [3. How to Use](#3-how-to-use)
   - [3.1 Contract Builder](#31-contract-builder)
   - [3.2 Front Tester](#32-front-tester)
@@ -185,10 +185,10 @@ The document creator is used to view the data contract of the currently active c
 
 ## 5. CONTRIBUTORS
 
-[Ernest Leung](https://www.linkedin.com/in/ernestleung52/)[@ernestLeung52](https://github.com/ErnestLeung52)
+[Ernest Leung](https://www.linkedin.com/in/ernestleung52/)&nbsp;[@ernestLeung52](https://github.com/ErnestLeung52)
 
-[George Jeng](https://www.linkedin.com/in/gjenga/)[@gdelaselva](https://github.com/gdelaselva)
+[George Jeng](https://www.linkedin.com/in/gjenga/)&nbsp;[@gdelaselva](https://github.com/gdelaselva)
 
-[Joseph Amos](https://www.linkedin.com/in/joe-amos/)[@joeamos](https://github.com/joeamos)
+[Joseph Amos](https://www.linkedin.com/in/joe-amos/)&nbsp;[@joeamos](https://github.com/joeamos)
 
-[Yankun Song](https://www.linkedin.com/in/yankunsong/)[@yankun-song](https://github.com/yankun-song)
+[Yankun Song](https://www.linkedin.com/in/yankunsong/)&nbsp;[@yankun-song](https://github.com/yankun-song)
