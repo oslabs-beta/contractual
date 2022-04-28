@@ -1,9 +1,9 @@
 const { Pool } = require('pg');
 
 // Link to ElephantSQL DB
-const PG_URI = process.env.DB_KEY;
-// const PG_URI =
-//   'postgres://zzzenrbw:qKcrtsvOIBu_eBn7vP9l83Nk0V_ij_md@heffalump.db.elephantsql.com/zzzenrbw';
+const PG_URI =
+  "postgres://prtanubs:dWU6razsSRkatrpNGRK4BSwE3h5DvPoA@heffalump.db.elephantsql.com/prtanubs";
+
 // Establish connection to DB
 const pool = new Pool({
   connectionString: PG_URI,
