@@ -60,13 +60,14 @@ Developers who want to dive deeper into the code can fork this repo.
 
 Contributions are not only welcome but highly recommended, we believe that every open source contribution makes the entire community much better.
 
-We put our database
+We put our database URI in the .env file for your testing convenience. Do NOT put any sensitive information in your account!
 
-This application requires a postgreSQL database to function.
+If you would like the app and would use it, you should replace with your own database URI.
 
-Please create your postgreSQL database instane (we recommend elephantSQL as a free option)
 
 #### elephantSQL directions:
+
+This application requires a postgreSQL database to function.Please create your postgreSQL database instane (we recommend elephantSQL as a free option).
 
 After creating your postgreSQL instance, refer to the build.sql file in the root of the app directory. This file will contain the proper query strings to build your own contractual database. Please run these commands in your postgreSQL database.
 
