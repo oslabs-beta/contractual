@@ -6,7 +6,7 @@
 ![Release: 7.0.1](https://img.shields.io/badge/Release-1.0.0-red)
 ![License: MIT](https://img.shields.io/badge/License-MIT-orange.svg)
 ![Contributions Welcome](https://img.shields.io/badge/Contributions-welcome-blue.svg)
-[![Github stars](https://img.shields.io/github/stars/oslabs-beta/contractual?style=social)]
+[![Github stars](https://img.shields.io/github/stars/oslabs-beta/contractual?style=social)]()
 
 </div>
 
