@@ -1,18 +1,20 @@
 import { Fragment, useState } from 'react'
 import { Transition } from '@headlessui/react'
-import { CheckCircleIcon } from '@heroicons/react/outline'
+import { CheckCircleIcon, XCircleIcon } from '@heroicons/react/outline'
 import { XIcon } from '@heroicons/react/solid'
 
 interface NotificationProps {
   notificationString: string;
   visibility: boolean;
-  setVisibility: (input: boolean) => void
+  setVisibility: (input: boolean) => void;
+  positiveFeedback: boolean;
 }
 
 const Notification: React.FC<NotificationProps> = ({
   notificationString,
   visibility,
-  setVisibility
+  setVisibility,
+  positiveFeedback,
 }) => {
   // const [show, setShow] = useState(true)
 
@@ -39,9 +41,21 @@ const Notification: React.FC<NotificationProps> = ({
             <div className="max-w-sm w-full bg-white shadow-lg rounded-lg pointer-events-auto ring-1 ring-black ring-opacity-5 overflow-hidden">
               <div className="p-4">
                 <div className="flex items-start">
+                  {
+                  positiveFeedback ?  <div className="flex-shrink-0">
+                    <CheckCircleIcon className="h-6 w-6 text-green-400" aria-hidden="true" />
+                  </div> : <div className="flex-shrink-0">
+                    <XCircleIcon className="h-6 w-6 text-red-400" aria-hidden="true" />
+                  </div>
+                  }
+
+                  {/* <div className="flex-shrink-0">
+                    <XCircleIcon className="h-6 w-6 text-red-400" aria-hidden="true" />
+                  </div>
                   <div className="flex-shrink-0">
                     <CheckCircleIcon className="h-6 w-6 text-green-400" aria-hidden="true" />
-                  </div>
+                  </div> */}
+
                   <div className="ml-3 w-0 flex-1 pt-0.5">
                     <p className="text-sm font-medium text-gray-900">{notificationString}</p>
                     {/* <p className="mt-1 text-sm text-gray-500">Some more details here.</p> */}

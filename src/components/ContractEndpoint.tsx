@@ -32,6 +32,7 @@ interface ContractEndpointProps {
   updateFieldsByEndpoint: (requestString: string, responseString: string) => void,
   setNotificationString: (input: string) => void,
   setVisibility: (input: boolean) => void,
+  setPositiveFeedback: (input: boolean) => void,
 }
 function classNames(...classes) {
   return classes.filter(Boolean).join(' ');
@@ -51,6 +52,7 @@ const ContractEndpoint: React.FC<ContractEndpointProps> = ({
   updateFieldsByEndpoint,
   setNotificationString,
   setVisibility,
+  setPositiveFeedback,
 }): JSX.Element => {
   const [query, setQuery] = useState('');
   const [selectedEndpoint, setSelectedEndpoint] = useState<EnumEndpointItem>();
@@ -71,16 +73,19 @@ const ContractEndpoint: React.FC<ContractEndpointProps> = ({
     /// NOTIFICATION TEST
     if (!currentContractToken) {
       setNotificationString('NO CURRENT CONTRACT SELECTED')
+      setPositiveFeedback(false)
       setVisibility(true)
       return
     }
     else if (!endpoint) {
       setNotificationString('ENDPOINT REQUIRED')
+      setPositiveFeedback(false)
       setVisibility(true)
       return
     }
     else if (!owns.includes(currentContractToken)) {
       setNotificationString('ONLY CONTRACT OWNER MAY EDIT THIS CONTRACT')
+      setPositiveFeedback(false)
       setVisibility(true)
       return
     }
@@ -120,26 +125,30 @@ const ContractEndpoint: React.FC<ContractEndpointProps> = ({
         console.log(error);
       });
 
-    setNotificationString('ENDPOINT SAVED')
-    setVisibility(true)
+    setNotificationString('ENDPOINT SAVED');
+    setPositiveFeedback(true);
+    setVisibility(true);
   }
 
   const deleteEndpoint = (reqMethod: string, endpoint: string) => {
     // if (!currentContractToken) return console.log('NO CURRENT CONTRACT SELECTED')
     // if (!endpoint) return console.log('ENDPOINT REQUIRED')
     if (!currentContractToken) {
-      setNotificationString('NO CURRENT CONTRACT SELECTED')
-      setVisibility(true)
+      setNotificationString('NO CURRENT CONTRACT SELECTED');
+      setPositiveFeedback(false);
+      setVisibility(true);
       return
     }
     else if (!endpoint) {
-      setNotificationString('ENDPOINT REQUIRED')
-      setVisibility(true)
+      setNotificationString('ENDPOINT REQUIRED');
+      setPositiveFeedback(false);
+      setVisibility(true);
       return
     }
     else if (!owns.includes(currentContractToken)) {
-      setNotificationString('ONLY CONTRACT OWNER MAY EDIT THIS CONTRACT')
-      setVisibility(true)
+      setNotificationString('ONLY CONTRACT OWNER MAY EDIT THIS CONTRACT');
+      setPositiveFeedback(false);
+      setVisibility(true);
       return
     }
     const contractCopy = { ...currentContract }
@@ -164,8 +173,9 @@ const ContractEndpoint: React.FC<ContractEndpointProps> = ({
       .catch((error) => {
         console.log(error);
       });
-    setNotificationString('ENDPOINT DELETED')
-    setVisibility(true)
+    setNotificationString('ENDPOINT DELETED');
+    setPositiveFeedback(true);
+    setVisibility(true);
   }
 
   /** ADJUST CURRENT SELECTED ENUM INDEX  */

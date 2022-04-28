@@ -1,5 +1,7 @@
 import { PaperClipIcon } from "@heroicons/react/solid";
 import { validateYupSchema } from "formik";
+import  DocumentHeading  from "./DocumentHeading"
+
 type CurrentContract = {
   [key: string]: Contracts;
 };
