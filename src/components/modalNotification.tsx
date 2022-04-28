@@ -11,11 +11,12 @@ interface modalNotificationProps {
 }
 
 const modalNotification: React.FC<modalNotificationProps> = () => {
-  // const [show, setShow] = useState(true);
   const dispatch = useDispatch()
   const { modalNotification } = useSelector((store: RootState) => store.modals);
 
-
+  const closeNotification = () => {
+    dispatch(showNotification(false))
+  }
   return (
     <>
       {/* Global notification live region, render this permanently at the end of the document */}
@@ -52,7 +53,7 @@ const modalNotification: React.FC<modalNotificationProps> = () => {
                   <div className="ml-4 flex-shrink-0 flex">
                     <button
                       className="bg-white rounded-md inline-flex text-gray-400 hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
-                      onClick={dispatch(showNotification(false))}
+                      onClick={closeNotification}
                     >
                       <span className="sr-only">Close</span>
                       <XIcon className="h-5 w-5" aria-hidden="true" />

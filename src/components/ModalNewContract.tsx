@@ -56,7 +56,7 @@ const ModalNewContract: React.FC<ModalProps> = ({
         console.log(error);
       });
   };
-
+  const handleC
   return (
     <Transition.Root show={visibility} as={Fragment}>
       <Dialog
