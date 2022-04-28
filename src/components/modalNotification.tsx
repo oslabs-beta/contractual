@@ -6,11 +6,11 @@ import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '../state/store';
 import { showNotification } from '../state/features/modalsSlice';
 
-interface modalNotificationProps {
+interface ModalNotificationProps {
   // className: string;
 }
 
-const modalNotification: React.FC<modalNotificationProps> = () => {
+const ModalNotification: React.FC<ModalNotificationProps> = () => {
   const dispatch = useDispatch()
   const { modalNotification } = useSelector((store: RootState) => store.modals);
 
@@ -69,4 +69,4 @@ const modalNotification: React.FC<modalNotificationProps> = () => {
   );
 };
 
-export default modalNotification;
+export default ModalNotification;

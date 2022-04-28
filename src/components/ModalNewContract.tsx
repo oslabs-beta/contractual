@@ -56,7 +56,11 @@ const ModalNewContract: React.FC<ModalProps> = ({
         console.log(error);
       });
   };
-  const handleC
+
+  /** STOP MODAL FROM CLOSING IF CONTRACT NAME ALREADY EXISTS
+   * INCOMPLETE
+   */
+  // const handleClickCreate = () => { }
   return (
     <Transition.Root show={visibility} as={Fragment}>
       <Dialog

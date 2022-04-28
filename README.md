@@ -64,9 +64,9 @@ Please create your postgreSQL database instane (we recommend elephantSQL as a fr
 
 #### elephantSQL directions:
 
-After creating your SQL instance, refer to the build.sql file in the root of the app directory. This file will contain the proper query strings to build your own contractual database. Please run these commands in your postgreSQL database.
+After creating your postgreSQL instance, refer to the build.sql file in the root of the app directory. This file will contain the proper query strings to build your own contractual database. Please run these commands in your postgreSQL database.
 
-In order to connect your application to the database instance, go to the _.env_ in the root directory, and paste your query connection string into the DB_KEY variable.
+In order to connect the application to your database instance, go to the _.env_ in the root directory, and paste your query connection string into the DB_KEY variable.
 
 ## 3. HOW TO USE
 

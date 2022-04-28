@@ -15,9 +15,6 @@ export const modalsSlice = createSlice({
     showNotification: (state, action: PayloadAction<boolean>) => {
       state.modalNotification = action.payload;
     },
-    // hideNotification: (state/*, action: PayloadAction<boolean>*/) => {
-    //   state.modalNotification = false;
-    // },
   }
 });
 
