@@ -1,8 +1,8 @@
 {
   "name": "contractual",
   "version": "1.0.0",
-  "description": "",
-  "main": "./src/main.js",
+  "description": "Contractual allows development teams to define their applications data contract using a simple user interface. Helping frontend/backend development to test their applications confidently in a decoupled manner",
+  "main": "./dist/main.js",
   "moduleFileExtensions": [
     "js",
     "jsx",
@@ -11,38 +11,176 @@
     "json"
   ],
   "scripts": {
+    "test": "jest",
     "build": "webpack --config ./webpack.config.js",
     "watch": "webpack --config webpack.config.js --watch",
-    "start": "npm run build && electron ./dist/main.js"
+    "start": "npm run build && electron ./dist/main.js",
+    "dev": "electron ./dist/main.js",
+    "mac:installer": "electron-builder --mac",
+    "win:installer": "electron-builder --win",
+    "linux:installer": "electron-builder --linux"
   },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
+  "build": {
+    "productName": "Contractual",
+    "appId": "com.electron.contractual",
+    "directories": {
+      "app": ".",
+      "output": "installer"
+    },
+    "files": [
+      "dist/**/*",
+      "assets/**/*",
+      "package.json",
+      "src/**/*",
+      "node_modules/**/*",
+      ".env"
+    ],
+    "mac": {
+      "category": "public.app-category.developer-tools",
+      "icon": "assets/img/app-logo-mac.png",
+      "hardenedRuntime": true,
+      "gatekeeperAssess": false
+    },
+    "dmg": {
+      "backgroundColor": "#ffffff",
+      "window": {
+        "width": "400",
+        "height": "300"
+      },
+      "contents": [
+        {
+          "x": 100,
+          "y": 100
+        },
+        {
+          "x": 300,
+          "y": 100,
+          "type": "link",
+          "path": "/Applications"
+        }
+      ]
+    },
+    "win": {
+      "target": [
+        "nsis"
+      ],
+      "icon": "assets/img/app-logo-win.ico"
+    },
+    "nsis": {
+      "oneClick": false,
+      "installerIcon": "assets/img/app-logo-win.ico",
+      "uninstallerIcon": "assets/img/app-logo-win.ico",
+      "uninstallDisplayName": "Contractual-uninstaller",
+      "license": "license.md",
+      "allowToChangeInstallationDirectory": true
+    },
+    "linux": {
+      "target": [
+        "deb",
+        "rpm",
+        "AppImage"
+      ],
+      "category": "Development"
+    }
+  },
+  "keywords": [
+    "Data Contract",
+    "Contract",
+    "Test",
+    "Endpoints"
+  ],
+  "author": {
+    "name": "Contractual",
+    "url": "https://www.contractualapp.io/",
+    "email": "admin@contractualapp.io"
+  },
+  "contributors": [
+    {
+      "name": "Ernest Leung",
+      "url": "https://github.com/ErnestLeung52",
+      "email": "ernestleung52@gmail.com"
+    },
+    {
+      "name": "George Jeng",
+      "url": "https://github.com/gdelaselva",
+      "email": "gjenga@icloud.com"
+    },
+    {
+      "name": "Joe Amos",
+      "url": "https://github.com/joeamos",
+      "email": "joeamos17@gmail.com"
+    },
+    {
+      "name": "Yankun Song",
+      "url": "https://github.com/yankun-song",
+      "email": "yankun.l.song@gmail.com"
+    }
+  ],
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/oslabs-beta/contractual.git"
+  },
+  "bugs": {
+    "url": "https://github.com/oslabs-beta/contractual/issues"
+  },
   "dependencies": {
+    "@headlessui/react": "^1.5.0",
+    "@heroicons/react": "^1.0.6",
+    "@reduxjs/toolkit": "^1.8.1",
+    "axios": "^0.26.1",
+    "bcrypt": "^5.0.1",
+    "chance": "^1.1.8",
+    "cors": "^2.8.5",
+    "dotenv": "^16.0.0",
     "express": "^4.17.3",
+    "file-loader": "^6.2.0",
+    "formik": "^2.2.9",
+    "html2canvas": "^1.4.1",
+    "http": "^0.0.1-security",
+    "jspdf": "^2.5.1",
+    "pg": "^8.7.3",
     "react-redux": "^7.2.8",
     "react-router-dom": "^6.3.0",
     "redux": "^4.1.2",
     "redux-devtools-extension": "^2.13.9",
-    "redux-thunk": "^2.4.1"
+    "redux-thunk": "^2.4.1",
+    "shell": "^0.9.4",
+    "socket.io": "^4.4.1",
+    "url-loader": "^4.1.1",
+    "websocket": "^1.0.34",
+    "ws": "^8.5.0",
+    "yup": "^0.32.11"
   },
   "devDependencies": {
     "@babel/core": "^7.17.8",
     "@babel/preset-env": "^7.16.11",
     "@babel/preset-react": "^7.16.7",
+    "@tailwindcss/aspect-ratio": "^0.4.0",
+    "@tailwindcss/forms": "^0.5.0",
+    "@tailwindcss/line-clamp": "^0.3.1",
+    "@tailwindcss/typography": "^0.5.2",
     "@types/react": "^17.0.43",
     "@types/react-dom": "^17.0.14",
     "@types/react-redux": "^7.1.23",
+    "@types/yup": "^0.29.13",
+    "autoprefixer": "^10.4.4",
     "babel-loader": "^8.2.4",
     "concurrently": "^7.1.0",
     "css-loader": "^6.7.1",
+    "dotenv-webpack": "^7.1.0",
     "electron": "^18.0.2",
+    "electron-builder": "^23.0.3",
     "html-webpack-plugin": "^5.5.0",
+    "jest": "^27.5.1",
+    "postcss": "^8.4.12",
+    "postcss-loader": "^6.2.1",
     "react": "^18.0.0",
     "react-dom": "^18.0.0",
     "sass": "^1.49.11",
     "sass-loader": "^12.6.0",
     "style-loader": "^3.3.1",
+    "tailwindcss": "^3.0.23",
     "ts-loader": "^9.2.8",
     "typescript": "^4.6.3",
     "webpack": "^5.71.0",
