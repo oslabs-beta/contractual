@@ -5,7 +5,7 @@ import axios from 'axios'
 import { useDispatch, useSelector } from 'react-redux'
 import { RootState } from '../state/store';
 import { joinContract } from '../state/features/contractSlice';
-// import ModalNotification from './modalNotification';
+// import ModalNotification from './ModalNotification';
 
 interface ModalProps {
   visibility: boolean,

@@ -12,16 +12,16 @@ export const modalsSlice = createSlice({
   name: 'newContract',
   initialState,
   reducers: {
-    showNotification: (state/*, action: PayloadAction<boolean>*/) => {
-      state.modalNotification = true;
+    showNotification: (state, action: PayloadAction<boolean>) => {
+      state.modalNotification = action.payload;
     },
-    hideNotification: (state/*, action: PayloadAction<boolean>*/) => {
-      state.modalNotification = false;
-    },
+    // hideNotification: (state/*, action: PayloadAction<boolean>*/) => {
+    //   state.modalNotification = false;
+    // },
   }
 });
 
-export const { showNotification, hideNotification } = modalsSlice.actions;
+export const { showNotification } = modalsSlice.actions;
 
 export default modalsSlice.reducer;
 

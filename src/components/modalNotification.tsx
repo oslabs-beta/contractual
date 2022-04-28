@@ -4,7 +4,7 @@ import { CheckCircleIcon, XCircleIcon } from "@heroicons/react/outline";
 import { XIcon } from "@heroicons/react/solid";
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '../state/store';
-import { hideNotification } from '../state/features/modalsSlice';
+import { showNotification } from '../state/features/modalsSlice';
 
 interface modalNotificationProps {
   // className: string;
@@ -52,9 +52,7 @@ const modalNotification: React.FC<modalNotificationProps> = () => {
                   <div className="ml-4 flex-shrink-0 flex">
                     <button
                       className="bg-white rounded-md inline-flex text-gray-400 hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
-                      onClick={() => {
-                        dispatch(hideNotification);
-                      }}
+                      onClick={dispatch(showNotification(false))}
                     >
                       <span className="sr-only">Close</span>
                       <XIcon className="h-5 w-5" aria-hidden="true" />

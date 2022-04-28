@@ -31,6 +31,9 @@ export default function Navbar() {
   const [joinOpen, setJoinOpen] = useState<boolean>(false)
   const [detailsOpen, setDetailsOpen] = useState<boolean>(false)
   const { tokens, currentContractToken } = useSelector((store: RootState) => store.contract);
+  //TEST
+  const { modalNotification } = useSelector((store: RootState) => store.modals);
+  //TEST
   const contracts: EnumContractItem[] = [];
   for (let key in tokens) {
     contracts.push({
@@ -104,7 +107,7 @@ export default function Navbar() {
   return (
     <>
       <ModalNotification/>
-
+      <button onClick={() => console.log(modalNotification)}>check modal notification state</button>
       <ModalNewContract
         visibility={newOpen}
         closeModal={handleCloseNewModal}
