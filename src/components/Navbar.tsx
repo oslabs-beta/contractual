@@ -107,7 +107,6 @@ export default function Navbar() {
   return (
     <>
       <ModalNotification/>
-      <button onClick={() => console.log(modalNotification)}>check modal notification state</button>
       <ModalNewContract
         visibility={newOpen}
         closeModal={handleCloseNewModal}
