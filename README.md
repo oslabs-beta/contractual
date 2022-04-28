@@ -1,12 +1,14 @@
-# [**_CONTRACTUAL_**](https://www.contractualapp.io/)
 
 <div align="center">
-
-[![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](https://github.com/oslabs-beta/SeeQR)
+	
+# [**_CONTRACTUAL_**](https://www.contractualapp.io/)
+[![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)]()
 ![Release: 7.0.1](https://img.shields.io/badge/Release-1.0.0-red)
 ![License: MIT](https://img.shields.io/badge/License-MIT-orange.svg)
 ![Contributions Welcome](https://img.shields.io/badge/Contributions-welcome-blue.svg)
 [![Github stars](https://img.shields.io/github/stars/oslabs-beta/contractual?style=social)]()
+![image](https://user-images.githubusercontent.com/43141076/165818499-84d305cb-bf94-46f2-8dc8-f46fa37670ef.png)
+
 
 </div>
 
