@@ -1,15 +1,15 @@
 CREATE TABLE users(
     user_id SERIAL PRIMARY KEY,
-    email VARCHAR() NOT NULL UNIQUE,
-    name VARCHAR() NOT NULL,
-    password VARCHAR() NOT NULL
+    email VARCHAR NOT NULL UNIQUE,
+    name VARCHAR NOT NULL,
+    password VARCHAR NOT NULL
 )
 
 CREATE TABLE contracts(
     contract_id SERIAL PRIMARY KEY,
-    title VARCHAR() NOT NULL,
-    content VARCHAR() NOT NULL,
-    token VARCHAR() NOT NULL,
+    title VARCHAR NOT NULL,
+    content VARCHAR NOT NULL,
+    token VARCHAR NOT NULL,
     user_id INTEGER,
     FOREIGN KEY (user_id) REFERENCES users(user_id)
 )
