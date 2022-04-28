@@ -41,7 +41,6 @@ export default function Navbar() {
       token: tokens[key]
     })
   }
-  console.log(contracts);
 
   const handleCloseNewModal = (): void => {
     setNewOpen(false);
@@ -61,7 +60,6 @@ export default function Navbar() {
         import: false
       })
       .then((response) => {
-        console.log(response);
         if (response.status === 200) {
           dispatch(loadContract({
             contract: response.data.content,
@@ -79,7 +77,6 @@ export default function Navbar() {
     axios
       .get(`http://localhost:1234/contract/${token}`)
       .then((response) => {
-        console.log(response)
       })
       .catch((error) => {
         console.log('Error is: ', error)
