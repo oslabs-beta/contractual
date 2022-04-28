@@ -6,7 +6,7 @@ import { Link, Outlet, useLocation, useNavigate } from 'react-router-dom';
 import ModalNewContract from './ModalNewContract';
 import ModalJoinContract from './ModalJoinContract';
 import ModalContractDetails from './ModalContractDetails';
-// import Notification from './Notification';
+import ModalNotification from './ModalNotification';
 import { RootState } from '../state/store';
 import { useDispatch, useSelector } from 'react-redux';
 import { loadContract } from '../state/features/contractSlice';
@@ -103,6 +103,8 @@ export default function Navbar() {
 
   return (
     <>
+      <ModalNotification/>
+
       <ModalNewContract
         visibility={newOpen}
         closeModal={handleCloseNewModal}
