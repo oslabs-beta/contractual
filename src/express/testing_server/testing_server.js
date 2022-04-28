@@ -38,7 +38,7 @@ app2.get("/contract/:token", dbController.getContent, (req, res) => {
 
 wss.on("connection", (ws) => {
   // Log when new client connect to this server
-  console.log("********* New Client Connected");
+  // console.log("********* New Client Connected");
   ws.send("Welcome New Client");
   // Trigger when server receives anything from a client
   ws.on("message", (message) => {
@@ -49,7 +49,6 @@ wss.on("connection", (ws) => {
   app2.use(
     "/",
     (req, res, next) => {
-      console.log("req receiced is    ", req);
       return next();
     },
     checkController.checkReq,
@@ -57,7 +56,6 @@ wss.on("connection", (ws) => {
     (req, res) => {
       //send a websocket message here
       ws.send(JSON.stringify(res.locals.report));
-      console.log("report", res.locals.report);
 
       // Send back mock response
       res.status(200).send(res.locals.mockRes);

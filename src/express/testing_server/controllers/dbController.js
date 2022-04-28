@@ -4,7 +4,6 @@ const dbController = {};
 
 dbController.getContent = async (req, res, next) => {
   const { token } = req.params;
-  console.log("TOKEN IS ", token);
   const param = [token.toUpperCase()];
   try {
     const getContent = `

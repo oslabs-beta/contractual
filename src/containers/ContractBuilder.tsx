@@ -74,7 +74,6 @@ export default function ContractBuilder() {
   /** ADD AN ADDITIONAL KEY/TYPE PAIR FIELD IN THE RESPONSE BODY SECTION */
   const addResField = () => {
     let additional = { resKey: '', resValType: 'boolean' };
-    console.log('new Response field added');
     setResInputs([...resInputs, additional]);
   };
 
