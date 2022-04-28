@@ -69,28 +69,26 @@ function genMockResponse(contracts, condition) {
   return mockRes;
 }
 
-// Extract array-type-length format
+/**
+ * Generate mock response based on data contract
+ * @param dataTypeStr - extract contract key 'array-content-length'
+ */
 function handleArray(dataTypeStr) {
+  // chancePrimitives handles random data type you want in your random generated array
   const chancePrimitives = [
-    'fN',
-    'country',
-    'word',
-    'animal',
+    // 'fN',
+    // 'country',
+    // 'word',
+    // 'animal',
+    // 'number',
+    // 'boolean',
+    // 'date',
     'number',
-    'boolean',
-    'date',
   ];
   const mockArray = [];
   const mockArrContent = dataTypeStr.split('-')[1];
   const mockArrLength = dataTypeStr.split('-')[2];
   const randomLength = randomize.number();
-
-  // const randomNum = Math.floor(Math.random() * chancePrimitives.length);
-  // randomNum;
-  // const dataType = chancePrimitives[randomNum];
-  // dataType;
-  // const randomContent = randomize[dataType]();
-  // randomContent;
 
   if (mockArrContent === 'any') {
     const length = mockArrLength === 'any' ? randomLength : mockArrLength;
@@ -113,7 +111,7 @@ const dataContract = {
   'Res@POST@/habits': { currentHabits: 'array-any-any' },
 };
 
-// console.log(genMockResponse(dataContract, 'Req@POST@/habits'));
+console.log(genMockResponse(dataContract, 'Req@POST@/habits'));
 // genMockResponse(dataContract, 'Req@POST@/habits');
 
 exports.mock = randomize;
