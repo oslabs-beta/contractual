@@ -60,6 +60,18 @@ const ContractEndpoint: React.FC<ContractEndpointProps> = ({
   const { currentContract, currentContractToken, owns } = useSelector((store: RootState) => store.contract);
   const dispatch = useDispatch()
 
+
+  //// TESTING
+  /** DESELECT CURRENTLY SELECTED ENDPOINT WHEN BACKSPACING THE ENDPOINT STRING AFTER CHOOSING FROM DROPDOWN
+   * 
+  */
+  const handleEndpointDeselect = () => {
+    if (newEndpoint === '') {
+      setSelectedEndpoint(undefined)
+    }
+  }
+  ///// TESTING
+
   /** SAVE OR UPDATE THE CURRENTLY SELECTED ENDPOINT AND FIELDS TO THE DATABASE */
   const saveContract = (
     reqMethod: string,
@@ -67,8 +79,7 @@ const ContractEndpoint: React.FC<ContractEndpointProps> = ({
     reqInputs: BodyInputs,
     resInputs: BodyInputs
   ): void => {
-    // if (!currentContractToken) return console.log('NO CURRENT CONTRACT SELECTED')
-    // if (!endpoint) return console.log('ENDPOINT REQUIRED')
+
 
     /// NOTIFICATION TEST
     if (!currentContractToken) {
@@ -131,8 +142,6 @@ const ContractEndpoint: React.FC<ContractEndpointProps> = ({
   }
 
   const deleteEndpoint = (reqMethod: string, endpoint: string) => {
-    // if (!currentContractToken) return console.log('NO CURRENT CONTRACT SELECTED')
-    // if (!endpoint) return console.log('ENDPOINT REQUIRED')
     if (!currentContractToken) {
       setNotificationString('NO CURRENT CONTRACT SELECTED');
       setPositiveFeedback(false);
@@ -153,10 +162,8 @@ const ContractEndpoint: React.FC<ContractEndpointProps> = ({
     }
     const contractCopy = { ...currentContract }
 
-    // console.log('COPY BEFORE DELETION: ', contractCopy)
     delete contractCopy[`Req@${reqMethod}@${endpoint}`]
     delete contractCopy[`Res@${reqMethod}@${endpoint}`]
-    // console.log('COPY AFTER DELETION: ', contractCopy)
 
     axios
       .patch('http://localhost:4321/contract', {
@@ -164,7 +171,6 @@ const ContractEndpoint: React.FC<ContractEndpointProps> = ({
         token: currentContractToken
       })
       .then((response) => {
-        // console.log(response);
         if (response.status === 200) {
           dispatch(updateContract(contractCopy))
           resetFields()
@@ -182,6 +188,12 @@ const ContractEndpoint: React.FC<ContractEndpointProps> = ({
   const endpointChange = (event) => {
     setQuery(event.target.value);
     setEndpoint(event);
+
+    /////// TESTING
+    // if (newEndpoint === '') {
+    //   setSelectedEndpoint(undefined)
+    // }
+    /////// TESTING
   };
 
   /** SEARCH FILTER FOR ENDPOINT INPUT FIELD */
@@ -215,12 +227,18 @@ const ContractEndpoint: React.FC<ContractEndpointProps> = ({
 
         {/* TEST BUTTONS */}
         {/* <button onClick={() => { console.log(store) }}>check current state of store</button>
-        <button onClick={() => { console.log(reqInputs); console.log(resInputs); console.log(reqMethod); console.log(newEndpoint) }}>check state of inputs</button> */}
-
+        <button onClick={() => { console.log(reqInputs); console.log(resInputs); console.log(reqMethod); console.log(newEndpoint) }}>check state of inputs</button>
+        <button onClick={() => console.log('Selected endpoint is :', selectedEndpoint)}> check seleced endpoint</button> */}
         <div className='col-span-12 sm:col-span-6 md:col-span-6 lg:col-span-7'>
           <Combobox
             as='div'
-            value={selectedEndpoint}
+            /** BUG
+             *  after selecting endpoint from drop down list, user is required to switch to a new tab before creating a new enpoint
+             * 
+             */
+            value={selectedEndpoint} //working with bug
+            // value={selectedEndpoint} // TEST
+            
             onChange={(endpoint: EnumEndpointItem) => { setSelectedEndpoint(endpoint); updateFieldsByEndpoint(`Req@${endpoint.method.toUpperCase()}@${endpoint.name}`, `Res@${endpoint.method.toUpperCase()}@${endpoint.name}`); setNewEndpoint(endpoint.name); setReqMethod(endpoint.method.toUpperCase()) }}
           >
             <div className='relative mt-1'>
