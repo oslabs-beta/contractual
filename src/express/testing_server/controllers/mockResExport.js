@@ -113,7 +113,7 @@ const dataContract = {
   'Res@POST@/habits': { currentHabits: 'array-any-any' },
 };
 
-console.log(genMockResponse(dataContract, 'Req@POST@/habits'));
+// console.log(genMockResponse(dataContract, 'Req@POST@/habits'));
 // genMockResponse(dataContract, 'Req@POST@/habits');
 
 exports.mock = randomize;

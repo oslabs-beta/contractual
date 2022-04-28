@@ -29,6 +29,8 @@ app.get('/', function (req, res) {
   res.send('User Server is ready!');
 });
 
+// console.log('-------Process.env: ', process.env.DB_KEY);
+
 app.use('/contract', contractRouter);
 app.use('/register', signupRouter);
 app.use('/login', loginRouter);
