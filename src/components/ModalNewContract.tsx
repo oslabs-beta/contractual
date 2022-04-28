@@ -91,6 +91,9 @@ const ModalNewContract: React.FC<ModalProps> = ({
                     <p className="text-sm text-gray-500">
                       Choose a descriptive name for your new contract.
                     </p>
+                    <p className="text-sm text-gray-500">
+                      Contract name must be unique or it will not be created.
+                    </p>
                   </div>
                 </div>
               </div>

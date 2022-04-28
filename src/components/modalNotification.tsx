@@ -2,13 +2,19 @@ import { Fragment, useState } from "react";
 import { Transition } from "@headlessui/react";
 import { CheckCircleIcon } from "@heroicons/react/outline";
 import { XIcon } from "@heroicons/react/solid";
+import { useDispatch, useSelector } from 'react-redux';
+import { RootState } from '../state/store';
+import { hideNotification } from '../state/features/modalsSlice';
 
-interface NotificationProps {
+interface modalNotificationProps {
   className: string;
 }
 
-const Notification: React.FC<NotificationProps> = () => {
-  const [show, setShow] = useState(true);
+const modalNotification: React.FC<modalNotificationProps> = () => {
+  // const [show, setShow] = useState(true);
+  const dispatch = useDispatch()
+  const { showModalNotification } = useSelector((store: RootState) => store.modals);
+
 
   return (
     <>
@@ -20,7 +26,7 @@ const Notification: React.FC<NotificationProps> = () => {
         <div className="w-full flex flex-col items-center space-y-4 sm:items-end">
           {/* Notification panel, dynamically insert this into the live region when it needs to be displayed */}
           <Transition
-            show={show}
+            show={showModalNotification}
             as={Fragment}
             enter="transform ease-out duration-300 transition"
             enterFrom="translate-y-2 opacity-0 sm:translate-y-0 sm:translate-x-2"
@@ -50,7 +56,7 @@ const Notification: React.FC<NotificationProps> = () => {
                     <button
                       className="bg-white rounded-md inline-flex text-gray-400 hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
                       onClick={() => {
-                        setShow(false);
+                        dispatch(hideNotification);
                       }}
                     >
                       <span className="sr-only">Close</span>
@@ -67,4 +73,4 @@ const Notification: React.FC<NotificationProps> = () => {
   );
 };
 
-export default Notification;
+export default modalNotification;
