@@ -35,14 +35,12 @@ export default function ContractBuilder() {
   /** RECORD CHANGES TO REQ TYPE DROPDOWN IN CONTRACTENDPOINT COMPONENT */
   const handleSetReqMethod = (e: any): void => {
     const method: string = e.target.value;
-    console.log('method changed: ', method);
     setReqMethod(method);
   };
 
   /** RECORD CHANGES IN ENDPOINT INPUT FIELD IN CONTRACTENDPOINT COMPONENT */
   const handleSetEndpoint = (e: any): void => {
     const endpoint: string = e.target.value;
-    console.log('current endpoint string: ', e.target.value);
     setNewEndpoint(endpoint);
   };
 
@@ -50,7 +48,6 @@ export default function ContractBuilder() {
   const handleSetReqInputs = (index, e) => {
     let data = [...reqInputs];
     data[index][e.target.name] = e.target.value;
-    console.log('Request Box changed: ', data);
     setReqInputs(data);
   };
 
@@ -58,14 +55,12 @@ export default function ContractBuilder() {
   const handleSetResInputs = (index, e) => {
     let data = [...resInputs];
     data[index][e.target.name] = e.target.value;
-    console.log('Response Box changed: ', data);
     setResInputs(data);
   };
 
   /** ADD AN ADDITIONAL KEY/TYPE PAIR FIELD IN THE REQUEST BODY SECTION */
   const addReqField = () => {
     let additional = { reqKey: '', reqValType: 'boolean' };
-    console.log('new Request field added');
     setReqInputs([...reqInputs, additional]);
   };
 
@@ -128,8 +123,6 @@ export default function ContractBuilder() {
       const k = {resKey: key, resValType: resEndpointKeys[key]};
       resKeys.push(k)
     }
-    console.log('REQENDPOINT KEYS ARE: ', reqKeys)
-    console.log('RESENDPOINT KEYS ARE: ', resKeys)
     setReqInputs(reqKeys);
     setResInputs(resKeys);
   };

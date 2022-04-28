@@ -97,7 +97,6 @@ export default function Navbar() {
   let currentStyleMobile = 'bg-gray-900 text-white block px-3 py-2 rounded-md text-base font-medium';
   let defaultStyleMobile = 'text-gray-300 hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium';
 
-  console.log('location: ' + location.pathname);
 
 
 

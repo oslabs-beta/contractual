@@ -38,7 +38,6 @@ const Register = () => {
       password: Yup.string().required('invalid password'),
     }),
     onSubmit: (values: FormValues): void => {
-      console.log(values);
       axios
         .post('http://localhost:4321/register', {
           name: values.name,
@@ -46,7 +45,6 @@ const Register = () => {
           password: values.password,
         })
         .then((response) => {
-          console.log(response);
           navigate('../navbar');
           dispatch(getUserData(response.data));
         })
