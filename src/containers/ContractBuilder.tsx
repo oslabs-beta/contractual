@@ -125,6 +125,7 @@ export default function ContractBuilder() {
     setReqInputs(reqKeys);
     setResInputs(resKeys);
   };
+
   /** BUILD ENUM ARRAY */
   const reqEndpoints: EnumEndpointItem[] = getEndpoints(currentContract);
   return (
