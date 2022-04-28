@@ -58,6 +58,8 @@ Developers who want to dive deeper into the code can fork this repo.
 
 Contributions are not only welcome but highly recommended, we believe that every open source contribution makes the entire community much better.
 
+We put our database
+
 This application requires a postgreSQL database to function.
 
 Please create your postgreSQL database instane (we recommend elephantSQL as a free option)
