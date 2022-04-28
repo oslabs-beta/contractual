@@ -5,6 +5,8 @@ import axios from 'axios'
 import { useDispatch, useSelector } from 'react-redux'
 import { RootState } from '../state/store';
 import { addContract } from '../state/features/contractSlice';
+import { showNotification } from '../state/features/modalsSlice';
+
 interface ModalProps {
   visibility: boolean,
   closeModal: () => void,
@@ -42,6 +44,9 @@ const ModalNewContract: React.FC<ModalProps> = ({
             }));
             setSelectedContract({name: contractName, token: response.data});
             sendToken(response.data);
+          }
+          else if (response.status === 400) {
+            dispatch(showNotification)
           }
         })
         .catch((error) => {

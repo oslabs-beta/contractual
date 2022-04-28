@@ -1,11 +1,11 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
 type ModalsState = {
-  showModalNotification: boolean;
+  modalNotification: boolean;
 }
 
 const initialState: ModalsState = {
-  showModalNotification: false
+  modalNotification: false
 }
 
 export const modalsSlice = createSlice({
@@ -13,10 +13,10 @@ export const modalsSlice = createSlice({
   initialState,
   reducers: {
     showNotification: (state/*, action: PayloadAction<boolean>*/) => {
-      state.showModalNotification = true;
+      state.modalNotification = true;
     },
     hideNotification: (state/*, action: PayloadAction<boolean>*/) => {
-      state.showModalNotification = false;
+      state.modalNotification = false;
     },
   }
 });

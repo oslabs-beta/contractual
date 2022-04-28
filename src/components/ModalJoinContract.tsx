@@ -5,7 +5,7 @@ import axios from 'axios'
 import { useDispatch, useSelector } from 'react-redux'
 import { RootState } from '../state/store';
 import { joinContract } from '../state/features/contractSlice';
-import { showNotification } from '../state/features/modalsSlice';
+import ModalNotification from './modalNotification';
 
 interface ModalProps {
   visibility: boolean,
@@ -58,6 +58,7 @@ const ModalJoinContract: React.FC<ModalProps> = ({
   };
   return (
     <Transition.Root show={visibility} as={Fragment} >
+      <ModalNotification/>
       <Dialog as="div" className="fixed z-[80] inset-0 overflow-y-auto" initialFocus={cancelButtonRef} onClose={closeModal}>
         <div className="flex items-end justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
           <Transition.Child

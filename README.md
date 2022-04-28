@@ -1,70 +1,196 @@
-# ***CONTRACTUAL***
----
-## BRIEF
+# [***CONTRACTUAL***](https://www.contractualapp.io/)
+<div align="center">
+- [***CONTRACTUAL***](#contractual)
+  - [Table of Contents](#table-of-contents)
+  - [0. BRIEF](#0-brief)
+  - [1. FEATURES](#1-features)
+  - [2. INSTALLATION](#2-installation)
+    - [- DOWNLOAD INSTALLER](#--download-installer)
+        - [OR](#or)
+    - [- FORK AND CLONE REPO](#--fork-and-clone-repo)
+      - [elephantSQL directions:](#elephantsql-directions)
+  - [3. HOW TO USE](#3-how-to-use)
+    - [3.1 CONTRACT BUILDER](#31-contract-builder)
+    - [3.2 FRONT TESTER](#32-front-tester)
+    - [3.3 BACK TESTER](#33-back-tester)
+    - [3.4 DOCUMENT CREATOR](#34-document-creator)
+  - [ITERATION OPPORTUNITY/BUGS](#iteration-opportunitybugs)
 
-Contractual is a tool designed to complement team-based development for web applications that utilize JS and Node.JS. Contractual's design philosophy is centered around what we call "Contract driven development".  Contract refers to the data contract between client and server. Contractual allows development teams to define their applications data contract using a simple user interface  Additionally, frontend/backend development teams will be able to test their applications confidently in a decoupled manner.
+[![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](https://github.com/oslabs-beta/SeeQR)
+![Release: 7.0.1](https://img.shields.io/badge/Release-1.0.0-red)
+![License: MIT](https://img.shields.io/badge/License-MIT-orange.svg)
+![Contributions Welcome](https://img.shields.io/badge/Contributions-welcome-blue.svg)
+[![Github stars](https://img.shields.io/github/stars/oslabs-beta/contractual?style=social)](https://github.com/open-source-labs/SeeQR)
 
----
-## GETTING STARTED
+</div>
 
-### DOWNLOAD 
+## Table of Contents
 
-Click here to download Contractual to your desktop. LINK
+- [***CONTRACTUAL***](#contractual)
+  - [Table of Contents](#table-of-contents)
+  - [0. BRIEF](#0-brief)
+  - [1. FEATURES](#1-features)
+  - [2. INSTALLATION](#2-installation)
+    - [- DOWNLOAD INSTALLER](#--download-installer)
+        - [OR](#or)
+    - [- FORK AND CLONE REPO](#--fork-and-clone-repo)
+      - [elephantSQL directions:](#elephantsql-directions)
+  - [3. HOW TO USE](#3-how-to-use)
+    - [3.1 CONTRACT BUILDER](#31-contract-builder)
+    - [3.2 FRONT TESTER](#32-front-tester)
+    - [3.3 BACK TESTER](#33-back-tester)
+    - [3.4 DOCUMENT CREATOR](#34-document-creator)
+  - [ITERATION OPPORTUNITY/BUGS](#iteration-opportunitybugs)
+
+## 0. BRIEF
+
+Contractual is a tool designed to complement team-based development for web applications that utilize JS and Node.js. 
+
+Contractual's design philosophy is centered around what we call "Contract driven development".  
+
+Contract refers to the data contract between client and server. Contractual allows development teams to define their applications data contract using a simple user interface.
+
+Additionally, frontend/backend development teams will be able to test their applications confidently in a decoupled manner.
+
+
+## 1. FEATURES
+- Define project data contracts within the app and share it using a 4-digit token
+- Test and validate request/response architecture with detailed contract breach analysis
+- Develop new features client-side or server-side independently of one-another while adhering to contract specifications with mock results
+- Generate clear contract documentation for distribution with a single click
+
+
+## 2. INSTALLATION
+
+### - DOWNLOAD INSTALLER
+
+Contractual Desktop can be downloaded from our [website](https://www.contractualapp.io/). Available for Mac OS, Windows, and Linux.
 
 ##### OR
-### FORK AND COPY REPO
+### - FORK AND CLONE REPO
 
-Fork this repo and copy down to your local machine
+Developers who want to dive deeper into the code can fork this repo. 
 
-This application requires a postgresQL database to function.
+Contributions are not only welcome but highly recommended, we believe that every open source contribution makes the entire community much better.
 
-Please create your postgresQL database instane (we recommend elephantSQL as a free option)
+This application requires a postgreSQL database to function.
+
+Please create your postgreSQL database instane (we recommend elephantSQL as a free option)
 
 #### elephantSQL directions: 
 
-After creating your SQL instance, refer to the build.SQL file in the root of the app directory. This file will contain the proper query strings to build your own contractual database. Please run these commands in your postgresQL database.
+After creating your SQL instance, refer to the build.sql file in the root of the app directory. This file will contain the proper query strings to build your own contractual database. Please run these commands in your postgreSQL database.
 
-In n order to connect your application to the database instance follow the filepath: ./src/express/user_info_server/models/dbModel.js in your cloned application. Here you will paste your query connection string into the PG_URI variable.
+In order to connect your application to the database instance, go to the _.env_ in the root directory, and paste your query connection string into the DB_KEY variable.
 
-SHOULD WE USE NODE.ENV FILE HERE INSTEAD AND HAVE USERS INPUT THEIR STRINGS AND PORTS THERE??
 
----
-## HOW TO USE
+## 3. HOW TO USE
 	
-### CONTRACT BUILDER
+### 3.1 CONTRACT BUILDER
 
-The Contract builder page is where a user will define the data contract for their application. Toward the top, the user will select the desired method and input the proper endpoint for their request(ex: /feed). Currently, Contractual supports request objects that include JS numbers, booleans, strings, and arrays of depth 1. The user will add the key names, as well as, the expected datatypes of those keys for the request and response objects.
+The Contract tab is where the project lead will define or edit the data contract for their application. 
 
-IMAGE/GIF HERE
+Users will select the desired request method option from a dropdown list and input the proper endpoint for their request to be sent to. 
 
-Alternatively, the user may select from the endpoint drop down list to view any endpoints that have been previously defined.
+Next, the user should add the key names and the expected datatypes of those keys for the request/response objects. 
 
-### FRONT TESTER
+Once the desired input fields are completed, the user can store this endpoint in their data contract by pressing save.
 
-The Front tester tab is used for testing your front end application while completely decoupled from the backend application. Upon switching your currently active data contract, we will connect our testing server to the frontend application via web hook. 
+<div align="center">
+	<img width="460" height="300" src="https://i.gyazo.com/10acdd901285cf6d105ef2c39cac442b.gif">
+	<div><i>Demo_1: add an endpoint</i></div>
+</div>
+<br>
 
-In order for the frontend developer to test with contractual. The will need to sent their requests to our testing server at port 1234
+Alternatively, the user may select from the endpoint drop down list to view any endpoints that have been previously defined. 
 
-IMAGE example
-ex: http://localhost:1234/<yourEndpointHere>
+These endpoints can be edited or deleted using the same method described above. 
 
-IMAGE/GIF HERE
+A notable feature built into this application is the 4-digit identifier token generated uniquely for each created contract.
 
-Upon sending requests from the front end, Contractual will build a log of these requests and whether or not adhered to the data contract or not. If the request followed the data contract, the user will also receive a mock response corresponding the response defined in the contract builder for that endpoint.
+<div align="center">
+	<img width="460" height="300" src="https://gyazo.com/eedcac823fa5811fef3ab9ac5fd67438.gif">
+	<div><i>Demo_2: find the token</i></div>
+</div>
+<br>
 
-### BACK TESTER
+As mentioned, this token is generated when a new contract is created. 
 
-The back tester  is used to test your backend application while completely decoupled from any sort of front end. You can think of its functionality similarly to postman. However, Contractual allows you to select from a list of endpoints defined in the data contract with easy to use input fields for the data values. Upon sending a request, the back tester will render the response from the application and whether or not the data contract was followed.
+Members can join, view, and test with previously built data contracts by clicking “Join Contract” in the application settings and inputting a valid token along with the associated contract’s name. A correct contract name and token must be provided at the same time.
 
-IMAGE/GIF HERE
+Currently, contract edit access is only provided to the user who created the data contract.
 
-### DOCUMENT CREATOR
+<div align="center">
+	<img width="460" height="300" src="https://gyazo.com/c1e59cad27fbbc321d2136c7c87e5b65.gif">
+	<div><i>Demo_3: import a contract with token</i></div>
+</div>
+<br>
 
-The document creator is used to view the data contract of your currently active project in a simplified layout. You are able to export a pdf image of this page using the export button.
+Once a single data contract endpoint has been created or imported, the user is ready and able to begin testing their fullstack application or export the contract for distribution.
 
-IMG/GIF HERE
 
- NOTE: Currently, Contractual only supports pdf export
+
+### 3.2 FRONT TESTER
+
+The Frontend tab is used for testing a frontend application’s http request functionality without requiring the addition of any server-side code. 
+
+In order for the frontend developer to test with contractual. The will need to sent their requests to our testing server at **PORT 1234**.
+
+Upon sending requests from a frontend application, Contractual will display a log of these requests and whether or not the data contract was breached. 
+
+If the request successfully adheres to the data contract, the user will also receive a mock response corresponding to the response defined in the contract builder for that endpoint. 
+
+This tool allows frontend developers to test with confidence and receive clear, immediate feedback.
+
+<div align="center">
+	<img  src="https://i.gyazo.com/2ed8b8d414dbc5816665f5c5e7c84175.gif">
+	<div><i>Demo_4: a successful request</i></div>
+</div>
+<br>
+
+<div align="center">
+	<img  src="https://i.gyazo.com/3f2566560f26a645a48efc66148b0bcc.gif">
+	<div><i>Demo_5: a failed request with error analysis</i></div>
+</div>
+<br>
+
+<div align="center">
+	<img  src="https://i.gyazo.com/560a79c735a381bfae9aa1ee8dcd9721.gif">
+	<div><i>Demo_6: a mock response based on the pre-defined data contract</i></div>
+</div>
+<br>
+
+### 3.3 BACK TESTER
+
+The Backend tab is used to test an application’s server-side request handling while being completely decoupled from any sort of front end. 
+
+Those familiar with Postman will feel right at home with this tool. 
+
+However, Contractual allows you to select from a list of endpoints defined in the data contract with easy to use input fields for the data values. 
+
+Upon sending a request, the back tester will render the response from the application and whether or not the data contract was followed, or if the request failed.
+
+<div align="center">
+	<img  width="500" height="350" src="https://i.gyazo.com/53c7cdc84568d9f304cc5230de11c12e.gif">
+	<div><i>Demo_7: a successful response</i></div>
+</div>
+<br>
+
+<div align="center">
+	<img  width="500" height="350" src="https://i.gyazo.com/0e0420c1a99bac7f1d8894736065e10f.gif">
+	<div><i>Demo_8: a failed response with error analysis</i></div>
+</div>
+<br>
+
+### 3.4 DOCUMENT CREATOR
+
+The document creator is used to view the data contract of the currently active contract in a simplified layout. You are able to export a pdf image of this page for quick and easy distribution to your team using the export button.
+
+<div align="center">
+	<img  width="500" height="350" src="https://i.gyazo.com/441cc9515e09e3fae3e271e2fda92ebf.gif">
+	<div><i>Demo_9: save the contract to local</i></div>
+</div>
+<br>
  
 ---
 ## ITERATION OPPORTUNITY/BUGS
