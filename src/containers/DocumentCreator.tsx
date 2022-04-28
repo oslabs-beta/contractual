@@ -1,5 +1,8 @@
 import DocumentExport from "../components/DocumentExport";
 import DocumentPreview from "../components/DocumentPreview";
+// TEST
+import DocumentHeading from "../components/DocumentHeading";
+// TEST END
 import { useState } from 'react';
 import { useSelector } from "react-redux";
 import { RootState } from "../state/store";
@@ -49,6 +52,7 @@ const DocumentCreator = () => {
       setFileName={setFileName}
       />
       <div ref={printRef}>
+        <DocumentHeading/>
         <DocumentPreview
           currentContract={currentContract}
           reqKeys={reqKeys}

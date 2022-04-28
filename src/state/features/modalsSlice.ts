@@ -24,3 +24,5 @@ export const modalsSlice = createSlice({
 export const { showNotification, hideNotification } = modalsSlice.actions;
 
 export default modalsSlice.reducer;
+
+/** NOT BEING USED */
