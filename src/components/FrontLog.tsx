@@ -6,7 +6,7 @@ import { updateLog } from "../state/features/frontLogSlice";
 const socket = new WebSocket("ws://localhost:1234");
 
 socket.addEventListener("open", (event) => {
-  console.log("CONNECTED TO WEB SOCKET FROM CLIENT Side");
+  // console.log("CONNECTED TO WEB SOCKET FROM CLIENT Side");
 });
 
 export default function FrontLog() {
@@ -18,7 +18,7 @@ export default function FrontLog() {
   socket.onmessage = (event) => {
     // logic to display received data here
     // likely use state components
-    console.log("MESSAGE RECEIVED FROM 1234: ", event.data);
+    // console.log("MESSAGE RECEIVED FROM 1234: ", event.data);
     dispatch(updateLog(JSON.parse(event.data)));
     updateRequests([...requests, JSON.parse(event.data)]);
   };

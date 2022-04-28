@@ -116,7 +116,6 @@ const ContractEndpoint: React.FC<ContractEndpointProps> = ({
     /**  BUILD CONTRACT STRINGS FOR REQUEST AND RESPONSE */
     newContract[`Req@${reqMethod}@${endpoint}`] = reqBody; // should pass in request object here
     newContract[`Res@${reqMethod}@${endpoint}`] = resBody; // should pass in response object here
-    console.log(newContract);
 
     const contractCopy = { ...currentContract, ...newContract }
 
@@ -126,7 +125,6 @@ const ContractEndpoint: React.FC<ContractEndpointProps> = ({
         token: currentContractToken
       })
       .then((response) => {
-        // console.log(response);
         if (response.status === 200) {
           dispatch(updateContract(contractCopy))
           resetFields()

@@ -17,8 +17,7 @@ const DocumentPreview: React.FC<PreviewProps> = ({
   currentContract,
   reqKeys,
 }): JSX.Element => {
-  // console.log('CURRENT CONTRACT', currentContract);
-  // console.log('CURRENT KEYS', reqKeys);
+
 
   /** BUILD STRUCTURE OF DOCUMENT PREVIEW
    * { endpoint1: [[{key: value}, {key: value}], [{key: value}]], endpoint2:...}
@@ -53,8 +52,7 @@ const DocumentPreview: React.FC<PreviewProps> = ({
   };
 
   const docObj = buildPreview(currentContract, reqKeys);
-  console.log("DOCUMENTATION");
-  console.log(docObj);
+ 
   //
   const documentation = [];
   /** BUILD DOCUMENTATION ARRAY ITERATING THROUGH PREVIEW STRUCTURE
