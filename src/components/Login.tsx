@@ -33,14 +33,12 @@ const Login = () => {
       password: Yup.string().required('invalid password'),
     }),
     onSubmit: (values: FormValues): void => {
-      console.log(values);
       axios
         .post('http://localhost:4321/login', {
           password: values.password,
           email: values.email,
         })
         .then((response) => {
-          console.log(response);
           if (response.status === 200) {
             navigate("navbar");
             dispatch(getUserData(response.data));

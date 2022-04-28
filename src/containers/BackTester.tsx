@@ -64,7 +64,6 @@ export default function BackTester() {
   /**  RECORD STATE CHANGES IN DOMAIN INPUT FIELD IN BACKENDPOINT COMPONENT */
   const handleSetURL = (e: any): void => {
     const URLString: string = e.target.value;
-    console.log("current URL string: ", e.target.value);
     setURLString(URLString);
   };
 
@@ -72,13 +71,11 @@ export default function BackTester() {
   const handleSetReqInputs = (index, e) => {
     let data = [...reqInputs];
     data[index][e.target.name] = e.target.value;
-    console.log("Request Box changed: ", data);
 
 
     /// TESTING
 
-    console.log('Target is : ', e.target.name)
-    console.log('Value is : ', e.target.value)
+ 
     if (data[index][e.target.name] === 'boolean') {
       data[index].reqVal = true
     }
@@ -110,7 +107,6 @@ export default function BackTester() {
       else if (k.reqValType === 'array-any-any') k.reqVal = ''
       keys.push(k)
     }
-    console.log('ENDPOINT KEYS ARE: ', keys)
     setReqInputs(keys);
   };
 

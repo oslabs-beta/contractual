@@ -4,7 +4,7 @@ const dbController = {};
 
 dbController.getContent = async (req, res, next) => {
   const { token } = req.params;
-  console.log("TOKEN IS ", token);
+
   const param = [token.toUpperCase()];
   try {
     const getContent = `
@@ -15,6 +15,7 @@ dbController.getContent = async (req, res, next) => {
     const targetContent = await db.query(getContent, param);
     // targetContent returns a JSON object
     currentContract = JSON.parse(targetContent.rows[0].content);
+    console.log(currentContract);
     return next();
   } catch (error) {
     return next({

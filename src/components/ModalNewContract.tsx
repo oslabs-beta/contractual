@@ -36,9 +36,7 @@ const ModalNewContract: React.FC<ModalProps> = ({
         userId: userId,
       })
       .then((response) => {
-        console.log(response);
         if (response.status === 200) {
-          console.log("200000");
 
           dispatch(
             addContract({
@@ -51,7 +49,6 @@ const ModalNewContract: React.FC<ModalProps> = ({
         } 
       })
       .catch((error) => {
-        console.log("xxx0000");
         dispatch(showNotification(true));
         console.log(error);
       });

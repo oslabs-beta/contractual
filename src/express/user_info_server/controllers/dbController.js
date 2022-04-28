@@ -44,7 +44,6 @@ dbController.getContent = async (req, res, next) => {
       // targetContent returns a JSON object
       const contractId = JSON.parse(contractIdRes.rows[0].contract_id);
       const param2 = [userId, contractId, false];
-      console.log("222222", param2);
 
       const addHistoryQuery = `
     INSERT INTO users_contracts(user_id, contract_id, permission)
@@ -93,7 +92,6 @@ dbController.getContent = async (req, res, next) => {
 dbController.updateContent = async (req, res, next) => {
   const { content, token } = req.body;
   const param = [JSON.stringify(content), token.toUpperCase()];
-  console.log("update Content req::::", req);
   try {
     const updateContent = `
     UPDATE contracts SET content = $1 WHERE token = $2;
@@ -170,7 +168,6 @@ dbController.addContract = async (req, res, next) => {
 
   // Store contract in user-contract table
   try {
-    console.log("CHECKPOINT----------------");
     const param2 = [userId, contractId, true];
     const addHistoryQuery = `
     INSERT INTO users_contracts(user_id, contract_id, permission)

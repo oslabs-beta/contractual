@@ -71,7 +71,16 @@ const ContractEndpoint: React.FC<ContractEndpointProps> = ({
     }
   }
   ///// TESTING
-
+    /** SEND CURRENT ACTIVE CONTRACT TOKEN TO WEBHOOK TESTING SERVER TO UPDATE EXPECTED EXPECTED REQUEST ENDPOINTS */
+  const sendToken = (token) => {
+    axios
+      .get(`http://localhost:1234/contract/${token}`)
+      .then((response) => {
+      })
+      .catch((error) => {
+        console.log('Error is: ', error)
+      })
+  }
   /** SAVE OR UPDATE THE CURRENTLY SELECTED ENDPOINT AND FIELDS TO THE DATABASE */
   const saveContract = (
     reqMethod: string,
@@ -116,7 +125,6 @@ const ContractEndpoint: React.FC<ContractEndpointProps> = ({
     /**  BUILD CONTRACT STRINGS FOR REQUEST AND RESPONSE */
     newContract[`Req@${reqMethod}@${endpoint}`] = reqBody; // should pass in request object here
     newContract[`Res@${reqMethod}@${endpoint}`] = resBody; // should pass in response object here
-    console.log(newContract);
 
     const contractCopy = { ...currentContract, ...newContract }
 
@@ -126,16 +134,16 @@ const ContractEndpoint: React.FC<ContractEndpointProps> = ({
         token: currentContractToken
       })
       .then((response) => {
-        // console.log(response);
         if (response.status === 200) {
           dispatch(updateContract(contractCopy))
           resetFields()
+          sendToken(currentContractToken)
         }
       })
       .catch((error) => {
         console.log(error);
       });
-
+    
     setNotificationString('ENDPOINT SAVED');
     setPositiveFeedback(true);
     setVisibility(true);
@@ -174,11 +182,13 @@ const ContractEndpoint: React.FC<ContractEndpointProps> = ({
         if (response.status === 200) {
           dispatch(updateContract(contractCopy))
           resetFields()
+          sendToken(currentContractToken)
         }
       })
       .catch((error) => {
         console.log(error);
       });
+
     setNotificationString('ENDPOINT DELETED');
     setPositiveFeedback(true);
     setVisibility(true);

@@ -40,7 +40,6 @@ const ModalJoinContract: React.FC<ModalProps> = ({
           token: contractToken
         })
         .then((response) => {
-          console.log(response);
           if (response.status === 200) {
             dispatch(joinContract({
               name: contractName,
