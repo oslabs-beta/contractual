@@ -1,7 +1,7 @@
 {
   "name": "contractual",
   "version": "1.0.0",
-  "description": "A testing and mocking tool for data contract that decouples workflow between front-end and back-end teams",
+  "description": "Contractual allows development teams to define their applications data contract using a simple user interface. Helping frontend/backend development to test their applications confidently in a decoupled manner",
   "main": "./dist/main.js",
   "moduleFileExtensions": [
     "js",
@@ -31,7 +31,9 @@
       "dist/**/*",
       "assets/**/*",
       "package.json",
-      "src/**/*"
+      "src/**/*",
+      "node_modules/**/*",
+      ".env"
     ],
     "mac": {
       "category": "public.app-category.developer-tools",
@@ -81,9 +83,14 @@
       "category": "Development"
     }
   },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
+  "keywords": [
+    "Data Contract",
+    "Contract",
+    "Test",
+    "Endpoints"
+  ],
+  "author": "Joe Amos, George Jeng, Ernest Leung, Yankun Song",
+  "license": "MIT",
   "dependencies": {
     "@headlessui/react": "^1.5.0",
     "@heroicons/react": "^1.0.6",
