@@ -3,9 +3,7 @@ const db = require("../models/dbModel.js");
 const dbController = {};
 
 dbController.getContent = async (req, res, next) => {
-  console.log("received a token");
   const { token } = req.params;
-  console.log(token);
 
   const param = [token.toUpperCase()];
   try {
