@@ -7,7 +7,7 @@ CREATE TABLE users(
 
 CREATE TABLE contracts(
     contract_id SERIAL PRIMARY KEY,
-    title VARCHAR NOT NULL,
+    title VARCHAR UNIQUE NOT NULL,
     content VARCHAR NOT NULL,
     token VARCHAR NOT NULL,
     user_id INTEGER,
