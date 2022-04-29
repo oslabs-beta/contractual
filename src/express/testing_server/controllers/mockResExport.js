@@ -4,7 +4,7 @@ const randomize = {
   // Primitive
   string: () => chance.string({ alpha: true }), // length, pool, alpha, casing, symbols
   letter: () => chance.letter(), // casing: lower
-  number: () => chance.integer({ min: 0, max: 30 }),
+  number: () => chance.integer({ min: 0, max: 10 }),
   floating: () => chance.floating({ min: 0, max: 100 }), // min, max, fixed
   boolean: () => chance.bool(),
   falsy: () => chance.falsy(),
