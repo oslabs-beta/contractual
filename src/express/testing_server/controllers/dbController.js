@@ -5,7 +5,7 @@ const dbController = {};
 dbController.getContent = async (req, res, next) => {
   const { token } = req.params;
 
-  const param = [token.toUpperCase()];
+  const param = [token];
   try {
     const getContent = `
       SELECT * FROM contracts
