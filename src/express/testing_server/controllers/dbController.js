@@ -5,6 +5,7 @@ const dbController = {};
 dbController.getContent = async (req, res, next) => {
   const { token } = req.params;
 
+  // convert to upper case
   const param = [token.toUpperCase()];
   try {
     const getContent = `
@@ -15,7 +16,7 @@ dbController.getContent = async (req, res, next) => {
     const targetContent = await db.query(getContent, param);
     // targetContent returns a JSON object
     currentContract = JSON.parse(targetContent.rows[0].content);
-    console.log(currentContract);
+    //console.log(currentContract);
     return next();
   } catch (error) {
     return next({
